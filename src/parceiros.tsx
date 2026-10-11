@@ -15,7 +15,7 @@ montar(<Parceiros />, {
     { href: '#papeis', texto: 'O que fazemos' },
     { href: '#planos', texto: 'Planos' },
     { href: '#como-funciona', texto: 'Como funciona' },
+    { href: '#duvidas', texto: 'Dúvidas' },
     { href: '/#portfolio', texto: 'Portfólio' },
-    { href: '#contato', texto: 'Contato' },
   ],
 })

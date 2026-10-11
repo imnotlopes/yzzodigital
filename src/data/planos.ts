@@ -27,6 +27,12 @@ export interface Plano {
   publico: string
   /** O que vem no plano. Uma linha por item, curta. */
   itens: readonly string[]
+  /**
+   * Em quais das quatro semanas do mês há entrega. Desenha o calendário do
+   * cartão, que é o jeito mais rápido de explicar "semanal" e "quinzenal"
+   * sem um parágrafo: a pessoa vê quatro marcas, duas ou uma.
+   */
+  semanas: readonly number[]
   /** O plano em destaque ganha o fundo amarelo. Só um. */
   destaque?: boolean
 }
@@ -35,6 +41,7 @@ export const planos: Plano[] = [
   {
     nome: 'Semanal',
     publico: 'Para o atleta em alta: Seleção, vitrine, janela de transferência.',
+    semanas: [1, 2, 3, 4],
     itens: [
       'Entregas toda semana',
       'Até 12 artes no mês',
@@ -48,6 +55,7 @@ export const planos: Plano[] = [
   {
     nome: 'Quinzenal',
     publico: 'Para o atleta em crescimento, que precisa de presença constante.',
+    semanas: [2, 4],
     itens: [
       'Entregas a cada 15 dias',
       'Até 6 artes no mês',
@@ -59,6 +67,7 @@ export const planos: Plano[] = [
   {
     nome: 'Mensal',
     publico: 'Para manter o perfil vivo e profissional o ano inteiro.',
+    semanas: [4],
     itens: [
       'Um pacote por mês',
       'Até 3 artes no mês',

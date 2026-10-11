@@ -96,14 +96,17 @@ de atleta trabalham:
 
 | # | seção | a pergunta que ela responde |
 | --- | --- | --- |
-| 1 | Capa: "Como funciona a Yzzo" · "O empresário cuida da carreira. A Yzzo cuida da vitrine." | como funciona? |
-| 2 | Vocês negociam, a Yzzo mostra (agenciamento × imagem) | vão pegar meu atleta? |
-| 3 | O que o seu atleta recebe (5 entregas) | o que eu ganho? |
-| 4 | Planos semanal, quinzenal e mensal | quanto e com que ritmo? |
-| 5 | Para quem tem uma carteira de atletas | e para a minha agência? |
-| 6 | Como trabalhamos (6 passos) | como começa? |
-| 7 | Atleta de base, com responsabilidade | e com atleta menor de idade? |
-| 8 | Contato, com mensagem pronta de parceiro | como falo com vocês? |
+| 1 | Capa: "Como funciona a Yzzo" · "O empresário cuida da carreira. A Yzzo cuida da vitrine." · +700 projetos | como funciona? |
+| 2 | Faixa em movimento com as entregas (Convocação, Novo clube, Melhores momentos…) | |
+| 3 | Vocês negociam, a Yzzo mostra (agenciamento + imagem) | vão pegar meu atleta? |
+| 4 | O que o seu atleta recebe (5 entregas), com a dupla vídeo de melhores momentos + arte | o que eu ganho? |
+| 5 | Planos semanal, quinzenal e mensal, com o calendário de entregas de cada um | quanto e com que ritmo? |
+| 6 | Para quem tem uma carteira de atletas | e para a minha agência? |
+| 7 | Quem já é #TimeYzzoDigital (faixa dos "Novo Cliente!") | quem já trabalha com vocês? |
+| 8 | Como trabalhamos (6 passos) | como começa? |
+| 9 | Atleta de base, com responsabilidade | e com atleta menor de idade? |
+| 10 | Perguntas frequentes | e aquela outra dúvida? |
+| 11 | Contato, com mensagem pronta de parceiro | como falo com vocês? |
 
 Cada botão abre o WhatsApp já com a mensagem certa ("Vim pela página de
 parceiros e quero saber sobre o plano Semanal"), para a Yzzo saber de onde
@@ -119,7 +122,11 @@ veio o contato.
    identidade do atleta e mídia kit. Fazem todos?
 4. **Para agências:** pacote por atleta, arte com a marca da agência, prazo
    de urgência e um ponto de contato. É isso mesmo?
-5. **A arte "2025"** aparece como exemplo de arte em parceria (tem a marca
+5. **As perguntas frequentes** (`src/data/duvidas.ts`): as respostas repetem
+   os planos e o processo, então valem as mesmas confirmações.
+6. **O vídeo de melhores momentos:** o espaço está em placeholder. Se tiverem
+   um exemplo, ele entra como `melhores-momentos.mp4` em `videos-originais/`.
+7. **A arte "2025"** aparece como exemplo de arte em parceria (tem a marca
    da Sabu Sports). A legenda não cita o nome, mas vale combinar com eles.
 
 **⚠️ Jurídico:** a seção de atleta de base fala em autorização dos pais com

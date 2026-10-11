@@ -50,7 +50,17 @@ export default function SecaoPapeis() {
           </TituloSecao>
         </Revelar>
 
-        <div className="mt-14 grid gap-4 md:grid-cols-2">
+        <div className="relative mt-14 grid gap-4 md:grid-cols-2">
+          {/*
+            O "+" no encontro dos dois cartões: são duas metades do mesmo
+            trabalho, e não dois lados de uma disputa.
+          */}
+          <span
+            aria-hidden
+            className="t-h2 absolute left-1/2 top-1/2 z-10 hidden size-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-preto pb-1 text-amarelo ring-8 ring-branco md:flex"
+          >
+            +
+          </span>
           {LADOS.map((lado, indice) => (
             <Revelar
               key={lado.quem}

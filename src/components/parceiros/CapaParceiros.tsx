@@ -1,5 +1,6 @@
 import { ArrowDown } from 'lucide-react'
 
+import { numeros } from '../../data/numeros'
 import { artes, srcsetDe } from '../../data/portfolio'
 import { cn } from '../../lib/utils'
 import Barra from '../Barra'
@@ -59,6 +60,21 @@ export default function CapaParceiros() {
               </a>
               <BotaoWhatsapp texto="Falar com a Yzzo" mensagem={MENSAGEM_PARCEIRO} />
             </div>
+
+            <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
+              {numeros.map((numero) => (
+                <div key={numero.rotulo} className="flex items-baseline gap-3">
+                  <dt className="sr-only">{numero.rotulo}</dt>
+                  <dd className="t-h3 text-[2.75rem]">{numero.valor}</dd>
+                  <dd className="text-sm font-medium text-cinza">{numero.rotulo}</dd>
+                </div>
+              ))}
+              <div className="flex items-baseline gap-3">
+                <dt className="sr-only">Ritmos de entrega</dt>
+                <dd className="t-h3 text-[2.75rem]">3</dd>
+                <dd className="text-sm font-medium text-cinza">ritmos de entrega</dd>
+              </div>
+            </dl>
           </Revelar>
         </div>
 

@@ -13,7 +13,12 @@ import Faixa from './Faixa'
  */
 const PALAVRAS = ['Convocado!', 'Novo cliente!', 'Campeão', '#TimeYzzoDigital', 'Motion', 'Brasil 2026']
 
-export default function FaixaPalavras() {
+interface FaixaPalavrasProps {
+  /** Outra lista de palavras. A página de parceiros passa as entregas. */
+  palavras?: readonly string[]
+}
+
+export default function FaixaPalavras({ palavras = PALAVRAS }: FaixaPalavrasProps) {
   /*
     Levemente torta, como as faixas dos posts. O invólucro corta as pontas que
     a rotação joga para fora da tela, senão a página ganharia rolagem lateral.
@@ -22,7 +27,7 @@ export default function FaixaPalavras() {
     <div className="overflow-hidden py-3">
       <div className="-rotate-1 scale-[1.03] bg-preto py-4 md:py-5">
         <Faixa
-          itens={PALAVRAS}
+          itens={palavras}
           chave={(palavra) => palavra}
           duracao={28}
           respiro="1.5rem"

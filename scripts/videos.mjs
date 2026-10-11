@@ -66,6 +66,7 @@ const PLANO = [
   { arquivo: 'motion-1.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
   { arquivo: 'motion-2.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
   { arquivo: 'motion-3.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
+  { arquivo: 'melhores-momentos.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
 ]
 
 function ffmpeg(args) {

@@ -1,10 +1,13 @@
 import { avulsos } from '../../data/planos'
-import { fotos, srcsetDe } from '../../data/portfolio'
+import { artes, srcsetDe } from '../../data/portfolio'
+import { videoMelhoresMomentos } from '../../data/videos'
+import Dupla from '../Dupla'
 import Revelar from '../Revelar'
 import TituloSecao from '../TituloSecao'
+import Video from '../Video'
 
-/** A foto ao lado da lista: o atleta segurando a flâmula, antes do jogo. */
-const FOTO = fotos.find((foto) => foto.src.includes('flamula')) ?? fotos[0]
+/** A arte pequena da dupla: uma convocação, a entrega mais reconhecível. */
+const ARTE = artes.find((arte) => arte.src.includes('convocado-sub-17')) ?? artes[0]
 
 /**
  * O QUE O ATLETA RECEBE.
@@ -48,19 +51,34 @@ export default function SecaoEntregas() {
           </ol>
         </div>
 
-        <Revelar distancia="nenhuma" className="hidden lg:block">
-          <img
-            src={FOTO.pequena}
-            srcSet={srcsetDe(FOTO)}
-            sizes="35vw"
-            alt={FOTO.alt}
-            width={FOTO.largura}
-            height={FOTO.altura}
-            loading="lazy"
-            decoding="async"
-            className="sticky top-28 aspect-[4/5] w-full rounded-sm object-cover"
-          />
-        </Revelar>
+        {/*
+          A DUPLA DA LANDING, AGORA COM O VÍDEO QUE O EMPRESÁRIO QUER VER.
+
+          O grande é o vídeo de melhores momentos (placeholder até o vídeo
+          chegar, ver data/videos.ts) e o pequeno, com moldura, uma arte de
+          convocação: as duas entregas que mais pesam, uma sobre a outra.
+          Presa no alto enquanto a lista passa ao lado, no computador.
+        */}
+        <div className="mx-auto w-full max-w-sm lg:max-w-none">
+          <div className="lg:sticky lg:top-28">
+            <Dupla
+              grande={<Video video={videoMelhoresMomentos} />}
+              pequena={
+                <img
+                  src={ARTE.pequena}
+                  srcSet={srcsetDe(ARTE)}
+                  sizes="(max-width: 1023px) 45vw, 18vw"
+                  alt={ARTE.alt}
+                  width={ARTE.largura}
+                  height={ARTE.altura}
+                  loading="lazy"
+                  decoding="async"
+                  className="block aspect-[4/5] w-full object-cover"
+                />
+              }
+            />
+          </div>
+        </div>
       </div>
     </section>
   )

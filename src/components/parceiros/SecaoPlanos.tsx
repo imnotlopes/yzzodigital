@@ -49,10 +49,19 @@ export default function SecaoPlanos() {
                 plano.destaque ? 'bg-amarelo' : 'border border-borda bg-branco',
               )}
             >
-              <h3 className="t-h2">{plano.nome}</h3>
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="t-h2">{plano.nome}</h3>
+                {plano.destaque && (
+                  <span className="rotulo mt-2 whitespace-nowrap rounded-full bg-preto px-3 py-1.5 text-[0.625rem] text-amarelo">
+                    Mais completo
+                  </span>
+                )}
+              </div>
               <p className={cn('mt-3 min-h-[3lh] text-[0.9375rem] leading-snug', plano.destaque ? 'text-preto/80' : 'text-cinza')}>
                 {plano.publico}
               </p>
+
+              <Ritmo semanas={plano.semanas} destaque={plano.destaque} />
 
               <ul className="mt-6 flex-1 space-y-3 border-t border-preto/15 pt-6">
                 {plano.itens.map((item) => (
@@ -82,5 +91,48 @@ export default function SecaoPlanos() {
         </Revelar>
       </div>
     </section>
+  )
+}
+
+/**
+ * O CALENDÁRIO DO PLANO.
+ *
+ * Quatro semanas lado a lado, e uma marca em cada semana com entrega. É o que
+ * explica "semanal", "quinzenal" e "mensal" num relance: quatro marcas, duas
+ * ou uma. Para quem lê com leitor de tela, a frase escondida diz o mesmo.
+ */
+function Ritmo({ semanas, destaque }: { semanas: readonly number[]; destaque?: boolean }) {
+  return (
+    <div className="mt-6">
+      <p className="rotulo text-[0.625rem] text-preto/60" aria-hidden>
+        Entregas no mês
+      </p>
+      <p className="sr-only">
+        Entregas em {semanas.length} de 4 semanas do mês.
+      </p>
+      <ol aria-hidden className="mt-2.5 grid grid-cols-4 gap-1.5">
+        {[1, 2, 3, 4].map((semana) => {
+          const entrega = semanas.includes(semana)
+          return (
+            <li
+              key={semana}
+              className={cn(
+                'flex h-11 flex-col items-center justify-center rounded-sm text-[0.6875rem] font-semibold',
+                entrega
+                  ? destaque
+                    ? 'bg-preto text-amarelo'
+                    : 'bg-amarelo text-preto'
+                  : destaque
+                    ? 'bg-preto/10 text-preto/40'
+                    : 'bg-papel text-preto/35',
+              )}
+            >
+              <span>S{semana}</span>
+              {entrega && <span aria-hidden className="mt-0.5 size-1.5 rounded-full bg-current" />}
+            </li>
+          )
+        })}
+      </ol>
+    </div>
   )
 }
