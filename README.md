@@ -59,6 +59,7 @@ caminho que o site usa, e cada imagem sai em duas larguras (cheia e 600px).
 
 ## Publicar
 
-⚠️ O `origin` deste repositório ainda é o GitHub da Danielli
-(`previadanielinoivas`). **Não dê `git push` daqui** antes de trocar o
-`origin` por um repositório da Yzzo: o push substituiria o site dela.
+Repositório: [imnotlopes/yzzodigital](https://github.com/imnotlopes/yzzodigital).
+O histórico começa limpo, sem os commits da Danielli. O remoto dela continua
+configurado nesta pasta como `danielli` (e o histórico dela no ramo local
+`danielli-legado`): nunca dê push para ele daqui.

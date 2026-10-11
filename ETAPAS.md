@@ -119,10 +119,10 @@ aplico.
 
 ## Etapa 7: publicação ⏳
 
-1. **Repositório novo.** ⚠️ Esta pasta ainda aponta para o GitHub da
-   Danielli (`previadanielinoivas`). Um `git push` daqui **substituiria o site
-   dela**. Antes de publicar: criar um repositório `yzzodigital` e trocar o
-   `origin`.
+1. ✅ **Repositório novo:**
+   [imnotlopes/yzzodigital](https://github.com/imnotlopes/yzzodigital), com
+   histórico limpo (nada da Danielli). O remoto dela ficou nesta pasta com o
+   nome `danielli`, e não deve receber push daqui.
 2. Projeto novo na Vercel, ligado a esse repositório.
 3. Domínio próprio, se houver.
 4. Conferir o cartão do link no WhatsApp e no Instagram.
