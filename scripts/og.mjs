@@ -1,5 +1,6 @@
 /**
- * Gera a imagem do cartão de link: public/og-yzzo.jpg.
+ * Gera as imagens do cartão de link, uma por página: public/og-yzzo.jpg e
+ * public/og-parceiros.jpg.
  *
  *   node scripts/og.mjs
  *
@@ -64,7 +65,8 @@ function poligono(largura, altura, pontos, cor = AMARELO) {
   )
 }
 
-async function main() {
+/** O cartão da landing: a capa do site. */
+async function cartaoInicio() {
   const camadas = []
 
   /* A foto, à direita, cortada pelo alto: o nome e o número ficam na parte de cima. */
@@ -125,6 +127,80 @@ async function main() {
     .toFile(path.join(PUBLICO, 'og-yzzo.jpg'))
 
   console.log('✓ public/og-yzzo.jpg')
+}
+
+/**
+ * O cartão de /parceiros: o link que vai para agências e empresários.
+ *
+ * Preto, como o post "Grandes conquistas", para não ser confundido com o da
+ * landing quando os dois aparecem na mesma conversa. À direita, o leque de
+ * artes da capa da página.
+ */
+async function cartaoParceiros() {
+  const camadas = []
+
+  /* O leque: três artes giradas, a do meio na frente. */
+  const LARGURA_ARTE = 250
+  const ALTURA_ARTE = Math.round(LARGURA_ARTE * 1.25)
+  const leque = [
+    { arquivo: 'artes/convocado-selecao-amarelo-600.webp', giro: -9, x: 720, y: 170 },
+    { arquivo: 'artes/convocado-corinthians-600.webp', giro: 9, x: 950, y: 170 },
+    { arquivo: 'artes/convocado-selecao-azul-600.webp', giro: 0, x: 835, y: 150 },
+  ]
+  for (const { arquivo, giro, x, y } of leque) {
+    const arte = await sharp(path.join(PUBLICO, arquivo))
+      .resize(LARGURA_ARTE, ALTURA_ARTE, { fit: 'cover' })
+      .rotate(giro, { background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toBuffer({ resolveWithObject: true })
+    camadas.push({
+      input: arte.data,
+      left: Math.round(x - arte.info.width / 2 + LARGURA_ARTE / 2),
+      top: Math.round(y - (arte.info.height - ALTURA_ARTE) / 2),
+    })
+  }
+
+  camadas.push({ input: poligono(380, 110, '0,110 380,20 380,110'), left: 0, top: ALTURA - 110 })
+
+  /* A barra, com o público no lugar da hashtag. */
+  const barraY = 64
+  camadas.push({ input: retangulo(430, 44, AMARELO, 22), left: X, top: barraY })
+  const publico = await texto('Para <b>agências e empresários</b>', 'Arial 19')
+  camadas.push({ input: publico.input, left: X + 22, top: barraY + Math.round((44 - publico.altura) / 2) })
+
+  /* "Como funciona / a Yzzo", com o marca-texto em "Yzzo". */
+  const linha1Y = 150
+  const como = await texto('Como funciona', 'Impact 84', '#FFFFFF')
+  camadas.push({ input: como.input, left: X, top: linha1Y })
+  const linha2Y = linha1Y + Math.round(como.altura * 1.08)
+  const a = await texto('a', 'Impact 84', '#FFFFFF')
+  const yzzo = await texto('Yzzo', 'Impact 84')
+  camadas.push({ input: a.input, left: X, top: linha2Y })
+  camadas.push({
+    input: retangulo(yzzo.largura + 16, Math.round(yzzo.altura * 0.86), AMARELO, 6),
+    left: X + a.largura + 18 - 8,
+    top: linha2Y + Math.round(yzzo.altura * 0.1),
+  })
+  camadas.push({ input: yzzo.input, left: X + a.largura + 18, top: linha2Y })
+
+  const frase1 = await texto('O empresário cuida da <b>carreira</b>.', 'Arial 28', '#FFFFFF')
+  const frase2 = await texto('A Yzzo cuida da <b>vitrine</b>.', 'Arial 28', '#FFFFFF')
+  camadas.push({ input: frase1.input, left: X, top: 410 })
+  camadas.push({ input: frase2.input, left: X, top: 410 + frase1.altura + 6 })
+
+  await sharp({
+    create: { width: LARGURA, height: ALTURA, channels: 3, background: PRETO },
+  })
+    .composite(camadas)
+    .jpeg({ quality: 86, mozjpeg: true })
+    .toFile(path.join(PUBLICO, 'og-parceiros.jpg'))
+
+  console.log('✓ public/og-parceiros.jpg')
+}
+
+async function main() {
+  await cartaoInicio()
+  await cartaoParceiros()
 }
 
 main().catch((erro) => {

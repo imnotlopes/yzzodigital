@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F3F3F3" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!--
+      "COMO FUNCIONA A YZZO", PARA AGÊNCIAS E EMPRESÁRIOS.
+
+      HTML próprio, e não uma rota dentro da landing, porque este link vai ser
+      colado no WhatsApp quando alguém perguntar "como funciona a empresa de
+      vocês?". O robô que monta o cartão não executa JavaScript: o título, a
+      descrição e a imagem do cartão precisam estar escritos AQUI, ou o
+      empresário recebe o cartão da landing.
+
+      TODO: URLs absolutas com o endereço provisório. Trocar junto com
+      SITE_URL em src/lib/brand.ts quando houver domínio.
+    -->
+    <title>Como funciona a Yzzo | Para agências e empresários</title>
+    <meta name="description" content="O empresário cuida da carreira, a Yzzo cuida da vitrine. Arte, vídeo e foto para atletas de futebol, com planos semanais, quinzenais e mensais." />
+    <link rel="canonical" href="https://yzzodigital.vercel.app/parceiros" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Yzzo Digital" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Como funciona a Yzzo | Para agências e empresários" />
+    <meta property="og:description" content="O empresário cuida da carreira. A Yzzo cuida da vitrine." />
+    <meta property="og:url" content="https://yzzodigital.vercel.app/parceiros" />
+    <meta property="og:image" content="https://yzzodigital.vercel.app/og-parceiros.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Artes de convocação feitas pela Yzzo, ao lado do título Como funciona a Yzzo." />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Como funciona a Yzzo | Para agências e empresários" />
+    <meta name="twitter:description" content="O empresário cuida da carreira. A Yzzo cuida da vitrine." />
+    <meta name="twitter:image" content="https://yzzodigital.vercel.app/og-parceiros.jpg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/parceiros.tsx"></script>
+  </body>
+</html>

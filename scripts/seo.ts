@@ -22,11 +22,14 @@ import { SITE_URL, brand, linkInstagram } from '../src/lib/brand.js'
  * quem os lê é robô de busca, que só vê produção.
  */
 
+/** As páginas públicas. Mesma lista de PAGINAS em vite.config.ts. */
+const CAMINHOS = ['/', '/parceiros']
+
 function montarSitemap(): string {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    `  <url>\n    <loc>${SITE_URL}/</loc>\n  </url>`,
+    ...CAMINHOS.map((caminho) => `  <url>\n    <loc>${SITE_URL}${caminho}</loc>\n  </url>`),
     '</urlset>',
     '',
   ].join('\n')

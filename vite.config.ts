@@ -1,17 +1,58 @@
+import { resolve } from 'node:path'
+
 import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 
 import { pluginSeo } from './scripts/seo.js'
 
-/*
-  Uma página só, no index.html da raiz.
+/**
+ * As páginas, e o endereço de cada uma.
+ *
+ * Cada página é um HTML de verdade, com as próprias tags de compartilhamento:
+ * o robô que monta o cartão do link no WhatsApp não executa JavaScript, e é
+ * isso que dá a /parceiros um cartão diferente do da landing. Ver
+ * src/lib/montar.tsx.
+ *
+ * Mexeu aqui, confira o sitemap em scripts/seo.ts. Em produção, quem resolve
+ * `/parceiros` → `parceiros.html` é o `cleanUrls` do vercel.json.
+ */
+const PAGINAS = [
+  { nome: 'index', rota: '/', arquivo: 'index.html' },
+  { nome: 'parceiros', rota: '/parceiros', arquivo: 'parceiros.html' },
+] as const
 
-  O projeto da Danielli tinha uma tabela de peças (um HTML por apresentação)
-  e um plugin que imitava os rewrites da Vercel no desenvolvimento. Com uma
-  página só, nada disso tem trabalho a fazer, e o Vite padrão serve.
-*/
+/**
+ * Faz o servidor de desenvolvimento responder `/parceiros` como a Vercel.
+ *
+ * Sem isto, `/parceiros` em desenvolvimento cai no index.html e mostra a
+ * landing, sem erro nenhum no console. Mesma armadilha que o projeto da
+ * Danielli já tinha resolvido.
+ */
+function rotasDasPaginas(): Plugin {
+  return {
+    name: 'rotas-das-paginas',
+    apply: 'serve',
+    configureServer(servidor) {
+      servidor.middlewares.use((req, _res, proximo) => {
+        const caminho = (req.url ?? '/').split('?')[0].replace(/\/$/, '')
+        const pagina = PAGINAS.find((p) => p.rota !== '/' && p.rota === caminho)
+        if (pagina) req.url = `/${pagina.arquivo}`
+        proximo()
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), pluginSeo()],
+  plugins: [react(), rotasDasPaginas(), pluginSeo()],
+
+  build: {
+    rollupOptions: {
+      input: Object.fromEntries(
+        PAGINAS.map((p) => [p.nome, resolve(import.meta.dirname, p.arquivo)]),
+      ),
+    },
+  },
 
   server: {
     // O Vite ignora PORT e vai somando a partir da 5173 quando a porta está

@@ -40,7 +40,7 @@ export default function Inicio() {
       <SecaoTime />
 
       {/* 6 · Como funciona */}
-      <SecaoProcesso />
+      <SecaoProcesso comLinkParceiros />
 
       {/* 7 · O convite */}
       <SecaoContato />

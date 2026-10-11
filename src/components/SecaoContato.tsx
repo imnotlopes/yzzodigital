@@ -5,6 +5,16 @@ import BotaoWhatsapp from './BotaoWhatsapp'
 import { IconeInstagram } from './icones'
 import Revelar from './Revelar'
 
+interface SecaoContatoProps {
+  /** A linha embaixo do título. Muda com quem está lendo. */
+  texto?: string
+  /** A mensagem que já chega escrita no WhatsApp. */
+  mensagem?: string
+}
+
+const TEXTO_ATLETA =
+  'Conte quem é o atleta e o momento da carreira. A gente responde no WhatsApp com o caminho para a imagem dele.'
+
 /**
  * Bloco 7, o convite.
  *
@@ -19,7 +29,7 @@ import Revelar from './Revelar'
  * A Danielli terminava sem botão, porque a noiva já estava no WhatsApp. Aqui
  * ninguém está: o fim da página é o botão.
  */
-export default function SecaoContato() {
+export default function SecaoContato({ texto = TEXTO_ATLETA, mensagem }: SecaoContatoProps) {
   return (
     <section
       id="contato"
@@ -54,12 +64,11 @@ export default function SecaoContato() {
 
         <Revelar atraso={140}>
           <p className="mt-9 max-w-[42ch] text-[1.0625rem] text-cinza-claro">
-            Conte quem é o atleta e o momento da carreira. A gente responde no
-            WhatsApp com o caminho para a imagem dele.
+            {texto}
           </p>
 
           <div className="mt-10">
-            <BotaoWhatsapp texto="Chamar no WhatsApp" className="w-full sm:w-auto" />
+            <BotaoWhatsapp texto="Chamar no WhatsApp" mensagem={mensagem} className="w-full sm:w-auto" />
           </div>
         </Revelar>
 

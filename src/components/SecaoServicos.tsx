@@ -1,7 +1,6 @@
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 import { paraAgencias, servicos } from '../data/servicos'
-import { linkWhatsapp } from '../lib/brand'
 import Revelar from './Revelar'
 import TituloSecao from './TituloSecao'
 
@@ -58,12 +57,15 @@ export default function SecaoServicos() {
           ))}
         </ul>
 
-        {/* O destaque "Agências" do Instagram: o outro público da agência. */}
+        {/*
+          O destaque "Agências" do Instagram: o outro público da agência. Leva
+          para a página de parceiros, que explica planos e processo, e não
+          direto para o WhatsApp: quem tem uma carteira de atletas quer
+          entender como funciona antes de chamar.
+        */}
         <Revelar className="mt-4">
           <a
-            href={linkWhatsapp('Olá, Yzzo! Tenho uma agência/assessoria e quero saber como vocês trabalham com parceiros.')}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/parceiros"
             className="group flex flex-col gap-4 rounded-sm border border-branco/15 p-6 transition-colors
                        hover:border-amarelo md:flex-row md:items-center md:justify-between md:p-8"
           >
@@ -72,12 +74,12 @@ export default function SecaoServicos() {
               <p className="mt-2 max-w-[60ch] text-[0.9375rem] text-cinza-claro">{paraAgencias.texto}</p>
             </div>
             <span className="inline-flex items-center gap-2 text-sm font-semibold">
-              Conversar sobre parceria
-              <ArrowUpRight
+              Ver como funciona
+              <ArrowRight
                 size={18}
                 strokeWidth={2}
                 aria-hidden
-                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="transition-transform group-hover:translate-x-1"
               />
             </span>
           </a>

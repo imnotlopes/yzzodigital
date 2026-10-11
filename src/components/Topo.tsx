@@ -5,13 +5,34 @@ import { cn } from '../lib/utils'
 import { IconeWhatsapp } from './icones'
 import Logo from './Logo'
 
-/** As âncoras. Cada `href` é o `id` de uma seção em pages/Inicio.tsx. */
-const LINKS = [
+export interface LinkDoTopo {
+  href: string
+  texto: string
+}
+
+/**
+ * Os links da landing. Os que começam com `#` são o `id` de uma seção em
+ * pages/Inicio.tsx; "Para agências" é a outra página, e por isso é `<a>`
+ * comum e não âncora.
+ */
+const LINKS_INICIO: readonly LinkDoTopo[] = [
   { href: '#agencia', texto: 'A agência' },
   { href: '#servicos', texto: 'Serviços' },
   { href: '#portfolio', texto: 'Portfólio' },
+  { href: '/parceiros', texto: 'Para agências' },
   { href: '#contato', texto: 'Contato' },
-] as const
+]
+
+interface TopoProps {
+  links?: readonly LinkDoTopo[]
+  /**
+   * Para onde a logo leva. Na landing é o alto da própria página; na de
+   * parceiros, a landing, que é onde está o portfólio.
+   */
+  inicio?: string
+  /** A mensagem pronta do botão de WhatsApp. Sem ela, a padrão de brand.ts. */
+  mensagem?: string
+}
 
 /**
  * O TOPO, E POR QUE AQUI ELE EXISTE.
@@ -32,7 +53,7 @@ const LINKS = [
  * inteira no primeiro instante, e o topo só ganha fundo quando o conteúdo
  * começa a passar por baixo dele.
  */
-export default function Topo() {
+export default function Topo({ links = LINKS_INICIO, inicio = '#inicio', mensagem }: TopoProps) {
   const [rolou, setRolou] = useState(false)
 
   useEffect(() => {
@@ -50,13 +71,13 @@ export default function Topo() {
       )}
     >
       <div className="container-yz flex h-topo items-center justify-between gap-6">
-        <a href="#inicio" aria-label="Yzzo Digital, voltar ao início" className="-m-2 p-2">
+        <a href={inicio} aria-label="Yzzo Digital, voltar ao início" className="-m-2 p-2">
           <Logo className="w-24 md:w-28" />
         </a>
 
         <nav aria-label="Seções" className="hidden lg:block">
-          <ul className="flex items-center gap-9">
-            {LINKS.map((link) => (
+          <ul className="flex items-center gap-8">
+            {links.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
@@ -70,7 +91,7 @@ export default function Topo() {
         </nav>
 
         <a
-          href={linkWhatsapp()}
+          href={linkWhatsapp(mensagem)}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-preto min-h-11 px-5 text-sm"

@@ -75,7 +75,7 @@ trabalho, prova social, fechar com convite), adaptada para agência:
 | 4 | **Serviços** | design, motion, fotografia, gestão de imagem e atendimento a agências | "O que oferecemos" |
 | 5 | **Portfólio** | artes deslizando de lado · vídeos (placeholder) · fotos de jogo em mural, tudo abrindo em tela cheia | deslize de modelos + vídeos + mural de casamentos |
 | 6 | **#TimeYzzoDigital** | os posts "Novo Cliente!" passando em faixa | avaliações do Google |
-| 7 | **Como trabalhamos** | 4 passos | "Como funciona" |
+| 7 | **Como trabalhamos** | 6 passos + botão para a página de parceiros | "Como funciona" |
 | 8 | **Contato** | "Grandes conquistas começam com grandes decisões." + WhatsApp, e-mail e Instagram | o convite final |
 | 9 | **Rodapé** | logo, contatos, © | rodapé |
 
@@ -83,6 +83,49 @@ trabalho, prova social, fechar com convite), adaptada para agência:
 **placeholder**, com uma foto de fundo e o aviso "vídeo em breve". Quando os
 vídeos chegarem, eles entram em `videos-originais/`, o script
 `scripts/videos.mjs` comprime, e o placeholder vira vídeo sozinho.
+
+## Etapa 3b: página para agências e empresários ✅ (em aprovação)
+
+**`/parceiros`**, "Como funciona a Yzzo". É o link para mandar quando alguém
+pergunta "como funciona a empresa de vocês?". Tem HTML próprio
+(`parceiros.html`) para ter **cartão próprio no WhatsApp**
+(`og-parceiros.jpg`), como as apresentações da Danielli.
+
+Montada a partir da pesquisa de outubro de 2026 sobre como agências de imagem
+de atleta trabalham:
+
+| # | seção | a pergunta que ela responde |
+| --- | --- | --- |
+| 1 | Capa: "Como funciona a Yzzo" · "O empresário cuida da carreira. A Yzzo cuida da vitrine." | como funciona? |
+| 2 | Vocês negociam, a Yzzo mostra (agenciamento × imagem) | vão pegar meu atleta? |
+| 3 | O que o seu atleta recebe (5 entregas) | o que eu ganho? |
+| 4 | Planos semanal, quinzenal e mensal | quanto e com que ritmo? |
+| 5 | Para quem tem uma carteira de atletas | e para a minha agência? |
+| 6 | Como trabalhamos (6 passos) | como começa? |
+| 7 | Atleta de base, com responsabilidade | e com atleta menor de idade? |
+| 8 | Contato, com mensagem pronta de parceiro | como falo com vocês? |
+
+Cada botão abre o WhatsApp já com a mensagem certa ("Vim pela página de
+parceiros e quero saber sobre o plano Semanal"), para a Yzzo saber de onde
+veio o contato.
+
+**⚠️ A Yzzo precisa confirmar** (tudo em `src/data/planos.ts`):
+
+1. **O que entra em cada plano.** As quantidades (12/6/3 artes, Reels,
+   cobertura) são proposta minha, tirada do mercado.
+2. **Preço:** hoje "sob consulta". Se quiserem mostrar "a partir de", entra
+   um campo.
+3. **Os serviços avulsos:** vídeo de melhores momentos, cobertura de jogo,
+   identidade do atleta e mídia kit. Fazem todos?
+4. **Para agências:** pacote por atleta, arte com a marca da agência, prazo
+   de urgência e um ponto de contato. É isso mesmo?
+5. **A arte "2025"** aparece como exemplo de arte em parceria (tem a marca
+   da Sabu Sports). A legenda não cita o nome, mas vale combinar com eles.
+
+**⚠️ Jurídico:** a seção de atleta de base fala em autorização dos pais com
+finalidade e prazo (LGPD e ECA Digital, em vigor desde março de 2026). Um
+advogado deve conferir o modelo de autorização da Yzzo e se impulsionar post
+de atleta menor exige alvará judicial (Decreto 12.880/2026).
 
 ## Etapa 4: branding oficial ⏳ (depende de você)
 
@@ -101,7 +144,8 @@ O que eu preciso:
 | --- | --- | --- |
 | **Vídeos** (Motion) | portfólio e "A agência" | placeholder |
 | **Textos dos serviços** | `src/data/servicos.ts` | ⚠️ escritos por mim a partir do que aparece no Instagram. Confirmar se é isso mesmo que a agência vende |
-| **Como trabalhamos** | `src/data/processo.ts` | ⚠️ texto provisório meu. Confirmar o processo de verdade |
+| **Como trabalhamos** | `src/data/processo.ts` | ⚠️ 6 passos tirados da pesquisa de mercado. Confirmar o processo de verdade |
+| **Planos e avulsos** | `src/data/planos.ts` | ⚠️ proposta. Ver a etapa 3b |
 | **Números** | `src/data/numeros.ts` | só "+700 projetos" é confirmado. Atletas atendidos, clubes, anos de agência: mandar se quiser mostrar |
 | **Depoimentos** de atletas ou pais | nova seção | não existe ainda |
 | **Logos de clubes e marcas** | faixa em movimento | hoje a faixa é de palavras; com logos, vira faixa de clubes |

@@ -22,7 +22,7 @@ npm run dev
 | `npm run lint` | roda o oxlint |
 | `npm run fotos` | converte as imagens de `instagram/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
-| `npm run og` | gera `public/og-yzzo.jpg`, a imagem do cartão de link |
+| `npm run og` | gera `og-yzzo.jpg` e `og-parceiros.jpg`, os cartões de link |
 
 ## Onde mexer
 
@@ -33,16 +33,23 @@ npm run dev
 | Artes, fotos e posts "Novo Cliente!" | `src/data/portfolio.ts` + `scripts/importar-instagram.mjs` |
 | Vídeos (hoje placeholder) | `src/data/videos.ts` |
 | Serviços | `src/data/servicos.ts` |
-| Como trabalhamos | `src/data/processo.ts` |
+| Como trabalhamos (as duas páginas) | `src/data/processo.ts` |
+| Planos, avulsos e pacote para agências | `src/data/planos.ts` |
 | Números | `src/data/numeros.ts` |
 | Logo (hoje provisória) | `src/components/Logo.tsx` |
-| Título, descrição e cartão de link | `index.html` |
+| Título, descrição e cartão de link | `index.html` e `parceiros.html` |
 
-## A página
+## As páginas
 
-`src/pages/Inicio.tsx`, em ordem: Topo · Capa · faixa de palavras · A agência
-· Serviços · Portfólio (artes deslizando, Motion, mural "Em campo") ·
-#TimeYzzoDigital · Como trabalhamos · Contato · Rodapé.
+| endereço | arquivo | para quem |
+| --- | --- | --- |
+| `/` | `index.html` → `src/pages/Inicio.tsx` | quem chega pelo Instagram ou pela busca |
+| `/parceiros` | `parceiros.html` → `src/pages/Parceiros.tsx` | agências e empresários: "como funciona a Yzzo" |
+
+Cada página é um HTML próprio para ter o próprio cartão no WhatsApp (o robô
+do cartão não executa JavaScript). Para criar uma terceira: um HTML na raiz,
+uma entrada em `src/`, uma linha em `PAGINAS` (`vite.config.ts`) e outra em
+`CAMINHOS` (`scripts/seo.ts`). Ver `src/lib/montar.tsx`.
 
 ## Imagens
 

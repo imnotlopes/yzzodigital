@@ -17,7 +17,8 @@
   "overrides": [
     {
       "files": [
-        "src/main.tsx"
+        "src/main.tsx",
+        "src/parceiros.tsx"
       ],
       "rules": {
         "react/only-export-components": "off"
