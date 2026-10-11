@@ -1,0 +1,47 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Config local do agente/editor
+.claude/
+
+# Dump do Instagram da Yzzo.
+# Material de trabalho, não código: as imagens que o site usa estão em
+# public/, geradas por scripts/importar-instagram.mjs a partir daqui.
+instagram/
+imgi_*.jpg
+imgi_*.webp
+
+# Vídeos como saíram da edição. O que vai para o site é a versão comprimida
+# em public/videos/, gerada por scripts/videos.mjs a partir daqui.
+videos-originais/
+
+# O branding como a agência mandar (logo em vetor, manual). O site publica
+# só os arquivos derivados, em public/.
+branding-original/
+
+# Tudo o que era do projeto da Danielli Noivas, de onde esta pasta foi
+# copiada: código, fotos, vídeos e documentos. Guardado, e não apagado, fora
+# do repositório. Pode ser removido quando não fizer mais falta.
+_legado-danielli/

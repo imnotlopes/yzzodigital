@@ -1,0 +1,615 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   DESIGN TOKENS: Yzzo Digital
+   Fonte única de verdade. O tailwind.config.ts apenas referencia estas vars.
+
+   ⚠️ PROVISÓRIO: tirado dos posts do Instagram enquanto o branding oficial
+   não chega. Quando chegar, é aqui que as cores e as fontes mudam, e o site
+   inteiro acompanha.
+   ========================================================================== */
+:root {
+  /* --- Cores ------------------------------------------------------------
+     Cada cor é um TRIO DE CANAIS ("R G B", sem vírgulas) porque é o único
+     formato em que o Tailwind injeta transparência. Com hex, `text-preto/70`
+     falha em silêncio.
+
+     A PALETA DOS POSTS
+     ------------------
+     Papel cinza-claro, preto e um amarelo só. O amarelo foi medido no post
+     "Sua imagem também deveria", na barra do #TimeYzzoDigital.
+
+     AMARELO É FUNDO, NUNCA LETRA SOBRE CLARO. Sobre o papel ele rende 1,6:1 e
+     nenhum tamanho de fonte conserta. É o que os posts fazem: o amarelo é a
+     caixa atrás da palavra preta (o marca-texto), a barra, o triângulo. Como
+     letra, só sobre o preto, onde passa de 11:1.
+     ---------------------------------------------------------------------- */
+  --preto-rgb: 17 17 17; /* #111111, títulos e seções escuras */
+  --grafite-rgb: 30 30 30; /* #1E1E1E, cartão sobre o preto */
+  --branco-rgb: 255 255 255;
+  --papel-rgb: 243 243 243; /* #F3F3F3, o fundo dos posts */
+  --amarelo-rgb: 240 196 15; /* #F0C40F, a cor da marca */
+
+  /* Texto rebaixado. 6,4:1 sobre o papel e 8:1 o claro sobre o preto. */
+  --cinza-rgb: 88 88 88; /* #585858 */
+  --cinza-claro-rgb: 168 168 168; /* #A8A8A8 */
+
+  --borda-rgb: 222 222 222; /* #DEDEDE */
+
+  --preto: rgb(var(--preto-rgb));
+  --grafite: rgb(var(--grafite-rgb));
+  --branco: rgb(var(--branco-rgb));
+  --papel: rgb(var(--papel-rgb));
+  --amarelo: rgb(var(--amarelo-rgb));
+  --cinza: rgb(var(--cinza-rgb));
+  --cinza-claro: rgb(var(--cinza-claro-rgb));
+  --borda: rgb(var(--borda-rgb));
+
+  /* --- Tipografia -------------------------------------------------------
+     DUAS FAMÍLIAS, AS DOS POSTS
+     ---------------------------
+       TÍTULO  Sofia Sans Extra Condensed. O "Novo Cliente!" e o "GRANDES
+               CONQUISTAS" são um grotesco condensado e alto; esta é a mais
+               próxima no Google Fonts, e tem itálico de verdade, que é o do
+               "CONQUISTAS" amarelo.
+       CORPO   Poppins. É a do "Seu desempenho fala por você" e do
+               "#TimeYzzoDigital": geométrica, redonda, o "a" de um andar só.
+     ---------------------------------------------------------------------- */
+  --font-display: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
+  --font-corpo: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /*
+    Condensada pede corpo grande. A letra ocupa metade da largura de uma
+    normal, e no mesmo tamanho ela some. Os degraus daqui são maiores que os
+    de um site comum por isso.
+  */
+  --fs-display: 8rem;
+  --fs-h2: 4.75rem;
+  --fs-h3: 2.25rem;
+  --fs-h4: 1.5rem;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --largura-conteudo: 82rem;
+
+  --secao-p: 3.5rem;
+  --secao-m: 6rem;
+  --secao-g: 9rem;
+  --espaco-secao: var(--secao-g);
+
+  /* Altura do topo fixo, para as âncoras não pararem embaixo dele. */
+  --altura-topo: 4.5rem;
+
+  color-scheme: light;
+}
+
+/*
+  O MOSTRADOR: uma linha que reescala o design inteiro.
+
+  Tudo é medido em `rem`. Abaixo de 1440px a raiz trava em 16px; acima, sobe
+  com a largura até 17,33px. Tipografia, espaço e botão crescem juntos e na
+  mesma proporção.
+*/
+:root {
+  font-size: clamp(1rem, 1.1111vw, 1.0833rem);
+}
+
+/* O piso do celular. A maior parte das visitas chega aqui, pelo Instagram. */
+@media (max-width: 767px) {
+  :root {
+    --fs-display: 4rem;
+    --fs-h2: 3rem;
+    --fs-h3: 1.75rem;
+    --fs-h4: 1.25rem;
+
+    --secao-p: 2rem;
+    --secao-m: 3rem;
+    --secao-g: 4.5rem;
+
+    --altura-topo: 4rem;
+  }
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--altura-topo);
+
+    /*
+      `clip`, e não `hidden`: `overflow: hidden` no html cria um container de
+      rolagem e quebra o `position: sticky` do deslize do portfólio.
+    */
+    overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-papel font-sans text-preto antialiased;
+    max-width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-bold;
+    line-height: 0.9;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--amarelo);
+    color: var(--preto);
+  }
+}
+
+/* ==========================================================================
+   COMPONENTES
+   ========================================================================== */
+@layer components {
+  .container-yz {
+    @apply mx-auto w-full max-w-conteudo px-5 md:px-10 lg:px-14;
+  }
+
+  .secao {
+    padding-block: var(--espaco-secao);
+  }
+
+  /* --- Tipografia -------------------------------------------------------
+     Três tamanhos de título, e só três. Ver os degraus no `:root`.
+     ---------------------------------------------------------------------- */
+  .t-display {
+    @apply font-display font-bold;
+    font-size: var(--fs-display);
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+  }
+
+  .t-h2 {
+    @apply font-display font-bold;
+    font-size: var(--fs-h2);
+    line-height: 0.9;
+  }
+
+  .t-h3 {
+    @apply font-display font-bold;
+    font-size: var(--fs-h3);
+    line-height: 0.95;
+  }
+
+  /*
+    O GRITO: caixa alta, itálico e pesado, como o "GRANDES CONQUISTAS". Para a
+    faixa em movimento e o fecho. Em texto corrido, cansa na segunda linha.
+  */
+  .t-grito {
+    @apply font-display font-black uppercase italic;
+    letter-spacing: 0.005em;
+  }
+
+  /*
+    O MARCA-TEXTO: a caixa amarela atrás de uma palavra preta.
+
+    É o recurso mais repetido do Instagram ("Novo Cliente!", "Sua imagem").
+    `box-decoration-break: clone` faz a caixa se repetir inteira em cada linha
+    quando a palavra quebra, em vez de virar um retângulo aberto nas pontas.
+
+    Uma vez por título. Duas caixas amarelas no mesmo título brigam pelo olho
+    e nenhuma das duas palavras ganha.
+  */
+  .marca-texto {
+    /*
+      Gradiente, e não cor chapada: o fundo de um elemento em linha cobre a
+      caixa da fonte inteira, com o espaço de acento e de descendente, e numa
+      condensada alta isso dá uma caixa muito mais alta que a palavra. A
+      faixa de 10% a 94% abraça a letra como no post.
+    */
+    background: linear-gradient(
+      transparent 10%,
+      var(--amarelo) 10%,
+      var(--amarelo) 94%,
+      transparent 94%
+    );
+    color: var(--preto);
+    padding-inline: 0.1em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Rótulo pequeno em caixa alta. */
+  .rotulo {
+    @apply font-sans text-xs font-semibold uppercase;
+    letter-spacing: 0.18em;
+  }
+
+  /* --- A barra do #TimeYzzoDigital --------------------------------------
+     A pílula amarela que abre os posts: hashtag, um fio e o ano. Aqui ela
+     abre cada seção, no lugar do rótulo comum. Ver components/Barra.tsx.
+     ---------------------------------------------------------------------- */
+  .barra {
+    @apply inline-flex w-full max-w-md items-center gap-4 rounded-full bg-amarelo px-5 py-2.5 text-preto;
+    font-size: 0.8125rem;
+    line-height: 1;
+  }
+
+  .barra_fio {
+    @apply h-px flex-1 bg-preto;
+  }
+
+  /* --- Botões ---------------------------------------------------------- */
+  /*
+    Pílula, como a barra dos posts. 48px de altura: é o alvo de toque com
+    folga, e botão de contato é o que mais importa acertar no polegar.
+  */
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 font-sans
+           text-[0.9375rem] font-semibold transition-[background-color,color,transform]
+           duration-300 ease-suave active:scale-[0.98];
+  }
+
+  .btn-amarelo {
+    @apply bg-amarelo text-preto hover:bg-preto hover:text-amarelo;
+  }
+
+  /* Sobre o amarelo ou sobre foto clara, o botão é preto. */
+  .btn-preto {
+    @apply bg-preto text-branco hover:bg-amarelo hover:text-preto;
+  }
+
+  .btn-contorno {
+    @apply border border-preto/25 text-preto hover:border-preto hover:bg-preto hover:text-branco;
+  }
+
+  .btn-contorno-claro {
+    @apply border border-branco/30 text-branco hover:border-amarelo hover:bg-amarelo hover:text-preto;
+  }
+
+  /* --- Moldura e dupla (herdadas da Danielli) -------------------------- */
+  .moldura {
+    background-color: var(--branco);
+    padding: 0.375rem;
+  }
+
+  @media (min-width: 768px) {
+    .moldura {
+      padding: 0.5rem;
+    }
+  }
+
+  /*
+    A DUPLA: foto grande, e uma pequena com moldura branca caindo sobre a
+    borda dela. O porquê está em components/Dupla.tsx.
+  */
+  .dupla {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .dupla_grande {
+    grid-column: 4 / 13;
+    grid-row: 1;
+    align-self: start;
+    margin-bottom: var(--dupla-desce, 24%);
+  }
+
+  .dupla_pequena {
+    position: relative;
+    z-index: 1;
+    grid-column: 1 / 7;
+    grid-row: 1;
+    align-self: end;
+  }
+
+  .dupla_rotulo {
+    grid-column: 7 / 13;
+    grid-row: 1;
+    align-self: end;
+    padding-left: 0.875rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .dupla--invertida .dupla_grande {
+    grid-column: 1 / 10;
+  }
+
+  .dupla--invertida .dupla_pequena {
+    grid-column: 7 / 13;
+  }
+
+  .dupla--invertida .dupla_rotulo {
+    grid-column: 1 / 7;
+    padding-right: 0.875rem;
+    padding-left: 0;
+    text-align: right;
+  }
+
+  /* --- Os triângulos ----------------------------------------------------
+     Os cacos amarelos que entram pelas bordas dos posts. Recortados com
+     `clip-path`, então são só um retângulo amarelo: nenhum arquivo, e mudam
+     de cor junto com a marca.
+     ---------------------------------------------------------------------- */
+  .caco {
+    position: absolute;
+    background-color: var(--amarelo);
+    pointer-events: none;
+  }
+
+  .caco--a {
+    clip-path: polygon(0 100%, 100% 30%, 100% 100%);
+  }
+
+  .caco--b {
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+  }
+
+  .caco--c {
+    clip-path: polygon(0 40%, 100% 0, 70% 100%);
+  }
+}
+
+/* ==========================================================================
+   A FAIXA EM MOVIMENTO
+   --------------------------------------------------------------------------
+   O motor da faixa de marcas da Danielli, com palavras no lugar dos
+   logotipos e com os posts "Novo Cliente!". A lista é renderizada DUAS vezes
+   e o trilho anda até -50%: nesse ponto a segunda cópia está onde a primeira
+   começou, e a volta ao zero não aparece.
+
+   O respiro entre os itens é PADDING dentro de cada um, e não `gap`. Com
+   `gap`, metade do trilho é uma cópia menos meio vão, e a faixa dá um tranco
+   a cada volta.
+   ========================================================================== */
+@layer components {
+  .faixa {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .faixa--esmaecida {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .faixa_trilho {
+    display: flex;
+    width: max-content;
+    animation: faixa var(--faixa-duracao, 30s) linear infinite;
+    will-change: transform;
+  }
+
+  .faixa_trilho.esta-parada,
+  .faixa:focus-within .faixa_trilho {
+    animation-play-state: paused;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .faixa:hover .faixa_trilho {
+      animation-play-state: paused;
+    }
+  }
+
+  .faixa_fileira {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .faixa_item {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding-inline: var(--faixa-respiro, 1.25rem);
+  }
+
+  @keyframes faixa {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faixa_trilho {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   O DESLIZE DAS ARTES
+   --------------------------------------------------------------------------
+   No computador, a seção prende na tela e as artes andam de lado enquanto a
+   pessoa rola. A altura é inventada: `100svh` fica preso, e `--percurso`
+   (medido pelo JavaScript, ver useDeslizeHorizontal) é o quanto a pessoa
+   rola enquanto a tela não sai do lugar.
+
+   No celular não há prisão: é um carrossel de arrastar com o dedo, com a
+   próxima arte aparecendo na borda para dizer que tem mais.
+   ========================================================================== */
+@layer components {
+  .deslize {
+    position: relative;
+    height: calc(100svh + var(--percurso, 0px));
+  }
+
+  .deslize_janela {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .deslize_trilho {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    transform: translate3d(var(--deslocamento, 0px), 0, 0);
+    will-change: transform;
+  }
+
+  /* A arte: 4:5, como no feed, com a altura mandando. */
+  .deslize_cartao {
+    flex-shrink: 0;
+    height: min(62svh, 40rem);
+    aspect-ratio: 4 / 5;
+    margin-right: 1.5rem;
+  }
+
+  .carrossel {
+    display: flex;
+    gap: 0.875rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1.25rem;
+    padding-inline: 1.25rem;
+    scrollbar-width: none;
+  }
+
+  .carrossel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carrossel > * {
+    flex: 0 0 78%;
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 640px) {
+    .carrossel > * {
+      flex-basis: 46%;
+    }
+  }
+}
+
+/* ==========================================================================
+   O MURAL DAS FOTOS
+   --------------------------------------------------------------------------
+   Duas colunas no celular, quatro no computador. As fotos marcadas `alta`
+   ocupam duas linhas: a grade deixa de ser tabela e vira mural, que é o que
+   uma cobertura de jogo é. `grid-auto-flow: dense` tapa os buracos que essas
+   fotos altas deixariam. A conta de casas está em data/portfolio.ts.
+   ========================================================================== */
+@layer components {
+  .mural {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: dense;
+    gap: 0.5rem;
+  }
+
+  .mural_item {
+    aspect-ratio: 4 / 5;
+  }
+
+  .mural_item--alto {
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+
+  @media (min-width: 1024px) {
+    .mural {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+  }
+}
+
+/* ==========================================================================
+   O VISOR: a imagem do portfólio em tela cheia
+   ========================================================================== */
+@layer components {
+  .visor {
+    max-width: 100vw;
+    max-height: 100svh;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--branco);
+  }
+
+  .visor::backdrop {
+    background: rgb(var(--preto-rgb) / 0.94);
+  }
+
+  .visor[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   MOVIMENTO: conteúdo que chega quando a pessoa alcança ele
+   ========================================================================== */
+@layer components {
+  /*
+    Fica escondido SÓ depois que o JavaScript confirma que sabe revelar: o
+    hook nasce visível sem `IntersectionObserver` ou com menos movimento
+    pedido. Nenhum caminho deixa texto invisível. Ver lib/movimento.ts.
+  */
+  .revelar {
+    opacity: 0;
+    transform: translate3d(0, var(--revelar-distancia, 1.75rem), 0);
+    transition:
+      opacity 800ms var(--ease-suave) var(--revelar-atraso, 0ms),
+      transform 800ms var(--ease-suave) var(--revelar-atraso, 0ms);
+  }
+
+  .revelar-visivel {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revelar {
+    opacity: 1;
+    transform: none;
+  }
+}
