@@ -1,13 +1,9 @@
 /**
- * As mensagens que já chegam escritas no WhatsApp a partir de /parceiros.
+ * A mensagem que já chega escrita no WhatsApp a partir de /parceiros.
  *
- * Todas começam com "Vim pela página de parceiros": é assim que a Yzzo sabe,
- * sem ferramenta nenhuma, que o contato é de agência ou empresário e não de
- * atleta, e de qual botão ele veio.
+ * Começa com "Vim pela página de parceiros": é assim que a Yzzo sabe, sem
+ * ferramenta nenhuma, que o contato é de empresa ou assessoria e não de um
+ * atleta que chegou pela landing.
  */
 export const MENSAGEM_PARCEIRO =
-  'Olá, Yzzo! Vim pela página de parceiros e quero saber como funciona para a minha agência.'
-
-export function mensagemDoPlano(plano: string) {
-  return `Olá, Yzzo! Vim pela página de parceiros e quero saber sobre o plano ${plano}.`
-}
+  'Olá, Yzzo! Vim pela página de parceiros e quero saber como funciona a parceria para a minha empresa.'

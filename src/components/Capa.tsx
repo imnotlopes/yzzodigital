@@ -63,8 +63,8 @@ export default function Capa() {
 
           <Revelar distancia="curta" atraso={240} naPrimeiraTela>
             <p className="mt-7 max-w-[40ch] text-[1.0625rem] text-cinza">
-              {brand.descricao}. Design, motion, fotografia e gestão de imagem
-              para atletas de futebol.
+              Artes e conteúdo visual para o futebol: Match Days, Motion,
+              convocação, novo clube e DVD esportivo.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">

@@ -6,11 +6,10 @@
  * scripts/importar-instagram.mjs. Cada imagem existe em duas larguras: a cheia
  * e a de 600px (`-600.webp`), e é o `srcset` que escolhe.
  *
- * TRÊS LISTAS, PORQUE SÃO TRÊS TRABALHOS DIFERENTES
+ * DUAS LISTAS, PORQUE SÃO DOIS TRABALHOS DIFERENTES
  * -------------------------------------------------
  *   artes     o design: convocação, título, agenda. É o que a agência mais
  *             publica e o que mais se reconhece de longe.
- *   fotos     a cobertura em campo: jogo, treino, retrato.
  *   clientes  os posts "Novo Cliente!". Não são portfólio, são prova: cada um
  *             é um atleta que fechou com a agência. Vão para a faixa do
  *             #TimeYzzoDigital, e não para a grade.
@@ -25,11 +24,6 @@ export interface Imagem {
   src: string
   /** Versão de 600px de largura, para grade e faixa. */
   pequena: string
-  /**
-   * No mural, ocupa duas linhas. Só para foto em pé de corpo inteiro: numa
-   * foto deitada, o recorte alto mostraria só céu ou gramado.
-   */
-  alta?: boolean
   /** O que se vê, para quem não vê. */
   alt: string
   largura: number
@@ -74,36 +68,16 @@ export const artes: Imagem[] = [
 ]
 
 /**
- * A fotografia, na ordem do mural.
+ * A foto da capa: a camisa 20 de costas.
  *
- * A camisa 20 de costas é a capa, e por isso não se repete aqui.
- *
- * 14 fotos, duas delas altas: 16 casas, que fecham 4 linhas de 4 no
- * computador e 8 de 2 no celular, sem buraco no fim. Mexeu na quantidade,
- * refaça a conta. A da bandeirinha saiu porque traz o "Seja Bem-Vindo"
- * escrito por cima, que o recorte do mural cortava no meio.
+ * A Yzzo não fotografa jogo. Esta é uma foto de jogo editada por ela, que é
+ * o que ela faz quando um atleta se destaca. O mural de fotos que existia
+ * aqui saiu em outubro de 2026, a pedido dela: o foco é só arte.
  */
 export const fotoCapa = imagem(
   'fotos/camisa-20',
   'Atleta de costas, vestindo a camisa amarela número 20 com o nome Gabriel.',
 )
-
-export const fotos: Imagem[] = [
-  { ...imagem('fotos/flamula', 'Atleta de agasalho azul segurando a flâmula da CBF antes do jogo.'), alta: true },
-  imagem('fotos/barreira', 'Dois atletas da Seleção, camisas 8 e 20, lado a lado no campo.', 1304),
-  imagem('fotos/conducao', 'Atleta de amarelo conduzindo a bola em velocidade.'),
-  imagem('fotos/foto-do-trofeu', 'Atleta com a camisa 20 fotografando um troféu com o celular.'),
-  imagem('fotos/trofeu-no-gramado', 'Atleta deitado no gramado ao lado de um troféu, em luz de fim de tarde.', 1120, 1408),
-  imagem('fotos/chute', 'Atleta de branco batendo na bola num estádio.', 935, 1223),
-  { ...imagem('fotos/entrevista', 'Atleta da Seleção segurando a bola durante uma entrevista.', 1200), alta: true },
-  imagem('fotos/escanteio', 'Atleta de vermelho cobrando escanteio.', 1200),
-  imagem('fotos/ajoelhado', 'Goleiro de joelhos no gramado.', 1204),
-  imagem('fotos/retrato', 'Retrato de um atleta com a camisa branca do clube.', 1290),
-  imagem('fotos/disputa', 'Dois atletas disputando a bola perto do gol.', 960, 1280),
-  imagem('fotos/trofeu-colegio', 'Atleta com a camisa 11 segurando um troféu no campo.', 1200),
-  imagem('fotos/entre-predios', 'Atleta caminhando no campo com prédios ao fundo.', 1200),
-  imagem('fotos/jogada', 'Lance de jogo com três atletas disputando a bola.', 1282),
-]
 
 /** Os posts "Novo Cliente!", para a faixa do #TimeYzzoDigital. */
 export const novosClientes: Imagem[] = [
@@ -116,8 +90,3 @@ export const novosClientes: Imagem[] = [
   imagem('clientes/novo-cliente-07', 'Post "Novo Cliente!" de um atleta com a camisa tricolor do Grêmio.'),
 ]
 
-/** Peças da própria marca, usadas como apoio nas seções. */
-export const pecaSuaImagem = imagem(
-  'marca/sua-imagem-tambem-deveria',
-  'Post da Yzzo: "Seu desempenho fala por você. Sua imagem também deveria."',
-)

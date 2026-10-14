@@ -130,7 +130,8 @@ async function cartaoInicio() {
 }
 
 /**
- * O cartão de /parceiros: o link que vai para agências e empresários.
+ * O cartão de /parceiros: o link de "como funciona a Yzzo", para atletas e
+ * empresários.
  *
  * Preto, como o post "Grandes conquistas", para não ser confundido com o da
  * landing quando os dois aparecem na mesma conversa. À direita, o leque de
@@ -165,7 +166,7 @@ async function cartaoParceiros() {
   /* A barra, com o público no lugar da hashtag. */
   const barraY = 64
   camadas.push({ input: retangulo(430, 44, AMARELO, 22), left: X, top: barraY })
-  const publico = await texto('Para <b>agências e empresários</b>', 'Arial 19')
+  const publico = await texto('Para <b>atletas e empresários</b>', 'Arial 19')
   camadas.push({ input: publico.input, left: X + 22, top: barraY + Math.round((44 - publico.altura) / 2) })
 
   /* "Como funciona / a Yzzo", com o marca-texto em "Yzzo". */
@@ -184,7 +185,7 @@ async function cartaoParceiros() {
   camadas.push({ input: yzzo.input, left: X + a.largura + 18, top: linha2Y })
 
   const frase1 = await texto('O empresário cuida da <b>carreira</b>.', 'Arial 28', '#FFFFFF')
-  const frase2 = await texto('A Yzzo cuida da <b>vitrine</b>.', 'Arial 28', '#FFFFFF')
+  const frase2 = await texto('A Yzzo cuida da <b>imagem</b>.', 'Arial 28', '#FFFFFF')
   camadas.push({ input: frase1.input, left: X, top: 410 })
   camadas.push({ input: frase2.input, left: X, top: 410 + frase1.altura + 6 })
 

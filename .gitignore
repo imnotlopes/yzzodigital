@@ -45,3 +45,7 @@ branding-original/
 # copiada: código, fotos, vídeos e documentos. Guardado, e não apagado, fora
 # do repositório. Pode ser removido quando não fizer mais falta.
 _legado-danielli/
+
+# A mídia como a Yzzo mandou: PNG de 20 MB, vídeos com áudio, logo em vários
+# fundos. O site publica só os derivados em public/, gerados pelos scripts.
+banco-de-midia/

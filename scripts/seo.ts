@@ -50,7 +50,7 @@ function montarOrganizacao() {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#agencia`,
     name: brand.nome,
-    description: `${brand.descricao} para atletas de futebol. Design, motion, fotografia e gestão de imagem.`,
+    description: `${brand.descricao}: artes e conteúdo visual para o futebol, para atletas, assessorias esportivas e empresas do ramo.`,
     url: `${SITE_URL}/`,
     image: `${SITE_URL}/og-yzzo.jpg`,
     email: brand.email,

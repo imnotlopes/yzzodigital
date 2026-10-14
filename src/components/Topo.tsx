@@ -12,14 +12,14 @@ export interface LinkDoTopo {
 
 /**
  * Os links da landing. Os que começam com `#` são o `id` de uma seção em
- * pages/Inicio.tsx; "Para agências" é a outra página, e por isso é `<a>`
+ * pages/Inicio.tsx; "Para empresas" é a outra página, e por isso é `<a>`
  * comum e não âncora.
  */
 const LINKS_INICIO: readonly LinkDoTopo[] = [
-  { href: '#agencia', texto: 'A agência' },
   { href: '#servicos', texto: 'Serviços' },
   { href: '#portfolio', texto: 'Portfólio' },
-  { href: '/parceiros', texto: 'Para agências' },
+  { href: '#pacotes', texto: 'Pacotes' },
+  { href: '/parceiros', texto: 'Para empresas' },
   { href: '#contato', texto: 'Contato' },
 ]
 

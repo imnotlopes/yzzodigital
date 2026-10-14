@@ -1,14 +1,20 @@
 /**
- * O QUE A AGÊNCIA FAZ.
+ * O QUE A YZZO FAZ.
  *
- * ⚠️ TEXTO PROVISÓRIO. Escrito a partir do que aparece no Instagram (as
- * artes, as fotos de jogo, o destaque "Motion's", o destaque "Agências" e a
- * categoria "Image management" do perfil), e não a partir de uma conversa com
- * a agência. Confirmar cada um: o que não for vendido sai da lista.
+ * Os seis serviços da proposta comercial que a própria Yzzo escreveu
+ * (outubro de 2026), na ordem dela. Antes daqui havia "gestão de imagem" e
+ * "fotografia em campo", que eram leitura minha do Instagram e saíram: a
+ * Yzzo não cobre jogo. Quando o atleta se destaca, ela pega as fotos do jogo,
+ * edita e publica, e isso faz parte das artes.
  *
- * A imagem de cada serviço é trabalho real da agência, e não ilustração: quem
- * lê "artes de convocação" vê uma arte de convocação.
+ * O foco é só arte. Carreira e transferência são do empresário.
+ *
+ * A imagem de cada serviço é trabalho real da agência.
  */
+
+/** O "sobre" da proposta, numa frase só. */
+export const sobre =
+  'A Yzzo Digital é uma agência especializada na criação de artes e conteúdos visuais voltados ao futebol, atendendo atletas, assessorias esportivas e empresas do ramo.'
 
 export interface Servico {
   titulo: string
@@ -20,41 +26,39 @@ export interface Servico {
 
 export const servicos: Servico[] = [
   {
-    titulo: 'Design de conquistas',
-    texto:
-      'Convocação, título, novo clube, agenda de jogos. Cada momento da carreira vira uma arte à altura dele.',
+    titulo: 'Match Days',
+    texto: 'A arte do dia de jogo: adversário, data, horário e o atleta em destaque.',
+    imagem: '/artes/agenda-corinthians-futsal-600.webp',
+    alt: 'Arte de agenda de jogos de um atleta do Corinthians.',
+  },
+  {
+    titulo: 'Motion Design',
+    texto: 'As artes em vídeo, com movimento, para Reels e Stories.',
+    imagem: '/artes/convocado-tropical-600.webp',
+    alt: 'Arte de um atleta com a camisa amarela, em fundo tropical.',
+  },
+  {
+    titulo: 'Convocação',
+    texto: 'O anúncio da convocação, no tamanho do momento.',
     imagem: '/artes/convocado-selecao-amarelo-600.webp',
     alt: 'Arte "Convocado!" de um atleta da Seleção.',
   },
   {
-    titulo: 'Motion e vídeo',
-    texto:
-      'Reels, apresentações e os melhores lances editados para o atleta ser visto em movimento.',
-    imagem: '/fotos/conducao-600.webp',
-    alt: 'Atleta conduzindo a bola em velocidade.',
+    titulo: 'Novo clube',
+    texto: 'A apresentação do atleta no clube novo.',
+    imagem: '/artes/temporada-2025-600.webp',
+    alt: 'Arte de temporada de um atleta do Internacional, em vermelho.',
   },
   {
-    titulo: 'Fotografia em campo',
-    texto: 'Cobertura de jogos, treinos e convocações, com olhar de quem entende de futebol.',
-    imagem: '/fotos/foto-do-trofeu-600.webp',
-    alt: 'Atleta fotografando um troféu.',
+    titulo: 'Comemorativas',
+    texto: 'Título, gol marcante, aniversário. Cada conquista com a sua arte.',
+    imagem: '/artes/campeao-selecao-600.webp',
+    alt: 'Arte "Campeão" com dois atletas da Seleção comemorando.',
   },
   {
-    titulo: 'Gestão de imagem',
-    texto:
-      'O perfil do atleta cuidado de ponta a ponta: identidade, frequência e o tom certo para clubes e olheiros.',
-    imagem: '/fotos/retrato-600.webp',
-    alt: 'Retrato de um atleta com a camisa do clube.',
+    titulo: 'DVD esportivo',
+    texto: 'O material atualizado do atleta, para mostrar a clubes e empresários.',
+    imagem: '/fotos/chute-600.webp',
+    alt: 'Atleta de branco batendo na bola num estádio.',
   },
 ]
-
-/**
- * O atendimento a agências e assessorias, que tem destaque próprio no
- * Instagram. Fica fora da grade porque o público é outro: não é o atleta, é
- * quem cuida de vários.
- */
-export const paraAgencias = {
-  titulo: 'Para agências e assessorias',
-  texto:
-    'Também produzimos para quem gerencia atletas: a mesma qualidade, com a identidade da sua empresa.',
-}

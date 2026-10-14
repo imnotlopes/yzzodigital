@@ -15,7 +15,7 @@ export default function Rodape() {
         <div className="flex flex-col gap-3">
           <Logo className="w-28" />
           <p className="text-sm text-cinza">
-            {brand.descricao} · {brand.assinatura}
+            {brand.slogan}
           </p>
         </div>
 

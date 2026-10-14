@@ -1,7 +1,7 @@
 import { Maximize2 } from 'lucide-react'
 import { useState } from 'react'
 
-import { artes, fotos, srcsetDe, type Imagem } from '../data/portfolio'
+import { artes, srcsetDe, type Imagem } from '../data/portfolio'
 import { videosMotion } from '../data/videos'
 import { useDeslizeHorizontal, useTelaLarga } from '../lib/movimento'
 import { cn } from '../lib/utils'
@@ -17,18 +17,17 @@ type Aberto = { lista: readonly Imagem[]; indice: number } | null
  * Bloco 4, o portfólio. O coração do site.
  * =======================================
  *
- * Três trabalhos diferentes, cada um na montagem que serve a ele. É a mesma
- * sequência da Danielli (o deslize dos modelos, o tríptico de vídeos, o mural
- * dos casamentos), com outro conteúdo:
+ * Dois trabalhos, cada um na montagem que serve a ele:
  *
  *   1. ARTES    deslizando de lado. Arte de atleta é feita para ser vista uma
  *               de cada vez, em tamanho de tela, como no feed.
- *   2. MOTION   três vídeos verticais lado a lado, sobre o preto.
- *   3. EM CAMPO o mural de fotografia: aqui o volume é o argumento, e grade
- *               mostra volume melhor que qualquer carrossel.
+ *   2. MOTION   os vídeos verticais lado a lado, sobre o preto.
  *
- * Toda imagem abre em tela cheia no visor. Um visor só para as duas listas: a
- * seta de "próxima" percorre a lista de onde a pessoa clicou.
+ * Havia um terceiro, o mural "Em campo" de fotografia de jogo, e ele saiu:
+ * a Yzzo não cobre jogo (áudio de outubro de 2026). Ela pega as fotos do jogo
+ * em que o atleta se destacou, edita e publica, e isso já está nas artes.
+ *
+ * Toda arte abre em tela cheia no visor.
  */
 export default function SecaoPortfolio() {
   const [aberto, setAberto] = useState<Aberto>(null)
@@ -40,7 +39,7 @@ export default function SecaoPortfolio() {
           <TituloSecao
             id="titulo-portfolio"
             barra="Portfólio"
-            descricao="Mais de 700 projetos entre artes, vídeos e fotos. Aqui vai uma amostra."
+            descricao="Mais de 700 projetos entre artes e vídeos. Aqui vai uma amostra."
           >
             Trabalho que <mark>entra em campo</mark>
           </TituloSecao>
@@ -49,7 +48,6 @@ export default function SecaoPortfolio() {
 
       <Artes aoAbrir={(indice) => setAberto({ lista: artes, indice })} />
       <Motion />
-      <EmCampo aoAbrir={(indice) => setAberto({ lista: fotos, indice })} />
 
       <Visor
         imagens={aberto?.lista ?? []}
@@ -199,7 +197,7 @@ function Motion() {
       <div className="container-yz mb-8 md:mb-10">
         <Subtitulo numero="02" texto="Motion" claro />
         <p className="mt-3 max-w-[48ch] text-cinza-claro">
-          Reels, apresentações e lances editados para o atleta ser visto em movimento.
+          As artes em vídeo, com movimento, para Reels e Stories.
         </p>
       </div>
 
@@ -208,50 +206,6 @@ function Motion() {
           <Revelar key={video.arquivo} como="li" atraso={indice * 120} distancia="curta">
             <Video video={video} className="rounded-sm" />
           </Revelar>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-/* ==========================================================================
-   3 · EM CAMPO
-   ========================================================================== */
-
-function EmCampo({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
-  return (
-    <div className="container-yz py-[var(--secao-g)]">
-      <div className="mb-8 md:mb-10">
-        <Subtitulo numero="03" texto="Em campo" />
-        <p className="mt-3 max-w-[48ch] text-cinza">
-          Cobertura de jogos, treinos e convocações.
-        </p>
-      </div>
-
-      <ul className="mural">
-        {fotos.map((foto, indice) => (
-          <li
-            key={foto.src}
-            className={cn('mural_item', foto.alta && 'mural_item--alto')}
-          >
-            <button
-              type="button"
-              onClick={() => aoAbrir(indice)}
-              aria-label={`Ampliar: ${foto.alt}`}
-              className="group relative block size-full overflow-hidden rounded-sm bg-borda"
-            >
-              <img
-                src={foto.pequena}
-                srcSet={srcsetDe(foto)}
-                sizes="(max-width: 1023px) 50vw, 25vw"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="size-full object-cover transition-transform duration-700 ease-suave group-hover:scale-[1.04]"
-              />
-              <IconeAmpliar />
-            </button>
-          </li>
         ))}
       </ul>
     </div>

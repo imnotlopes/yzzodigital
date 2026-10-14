@@ -14,6 +14,9 @@ export const brand = {
   /** O complemento da bio: "+700 Projetos | Criatividade & Qualidade". */
   assinatura: 'Criatividade & Qualidade',
 
+  /** O fecho da proposta comercial que a Yzzo escreveu. */
+  slogan: 'Profissionalismo, qualidade e valorização da imagem do atleta.',
+
   /** A hashtag dos posts, usada como rótulo de seção. */
   hashtag: '#TimeYzzoDigital',
 

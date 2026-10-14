@@ -11,10 +11,10 @@ import Faixa from './Faixa'
  * Quando chegarem os logotipos dos clubes onde os atletas jogam, esta faixa
  * pode virar a faixa de clubes, que prova mais que palavra.
  */
-const PALAVRAS = ['Convocado!', 'Novo cliente!', 'Campeão', '#TimeYzzoDigital', 'Motion', 'Brasil 2026']
+const PALAVRAS = ['Match Day', 'Convocado!', 'Novo clube', 'Motion', 'Campeão', '#TimeYzzoDigital']
 
 interface FaixaPalavrasProps {
-  /** Outra lista de palavras. A página de parceiros passa as entregas. */
+  /** Outra lista de palavras. A página de parceiros passa os serviços. */
   palavras?: readonly string[]
 }
 

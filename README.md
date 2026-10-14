@@ -32,9 +32,8 @@ npm run dev
 | Cores e fontes | `src/index.css` (tokens no `:root`) |
 | Artes, fotos e posts "Novo Cliente!" | `src/data/portfolio.ts` + `scripts/importar-instagram.mjs` |
 | Vídeos (hoje placeholder) | `src/data/videos.ts` |
-| Serviços | `src/data/servicos.ts` |
-| Como trabalhamos (as duas páginas) | `src/data/processo.ts` |
-| Planos, avulsos e pacote para agências | `src/data/planos.ts` |
+| Serviços e o "sobre" | `src/data/servicos.ts` |
+| Pacotes do atleta, modalidades de empresa, parceria e Estrela do Mês | `src/data/pacotes.ts` |
 | Números | `src/data/numeros.ts` |
 | Logo (hoje provisória) | `src/components/Logo.tsx` |
 | Título, descrição e cartão de link | `index.html` e `parceiros.html` |
@@ -44,7 +43,7 @@ npm run dev
 | endereço | arquivo | para quem |
 | --- | --- | --- |
 | `/` | `index.html` → `src/pages/Inicio.tsx` | quem chega pelo Instagram ou pela busca |
-| `/parceiros` | `parceiros.html` → `src/pages/Parceiros.tsx` | agências e empresários: "como funciona a Yzzo" |
+| `/parceiros` | `parceiros.html` → `src/pages/Parceiros.tsx` | "como funciona a Yzzo": o pacote do atleta e o do empresário |
 
 Cada página é um HTML próprio para ter o próprio cartão no WhatsApp (o robô
 do cartão não executa JavaScript). Para criar uma terceira: um HTML na raiz,
