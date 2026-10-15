@@ -48,7 +48,7 @@ export default function SecaoPacotes({
           <TituloSecao
             id={`titulo-${id}`}
             barra="Para atletas"
-            descricao="Escolha o pacote do mês. As artes chegam prontas para postar."
+            descricao="Talento sem visibilidade não é visto. Escolha o pacote do mês: as artes chegam prontas para postar."
           >
             Pacotes para <mark>atletas</mark>
           </TituloSecao>

@@ -72,7 +72,7 @@ export default function Topo({ links = LINKS_INICIO, inicio = '#inicio', mensage
     >
       <div className="container-yz flex h-topo items-center justify-between gap-6">
         <a href={inicio} aria-label="Yzzo Digital, voltar ao início" className="-m-2 p-2">
-          <Logo className="w-24 md:w-28" />
+          <Logo prioridade className="w-24 md:w-28" />
         </a>
 
         <nav aria-label="Seções" className="hidden lg:block">

@@ -21,6 +21,7 @@ npm run dev
 | `npm run build` | gera `dist/` para publicar |
 | `npm run lint` | roda o oxlint |
 | `npm run fotos` | converte as imagens de `instagram/` para `public/` |
+| `npm run midia` | logo, ícones e Match Days de `banco-de-midia/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera `og-yzzo.jpg` e `og-parceiros.jpg`, os cartões de link |
 
@@ -30,12 +31,12 @@ npm run dev
 | --- | --- |
 | WhatsApp, e-mail, Instagram, mensagem pronta | `src/lib/brand.ts` |
 | Cores e fontes | `src/index.css` (tokens no `:root`) |
-| Artes, fotos e posts "Novo Cliente!" | `src/data/portfolio.ts` + `scripts/importar-instagram.mjs` |
-| Vídeos (hoje placeholder) | `src/data/videos.ts` |
+| Artes, Match Days e posts "Novo Cliente!" | `src/data/portfolio.ts` |
+| Vídeos (Match Days em Motion) | `src/data/videos.ts` + `scripts/videos.mjs` |
 | Serviços e o "sobre" | `src/data/servicos.ts` |
 | Pacotes do atleta, modalidades de empresa, parceria e Estrela do Mês | `src/data/pacotes.ts` |
 | Números | `src/data/numeros.ts` |
-| Logo (hoje provisória) | `src/components/Logo.tsx` |
+| Logo oficial (escura e clara) | `src/components/Logo.tsx` + `scripts/importar-midia.mjs` |
 | Título, descrição e cartão de link | `index.html` e `parceiros.html` |
 
 ## As páginas

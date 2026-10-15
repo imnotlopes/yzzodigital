@@ -522,6 +522,31 @@
       flex-basis: 46%;
     }
   }
+
+  /*
+    Stories (9:16): mais estreitos que as artes 4:5, senão um só ocuparia a
+    altura inteira da tela. No computador, largura fixa: a fileira mostra
+    quatro e meio, e o meio é o convite para arrastar.
+  */
+  .carrossel--stories > * {
+    flex-basis: 62%;
+  }
+
+  @media (min-width: 640px) {
+    .carrossel--stories > * {
+      flex-basis: 34%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .carrossel--stories {
+      gap: 1rem;
+    }
+
+    .carrossel--stories > * {
+      flex-basis: 17rem;
+    }
+  }
 }
 
 /* ==========================================================================

@@ -1,7 +1,7 @@
 import { Maximize2 } from 'lucide-react'
 import { useState } from 'react'
 
-import { artes, srcsetDe, type Imagem } from '../data/portfolio'
+import { artes, matchDays, srcsetDe, type Imagem } from '../data/portfolio'
 import { videosMotion } from '../data/videos'
 import { useDeslizeHorizontal, useTelaLarga } from '../lib/movimento'
 import { cn } from '../lib/utils'
@@ -17,17 +17,21 @@ type Aberto = { lista: readonly Imagem[]; indice: number } | null
  * Bloco 4, o portfólio. O coração do site.
  * =======================================
  *
- * Dois trabalhos, cada um na montagem que serve a ele:
+ * Três trabalhos, cada um na montagem que serve a ele:
  *
- *   1. ARTES    deslizando de lado. Arte de atleta é feita para ser vista uma
- *               de cada vez, em tamanho de tela, como no feed.
- *   2. MOTION   os vídeos verticais lado a lado, sobre o preto.
+ *   1. ARTES      deslizando de lado. Arte de atleta é feita para ser vista
+ *                 uma de cada vez, em tamanho de tela, como no feed.
+ *   2. MATCH DAY  a arte do dia de jogo, em formato de Stories, numa fileira
+ *                 de arrastar. Veio na mídia de outubro de 2026.
+ *   3. MOTION     os dois Match Days em vídeo, ao lado do texto, sobre o
+ *                 preto.
  *
  * Havia um terceiro, o mural "Em campo" de fotografia de jogo, e ele saiu:
  * a Yzzo não cobre jogo (áudio de outubro de 2026). Ela pega as fotos do jogo
  * em que o atleta se destacou, edita e publica, e isso já está nas artes.
  *
- * Toda arte abre em tela cheia no visor.
+ * Toda arte abre em tela cheia no visor. Um visor só para as listas: a seta
+ * de "próxima" percorre a lista de onde a pessoa clicou.
  */
 export default function SecaoPortfolio() {
   const [aberto, setAberto] = useState<Aberto>(null)
@@ -47,6 +51,7 @@ export default function SecaoPortfolio() {
       </div>
 
       <Artes aoAbrir={(indice) => setAberto({ lista: artes, indice })} />
+      <MatchDays aoAbrir={(indice) => setAberto({ lista: matchDays, indice })} />
       <Motion />
 
       <Visor
@@ -182,32 +187,82 @@ function IconeAmpliar() {
 }
 
 /* ==========================================================================
-   2 · MOTION
+   2 · MATCH DAY
    ========================================================================== */
 
 /**
- * Três verticais lado a lado sobre o preto: três 9:16 formam uma faixa que
- * ocupa a largura sem cortar quadro nenhum. No celular, carrossel.
+ * Uma fileira de arrastar, em qualquer tela. São Stories (9:16): lado a lado
+ * em grade, sete delas ocupariam três telas de altura; em fileira, ocupam uma
+ * linha e a próxima aparece na borda dizendo que tem mais.
+ */
+function MatchDays({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
+  return (
+    <div className="pt-[var(--secao-m)]">
+      <div className="container-yz mb-6 flex items-end justify-between md:mb-8">
+        <Subtitulo numero="02" texto="Match Day" />
+        <p className="text-sm text-cinza">Arraste →</p>
+      </div>
+
+      <ul className="carrossel carrossel--stories lg:px-[max(3.5rem,calc((100%_-_var(--largura-conteudo))/2_+_3.5rem))]" aria-label="Match Day">
+        {matchDays.map((arte, indice) => (
+          <li key={arte.src}>
+            <button
+              type="button"
+              onClick={() => aoAbrir(indice)}
+              aria-label={`Ampliar: ${arte.alt}`}
+              className="group relative block aspect-[9/16] w-full overflow-hidden rounded-sm bg-borda"
+            >
+              <img
+                src={arte.pequena}
+                srcSet={srcsetDe(arte)}
+                sizes="(max-width: 639px) 62vw, (max-width: 1023px) 34vw, 17rem"
+                alt=""
+                width={arte.largura}
+                height={arte.altura}
+                loading="lazy"
+                decoding="async"
+                className="size-full object-cover transition-transform duration-700 ease-suave group-hover:scale-[1.03]"
+              />
+              <IconeAmpliar />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+/* ==========================================================================
+   3 · MOTION
+   ========================================================================== */
+
+/**
+ * O texto numa coluna e os dois vídeos nas outras duas, no computador. No
+ * celular, o texto em cima e os vídeos num carrossel de arrastar.
  *
- * ⏳ Os três ainda são placeholder. Ver data/videos.ts.
+ * Os vídeos só baixam quando entram na tela e pausam quando saem. Ver
+ * VideoVertical.
  */
 function Motion() {
   return (
     <div className="mt-[var(--secao-m)] bg-preto py-[var(--secao-m)]">
-      <div className="container-yz mb-8 md:mb-10">
-        <Subtitulo numero="02" texto="Motion" claro />
-        <p className="mt-3 max-w-[48ch] text-cinza-claro">
-          As artes em vídeo, com movimento, para Reels e Stories.
-        </p>
-      </div>
+      <div className="md:mx-auto md:grid md:max-w-conteudo md:grid-cols-3 md:items-end md:gap-5 md:px-10 lg:px-14">
+        <div className="container-yz mb-8 md:mb-0 md:self-center md:px-0 md:pr-6">
+          <Subtitulo numero="03" texto="Motion" claro />
+          <p className="mt-4 max-w-[34ch] text-cinza-claro">
+            As artes em vídeo, com movimento, para Reels e Stories. Cada Match
+            Day ganha vida antes do jogo.
+          </p>
+        </div>
 
-      <ul className="carrossel md:mx-auto md:grid md:max-w-conteudo md:grid-cols-3 md:gap-5 md:overflow-visible md:px-10 lg:px-14">
-        {videosMotion.map((video, indice) => (
-          <Revelar key={video.arquivo} como="li" atraso={indice * 120} distancia="curta">
-            <Video video={video} className="rounded-sm" />
-          </Revelar>
-        ))}
-      </ul>
+        <ul className="carrossel md:col-span-2 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0">
+          {videosMotion.map((video, indice) => (
+            <Revelar key={video.arquivo} como="li" atraso={indice * 120} distancia="curta">
+              <Video video={video} className="rounded-sm" />
+            </Revelar>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

@@ -1,11 +1,9 @@
 import { Star } from 'lucide-react'
 
 import { estrelaDoMes } from '../../data/pacotes'
-import { artes, srcsetDe } from '../../data/portfolio'
+import { matchDayEstrela } from '../../data/videos'
 import Revelar from '../Revelar'
-
-/** O atleta de medalha no peito: a arte que mais parece "estrela do mês". */
-const ARTE = artes.find((arte) => arte.src.includes('convocado-festival-sub-15')) ?? artes[0]
+import Video from '../Video'
 
 /**
  * A ESTRELA DO MÊS.
@@ -15,8 +13,9 @@ const ARTE = artes.find((arte) => arte.src.includes('convocado-festival-sub-15')
  * porque é a única coisa da página que nenhuma outra agência oferece com
  * esse nome.
  *
- * A arte com a estrela por cima é placeholder até a Etapa 2, quando entra o
- * vídeo "Estrela Matchday" que veio na mídia nova.
+ * Ao lado, um Match Day em Motion, girado como um post fixado: é o tipo de
+ * conteúdo que a Estrela do Mês ganha a mais. O vídeo é do FC Estrela pela
+ * Copa Goiás; a coincidência do nome é bem-vinda, mas não é o motivo.
  */
 export default function SecaoEstrela() {
   return (
@@ -46,21 +45,14 @@ export default function SecaoEstrela() {
           </Revelar>
         </div>
 
-        <Revelar distancia="nenhuma" className="relative mx-auto w-full max-w-sm">
-          <img
-            src={ARTE.pequena}
-            srcSet={srcsetDe(ARTE)}
-            sizes="(max-width: 1023px) 80vw, 28vw"
-            alt={ARTE.alt}
-            width={ARTE.largura}
-            height={ARTE.altura}
-            loading="lazy"
-            decoding="async"
-            className="aspect-[4/5] w-full rotate-2 rounded-sm object-cover shadow-[0_24px_50px_rgb(0_0_0/0.28)]"
+        <Revelar distancia="nenhuma" className="relative mx-auto w-full max-w-[17rem] md:max-w-[19rem]">
+          <Video
+            video={matchDayEstrela}
+            className="rotate-2 rounded-sm shadow-[0_24px_50px_rgb(0_0_0/0.28)]"
           />
           <span
             aria-hidden
-            className="absolute -top-4 left-3 flex size-20 items-center justify-center rounded-full bg-preto text-amarelo shadow-lg md:-left-5 md:-top-5 md:size-24"
+            className="absolute -left-4 -top-4 flex size-20 items-center justify-center rounded-full bg-preto text-amarelo shadow-lg md:-left-6 md:-top-6 md:size-24"
           >
             <Star size={40} strokeWidth={0} fill="currentColor" />
           </span>

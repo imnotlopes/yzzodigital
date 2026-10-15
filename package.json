@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "og": "node scripts/og.mjs",
     "fotos": "node scripts/importar-instagram.mjs",
-    "videos": "node scripts/videos.mjs"
+    "videos": "node scripts/videos.mjs",
+    "midia": "node scripts/importar-midia.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.27.0",

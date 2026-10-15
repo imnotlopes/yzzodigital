@@ -28,14 +28,14 @@ export const servicos: Servico[] = [
   {
     titulo: 'Match Days',
     texto: 'A arte do dia de jogo: adversário, data, horário e o atleta em destaque.',
-    imagem: '/artes/agenda-corinthians-futsal-600.webp',
-    alt: 'Arte de agenda de jogos de um atleta do Corinthians.',
+    imagem: '/matchday/gremio-x-sao-paulo-600.webp',
+    alt: 'Match Day de Grêmio x São Paulo, em azul.',
   },
   {
     titulo: 'Motion Design',
     texto: 'As artes em vídeo, com movimento, para Reels e Stories.',
-    imagem: '/artes/convocado-tropical-600.webp',
-    alt: 'Arte de um atleta com a camisa amarela, em fundo tropical.',
+    imagem: '/videos/brasil-x-paraguai.webp',
+    alt: 'Quadro do Match Day em Motion de Brasil x Paraguai.',
   },
   {
     titulo: 'Convocação',

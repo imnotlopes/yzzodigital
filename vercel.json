@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "headers": [
     {
-      "source": "/(artes|clientes|fotos|marca|videos)/(.*)",
+      "source": "/(artes|clientes|fotos|marca|matchday|videos)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

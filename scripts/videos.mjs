@@ -62,11 +62,10 @@ const CRF_CELULAR = 33
  * pôster borrado é pior que nenhum.
  */
 const PLANO = [
-  { arquivo: 'agencia.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
-  { arquivo: 'motion-1.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
-  { arquivo: 'motion-2.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
-  { arquivo: 'motion-3.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
-  { arquivo: 'melhores-momentos.mp4', crf: 31, posterEm: 2, celular: LARGURA_CELULAR },
+  /* O Match Day do FC Estrela pela Copa Goiás: rosto de perfil e o lance. */
+  { arquivo: 'estrela-x-vila-nova.mp4', crf: 31, posterEm: 6, celular: LARGURA_CELULAR },
+  /* O Match Day da Seleção contra o Paraguai, em amarelo e azul. */
+  { arquivo: 'brasil-x-paraguai.mp4', crf: 31, posterEm: 10, celular: LARGURA_CELULAR },
 ]
 
 function ffmpeg(args) {
@@ -97,6 +96,9 @@ for (const { arquivo, crf, posterEm, celular } of PLANO) {
     '-i', origem,
     /* Sem áudio: autoplay só existe mudo, então a faixa é peso puro. */
     '-an',
+    /* 720 de largura: a coluna mais larga que o vídeo ocupa tem uns 400px. O
+       original da Yzzo vem em 1080, e a diferença seria só peso. */
+    '-vf', 'scale=720:-2',
     '-c:v', 'libx264',
     '-crf', String(crf),
     '-preset', 'slow',

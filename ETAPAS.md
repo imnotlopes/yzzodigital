@@ -38,7 +38,7 @@ ela (outubro de 2026):
 Cada etapa termina com prints no computador e no celular e um commit local.
 Só sobe para o GitHub com aprovação.
 
-### Etapa 1: conteúdo oficial e enxugamento ✅ (em aprovação)
+### Etapa 1: conteúdo oficial e enxugamento ✅ (aprovada)
 
 **Landing**, de 9 blocos para 5:
 
@@ -76,16 +76,23 @@ pelo site e quero o pacote Profissional (R$ 115/mês)").
 Onde mexer: `src/data/servicos.ts` (serviços) e `src/data/pacotes.ts`
 (pacotes, modalidades, parceria e Estrela do Mês).
 
-### Etapa 2: logo oficial e mídia nova ⏳
+### Etapa 2: logo oficial e mídia nova ✅ (em aprovação)
 
-A mídia está em `banco-de-midia/` (fora do Git, são 200 MB):
+A mídia está em `banco-de-midia/` (fora do Git, são 200 MB).
 
-| o que | quantos | onde entra |
-| --- | --- | --- |
-| Logo oficial (a seta de crescimento nos dois Z) | 5 versões | topo, rodapé, ícone da aba e cartões de link, em versão escura e clara |
-| Vídeos de Match Day em Motion (verticais, 20 e 25 s) | 2 | os espaços "vídeo em breve" e a Estrela do Mês |
-| Artes de Match Day e jogos | 8 | nova categoria Match Day no portfólio e as imagens dos serviços |
-| Posts de texto da Yzzo ("A peneira agora é digital"…) | 4 | frases para os títulos |
+| o que | onde entrou |
+| --- | --- |
+| **Logo oficial**, com a seta de crescimento nos dois Z | topo, rodapé e os dois cartões de link. Fundo transparente, em versão escura (letras pretas) e clara (letras brancas). Nunca sobre o amarelo: a seta some |
+| **Ícone da aba** | a logo sobre o fundo da marca, como a foto de perfil do Instagram |
+| **2 Match Days em Motion** (Brasil x Paraguai e FC Estrela x Vila Nova) | bloco Motion do portfólio, ao lado do texto, e a Estrela do Mês em /parceiros. De 77 MB para 5 MB, com versão menor para celular, e só baixam quando aparecem na tela |
+| **7 artes de Match Day** | bloco novo "Match Day" no portfólio, numa fileira de arrastar, abrindo em tela cheia. Também viraram as imagens de Match Days e Motion em "O que a Yzzo faz" |
+| **Posts de texto** | "Talento sem visibilidade não é visto." abre os pacotes do atleta |
+
+Ficaram de fora: a convocação do festival Sub-15 (já estava no site) e os
+outros posts de texto, para não voltar a encher a página.
+
+Para refazer depois de trocar algum arquivo: `npm run midia` (logo, ícones e
+artes) e `npm run videos` (vídeos, a partir de `videos-originais/`).
 
 ### Etapa 3: visual mais sofisticado ⏳
 Tipografia, espaçamento, textura nas seções escuras e pequenas animações nos

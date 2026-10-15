@@ -12,9 +12,8 @@
  * JPEG e 1200x630: é o formato que todo robô de preview entende. WebP falha
  * em parte deles, e proporção diferente vira corte imprevisível.
  *
- * ⚠️ PROVISÓRIA, como a logo. As letras são Impact e Arial, que existem em
- * qualquer Windows, e não as fontes do site, que não estão instaladas na
- * máquina. Refazer quando o branding chegar.
+ * A logo é a oficial. As letras são Impact e Arial, que existem em qualquer
+ * Windows, e não as fontes do site, que não estão instaladas na máquina.
  */
 import path from 'node:path'
 
@@ -57,6 +56,15 @@ function retangulo(largura, altura, cor, raio = 0) {
   return Buffer.from(
     `<svg width="${largura}" height="${altura}"><rect width="${largura}" height="${altura}" rx="${raio}" fill="${cor}"/></svg>`,
   )
+}
+
+/** A logo oficial (public/marca/, gerada por importar-midia.mjs) numa largura. */
+async function logoNaLargura(nome, largura) {
+  const { data, info } = await sharp(path.join(PUBLICO, 'marca', `${nome}.png`))
+    .resize({ width: largura })
+    .png()
+    .toBuffer({ resolveWithObject: true })
+  return { input: data, altura: info.height }
 }
 
 function poligono(largura, altura, pontos, cor = AMARELO) {
@@ -112,12 +120,15 @@ async function cartaoInicio() {
   const linha2 = await texto('também deveria.', 'Impact 92')
   camadas.push({ input: linha2.input, left: X, top: linha1Y + Math.round(sua.altura * 0.92) })
 
-  /* A assinatura, no pé. */
-  const assinatura = await texto(
-    '<b>YZZO DIGITAL</b>  ·  Agência de marketing esportivo',
-    'Arial 20',
-  )
-  camadas.push({ input: assinatura.input, left: X, top: ALTURA - 150 })
+  /* A assinatura, no pé: a logo oficial e a linha da bio. */
+  const logo = await logoNaLargura('logo', 170)
+  camadas.push({ input: logo.input, left: X, top: ALTURA - 170 })
+  const bio = await texto('Agência de marketing esportivo', 'Arial 20')
+  camadas.push({
+    input: bio.input,
+    left: X + 170 + 22,
+    top: ALTURA - 170 + Math.round((logo.altura - bio.altura) / 2),
+  })
 
   await sharp({
     create: { width: LARGURA, height: ALTURA, channels: 3, background: PAPEL },
@@ -162,6 +173,10 @@ async function cartaoParceiros() {
   }
 
   camadas.push({ input: poligono(380, 110, '0,110 380,20 380,110'), left: 0, top: ALTURA - 110 })
+
+  /* A logo clara no canto, alinhada com a barra. */
+  const logo = await logoNaLargura('logo-claro', 170)
+  camadas.push({ input: logo.input, left: LARGURA - X - 170, top: 64 + Math.round((44 - logo.altura) / 2) })
 
   /* A barra, com o público no lugar da hashtag. */
   const barraY = 64

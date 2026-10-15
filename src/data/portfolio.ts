@@ -68,6 +68,23 @@ export const artes: Imagem[] = [
 ]
 
 /**
+ * Os Match Days: a arte do dia de jogo, com adversário, data e horário.
+ *
+ * Vieram na mídia de outubro de 2026, em formato de Stories (9:16), e por
+ * isso moram num bloco próprio do portfólio: no deslize das artes, que é
+ * 4:5, o corte comeria a data e o horário, que são o assunto da arte.
+ */
+export const matchDays: Imagem[] = [
+  imagem('matchday/brasil-x-peru', 'Match Day de Brasil x Peru: o atleta com a camisa 20 da Seleção, em amarelo e verde.', 900, 1600),
+  imagem('matchday/estrela-x-vila-nova', 'Match Day do FC Estrela contra o Vila Nova, pela Copa Goiás, em azul-marinho.', 900, 1600),
+  imagem('matchday/brasil-x-venezuela', 'Match Day de Brasil x Venezuela, em azul com raios.', 900, 1600),
+  imagem('matchday/pinda-x-corinthians', 'Match Day de Pinda x Corinthians, em preto e branco, com uma águia.', 900, 1600),
+  imagem('matchday/brasil-x-equador', 'Match Day de Brasil x Equador: dois atletas da Seleção em amarelo.', 900, 1600),
+  imagem('matchday/gremio-x-sao-paulo', 'Match Day de Grêmio x São Paulo, em azul.', 900, 1600),
+  imagem('matchday/paulista-sub-15-corinthians', 'Match Day do Corinthians pelo Paulista Sub-15, em preto e vermelho, com uma águia.', 900, 1600),
+]
+
+/**
  * A foto da capa: a camisa 20 de costas.
  *
  * A Yzzo não fotografa jogo. Esta é uma foto de jogo editada por ela, que é
