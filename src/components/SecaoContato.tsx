@@ -4,6 +4,7 @@ import { brand, linkInstagram } from '../lib/brand'
 import BotaoWhatsapp from './BotaoWhatsapp'
 import { IconeInstagram } from './icones'
 import Revelar from './Revelar'
+import TituloAnimado from './TituloAnimado'
 
 interface SecaoContatoProps {
   /** A linha embaixo do título. Muda com quem está lendo. */
@@ -50,19 +51,20 @@ export default function SecaoContato({ texto = TEXTO_ATLETA, mensagem }: SecaoCo
       </svg>
 
       <div className="container-yz secao relative">
-        <Revelar>
-          <h2 id="titulo-contato" className="t-grito text-[3.5rem] leading-[0.88] md:text-[7rem]">
-            Grandes
-            <br />
-            <span className="text-amarelo">conquistas</span>
-            <br />
-            começam com
-            <br />
-            grandes <span className="text-amarelo">decisões.</span>
-          </h2>
-        </Revelar>
+        {/* O fecho chega como a abertura: palavra por palavra. */}
+        <h2 id="titulo-contato" className="t-grito text-[3.5rem] leading-[0.88] md:text-[7rem]">
+          <TituloAnimado
+            passo={110}
+            linhas={[
+              ['Grandes'],
+              [{ texto: 'conquistas', estilo: 'amarelo' }],
+              ['começam', 'com'],
+              ['grandes', { texto: 'decisões.', estilo: 'amarelo' }],
+            ]}
+          />
+        </h2>
 
-        <Revelar atraso={140}>
+        <Revelar atraso={500}>
           <p className="mt-9 max-w-[42ch] text-[1.0625rem] text-cinza-claro">
             {texto}
           </p>

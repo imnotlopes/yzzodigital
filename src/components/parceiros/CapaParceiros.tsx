@@ -1,15 +1,27 @@
 import { ArrowDown } from 'lucide-react'
+import type { CSSProperties } from 'react'
 
 import { numeros } from '../../data/numeros'
 import { artes, srcsetDe } from '../../data/portfolio'
+import { useRevelar } from '../../lib/movimento'
 import { cn } from '../../lib/utils'
 import Barra from '../Barra'
 import BotaoWhatsapp from '../BotaoWhatsapp'
+import Contador from '../Contador'
 import Revelar from '../Revelar'
+import TituloAnimado from '../TituloAnimado'
 import { MENSAGEM_PARCEIRO } from './mensagens'
 
-/** As três artes do leque: amarela, azul e preta, para não virarem uma mancha só. */
-const LEQUE = [artes[0], artes[1], artes[3]]
+/**
+ * As três artes do leque: amarela, azul e preta, para não virarem uma mancha
+ * só. Cada uma com a posição aberta, em porcentagem da própria largura (o
+ * cartão tem 46% do bloco) e o giro. Fechado, as três ficam no centro, retas.
+ */
+const LEQUE = [
+  { arte: artes[0], tx: '-104%', ty: '-46%', giro: '-9deg' },
+  { arte: artes[3], tx: '4%', ty: '-46%', giro: '9deg' },
+  { arte: artes[1], tx: '-50%', ty: '-50%', giro: '0deg' },
+]
 
 /**
  * A abertura da página de parceiros.
@@ -27,6 +39,8 @@ const LEQUE = [artes[0], artes[1], artes[3]]
  * pacotes, o empresário já viu o nível do que o atleta dele vai receber.
  */
 export default function CapaParceiros() {
+  const { alvo: leque, visivel: aberto } = useRevelar<HTMLDivElement>({ margem: '0px' })
+
   return (
     <section id="inicio" className="relative overflow-hidden bg-papel pt-topo" aria-labelledby="titulo-parceiros">
       <div aria-hidden className="caco caco--a -bottom-px right-0 h-24 w-1/2 -scale-x-100 md:h-36" />
@@ -37,14 +51,18 @@ export default function CapaParceiros() {
             <Barra texto="Para atletas e empresários" />
           </Revelar>
 
-          <Revelar distancia="curta" atraso={120} naPrimeiraTela>
-            <h1 id="titulo-parceiros" className="t-display mt-9">
-              Como funciona
-              <br />a <mark className="marca-texto">Yzzo</mark>
-            </h1>
-          </Revelar>
+          <h1 id="titulo-parceiros" className="t-display mt-9">
+            <TituloAnimado
+              naPrimeiraTela
+              atraso={200}
+              linhas={[
+                ['Como', 'funciona'],
+                ['a', { texto: 'Yzzo', estilo: 'marca' }],
+              ]}
+            />
+          </h1>
 
-          <Revelar distancia="curta" atraso={240} naPrimeiraTela>
+          <Revelar distancia="curta" atraso={560} naPrimeiraTela>
             <p className="mt-8 font-sans text-[1.375rem] leading-snug md:text-[1.625rem]">
               O empresário cuida da <strong className="font-bold">carreira</strong>.
               <br />A Yzzo cuida da <strong className="font-bold">imagem</strong>.
@@ -64,7 +82,7 @@ export default function CapaParceiros() {
 
             {numeros.map((numero) => (
               <p key={numero.rotulo} className="mt-10 flex items-baseline gap-3">
-                <span className="t-h3 text-[2.75rem]">{numero.valor}</span>
+                <Contador valor={numero.valor} className="t-h3 text-[2.75rem]" />
                 <span className="text-sm font-medium text-cinza">{numero.rotulo}</span>
               </p>
             ))}
@@ -72,12 +90,16 @@ export default function CapaParceiros() {
         </div>
 
         {/*
-          O LEQUE. Três artes sobrepostas e giradas, como cartas na mão. A do
-          meio vem na frente. No celular o leque encolhe junto, porque tudo é
-          porcentagem da largura do bloco.
+          O LEQUE. Três artes sobrepostas e giradas, como cartas na mão, com a
+          do meio na frente. Chegam empilhadas no centro e se abrem: é o
+          portfólio "sendo mostrado", e não só exposto. No celular o leque
+          encolhe junto, porque tudo é porcentagem da largura do bloco.
         */}
-        <Revelar distancia="nenhuma" atraso={160} naPrimeiraTela className="relative mx-auto aspect-[5/4] w-full max-w-xl">
-          {LEQUE.map((arte, indice) => (
+        <div
+          ref={leque}
+          className={cn('leque relative mx-auto aspect-[5/4] w-full max-w-xl', aberto && 'esta-aberto')}
+        >
+          {LEQUE.map(({ arte, tx, ty, giro }, indice) => (
             <img
               key={arte.src}
               src={arte.pequena}
@@ -86,17 +108,13 @@ export default function CapaParceiros() {
               alt={arte.alt}
               width={arte.largura}
               height={arte.altura}
-              fetchPriority={indice === 1 ? 'high' : undefined}
+              fetchPriority={indice === 2 ? 'high' : undefined}
               decoding="async"
-              className={cn(
-                'absolute top-1/2 aspect-[4/5] w-[46%] rounded-sm object-cover shadow-[0_18px_40px_rgb(0_0_0/0.22)]',
-                indice === 0 && 'left-[2%] -translate-y-[46%] -rotate-[9deg]',
-                indice === 1 && 'left-1/2 z-10 -translate-x-1/2 -translate-y-1/2',
-                indice === 2 && 'right-[2%] -translate-y-[46%] rotate-[9deg]',
-              )}
+              style={{ '--tx': tx, '--ty': ty, '--giro': giro } as CSSProperties}
+              className="leque_carta absolute aspect-[4/5] w-[46%] rounded-sm object-cover shadow-[0_18px_40px_rgb(0_0_0/0.22)]"
             />
           ))}
-        </Revelar>
+        </div>
       </div>
     </section>
   )

@@ -19,6 +19,12 @@ interface VideoVerticalProps {
    * tem um atleta em campo, e fazendo o quê.
    */
   alt: string
+  /**
+   * Segundo em que o vídeo começa na primeira vez. Para Motion que abre com
+   * uma tela de cor: num destaque, quem chega precisa ver o atleta, não a
+   * vinheta. O laço depois volta ao zero normalmente.
+   */
+  inicio?: number
   className?: string
 }
 
@@ -62,6 +68,7 @@ export default function VideoVertical({
   srcCelular,
   poster,
   alt,
+  inicio,
   className,
 }: VideoVerticalProps) {
   const moldura = useRef<HTMLDivElement>(null)
@@ -172,6 +179,9 @@ export default function VideoVertical({
             loop
             playsInline
             preload="none"
+            onLoadedMetadata={(evento) => {
+              if (inicio) evento.currentTarget.currentTime = inicio
+            }}
             aria-label={alt}
             className="aspect-[9/16] w-full object-cover"
           />

@@ -783,3 +783,112 @@
     transform: none;
   }
 }
+
+/* ==========================================================================
+   A CAPA EM MOVIMENTO
+   --------------------------------------------------------------------------
+   O título que chega palavra por palavra (components/TituloAnimado.tsx), a
+   foto que anda um pouco mais devagar que a página e os cacos que andam no
+   sentido contrário. Todo deslocamento é escrito em `--parallax` por
+   `useParallax` (lib/movimento.ts); aqui mora só a aparência.
+   ========================================================================== */
+@layer components {
+  /*
+    A MÁSCARA DE CADA PALAVRA.
+
+    `overflow: hidden` na palavra, e a palavra de dentro começa um pouco
+    abaixo dela, escondida. O título tem entrelinha menor que 1, e por isso a
+    máscara ganha folga em cima (acentos) e embaixo (o "g" e o "ç"), devolvida
+    em margem negativa para a linha não mudar de altura.
+  */
+  .titulo-animado .palavra {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-block: 0.12em 0.2em;
+    margin-block: -0.12em -0.2em;
+  }
+
+  .titulo-animado .palavra > span {
+    display: inline-block;
+    transform: translate3d(0, 110%, 0);
+    transition: transform 1100ms var(--ease-suave) var(--atraso, 0ms);
+  }
+
+  .titulo-animado.esta-visivel .palavra > span {
+    transform: none;
+  }
+
+  /* O marca-texto pinta da esquerda para a direita, depois que a palavra chega. */
+  .titulo-animado .marca-anima {
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    transition: background-size 750ms var(--ease-suave) var(--atraso-marca, 600ms);
+  }
+
+  .titulo-animado.esta-visivel .marca-anima {
+    background-size: 100% 100%;
+  }
+
+  /*
+    A FOTO COM PROFUNDIDADE.
+
+    A imagem é 12% maior que a moldura, e é essa sobra que o deslocamento
+    gasta: sem ela, a borda da foto apareceria ao rolar.
+  */
+  .parallax {
+    overflow: hidden;
+  }
+
+  .parallax > img {
+    transform: translate3d(0, var(--parallax, 0px), 0) scale(1.12);
+    will-change: transform;
+  }
+
+  /* O caco que flutua, no sentido contrário ao da foto. */
+  .flutuar {
+    transform: translate3d(0, var(--parallax, 0px), 0);
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titulo-animado .palavra > span {
+    transform: none;
+  }
+
+  .titulo-animado .marca-anima {
+    background-size: 100% 100%;
+  }
+
+  .parallax > img,
+  .flutuar {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   O LEQUE DA CAPA DE PARCEIROS
+   --------------------------------------------------------------------------
+   As três cartas nascem empilhadas no centro, retas, e se abrem quando a
+   capa aparece. A posição aberta de cada uma vem do componente em `--tx`,
+   `--ty` e `--giro` (ver CapaParceiros); aqui mora só a transição.
+   ========================================================================== */
+@layer components {
+  .leque_carta {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.94);
+    transition: transform 1300ms var(--ease-suave) 350ms;
+  }
+
+  .leque.esta-aberto .leque_carta {
+    transform: translate(var(--tx), var(--ty)) rotate(var(--giro));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leque_carta {
+    transition: none;
+  }
+}

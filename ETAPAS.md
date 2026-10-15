@@ -94,7 +94,7 @@ outros posts de texto, para não voltar a encher a página.
 Para refazer depois de trocar algum arquivo: `npm run midia` (logo, ícones e
 artes) e `npm run videos` (vídeos, a partir de `videos-originais/`).
 
-### Etapa 3: visual mais sofisticado ✅ (em aprovação)
+### Etapa 3: visual mais sofisticado ✅ (aprovada)
 
 O conteúdo não mudou; mudou o acabamento.
 
@@ -111,9 +111,20 @@ O conteúdo não mudou; mudou o acabamento.
 
 O hover só existe com mouse: no celular, nada fica preso no estado de hover depois do toque.
 
-### Etapa 4: capa e movimento ⏳
-O Motion na capa, o título aparecendo palavra por palavra e o "+700"
-contando.
+### Etapa 4: capa e movimento ✅ (em aprovação)
+
+| onde | o que acontece |
+| --- | --- |
+| **Capa da landing** | "Sua imagem também deveria." chega palavra por palavra, cada uma subindo de trás de uma máscara, e o amarelo pinta o "imagem" depois, como caneta de marca-texto |
+| | o Match Day em Motion (Brasil x Paraguai) entra por cima da borda da foto, com moldura branca e levemente girado. Começa no segundo 7,2, já com o atleta, pulando a vinheta de cor |
+| | a foto anda um pouco mais devagar que a página e os cacos amarelos andam no sentido contrário: três planos, e é daí que vem a profundidade |
+| | o "+700" sobe contando, de 0 até 700, desacelerando no fim |
+| **Capa de /parceiros** | "Como funciona a Yzzo" palavra por palavra, o "+700" contando e o leque de artes que chega empilhado e se abre como cartas na mão |
+| **Fecho das duas páginas** | "Grandes conquistas começam com grandes decisões." chega palavra por palavra |
+
+Quem pediu menos movimento no sistema vê tudo já no lugar: sem animação,
+sem contagem, e o vídeo vira a imagem parada. No celular, o vídeo da capa
+só baixa quando aparece na tela.
 
 ### Etapa 5: portfólio ⏳
 Filtros por categoria, vídeo no visor e gesto de arrastar no celular.

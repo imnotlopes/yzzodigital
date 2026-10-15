@@ -6,6 +6,8 @@ import VideoVertical from './VideoVertical'
 
 interface VideoProps {
   video: EspacoDeVideo
+  /** Segundo em que começa na primeira vez. Ver VideoVertical. */
+  inicio?: number
   className?: string
 }
 
@@ -21,7 +23,7 @@ interface VideoProps {
  * Quando `src` deixar de ser `null` em data/videos.ts, este componente passa
  * a montar o VideoVertical, que só baixa o arquivo quando ele entra na tela.
  */
-export default function Video({ video, className }: VideoProps) {
+export default function Video({ video, inicio, className }: VideoProps) {
   if (video.src) {
     return (
       <VideoVertical
@@ -29,6 +31,7 @@ export default function Video({ video, className }: VideoProps) {
         srcCelular={video.srcCelular}
         poster={video.poster}
         alt={video.alt}
+        inicio={inicio}
         className={className}
       />
     )
