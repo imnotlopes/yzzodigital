@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F3F3F3" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <!--
+      A PÁGINA DE LINK QUEBRADO.
+
+      A Vercel mostra este arquivo para qualquer endereço que não existe, no
+      lugar da página de erro dela, que é em inglês e sem a marca. HTML puro,
+      sem React: é uma página que ninguém procura, e tem que abrir na hora.
+    -->
+    <title>Página não encontrada | Yzzo Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Sofia+Sans+Extra+Condensed:wght@700&display=swap" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1.5rem;
+        background: #f3f3f3;
+        color: #111;
+        font-family: Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        text-align: center;
+      }
+
+      main {
+        max-width: 32rem;
+      }
+
+      img {
+        display: block;
+        width: 7.5rem;
+        height: auto;
+        margin: 0 auto 3rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
+        font-weight: 700;
+        font-size: clamp(3.5rem, 14vw, 6rem);
+        line-height: 0.9;
+      }
+
+      mark {
+        background: #f0c40f;
+        color: inherit;
+        padding: 0 0.12em;
+      }
+
+      p {
+        margin: 1.5rem auto 0;
+        max-width: 34ch;
+        color: #4d4d4d;
+        line-height: 1.6;
+      }
+
+      a.botao {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3rem;
+        margin-top: 2.25rem;
+        padding: 0 1.75rem;
+        border-radius: 9999px;
+        background: #111;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        text-decoration: none;
+        transition: background-color 0.2s;
+      }
+
+      a.botao:hover {
+        background: #2b2b2b;
+      }
+
+      a.botao:focus-visible {
+        outline: 2px solid #111;
+        outline-offset: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="/" aria-label="Yzzo Digital, ir para o início">
+        <img src="/marca/logo.webp" alt="" width="720" height="198" />
+      </a>
+      <h1>Essa jogada <mark>saiu</mark> pela linha de fundo.</h1>
+      <p>A página que você procurou não existe ou mudou de endereço.</p>
+      <a class="botao" href="/">Voltar para o início</a>
+    </main>
+  </body>
+</html>

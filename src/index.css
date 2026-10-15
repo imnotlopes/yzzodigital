@@ -240,6 +240,26 @@
     outline-offset: 3px;
   }
 
+  /* O "Pular para o conteúdo": fora da tela até receber o foco do Tab. */
+  .pular {
+    position: fixed;
+    left: 1rem;
+    top: 0.75rem;
+    z-index: 60;
+    transform: translateY(-160%);
+    border-radius: 9999px;
+    background: var(--preto);
+    color: var(--branco);
+    padding: 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .pular:focus-visible {
+    transform: none;
+    outline-color: var(--amarelo);
+  }
+
   ::selection {
     background: var(--amarelo);
     color: var(--preto);

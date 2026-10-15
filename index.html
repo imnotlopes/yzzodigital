@@ -36,6 +36,15 @@
     <meta name="twitter:description" content="Seu desempenho fala por você. Sua imagem também deveria." />
     <meta name="twitter:image" content="https://yzzodigital.vercel.app/og-yzzo.jpg" />
 
+    <!--
+      A foto da capa começa a baixar junto com o resto, sem esperar o React
+      montar a página: no 4G fraco eram uns dois segundos de capa vazia. O
+      `imagesrcset` e o `imagesizes` são os mesmos do <picture> de
+      src/components/Capa.tsx; se um mudar, o outro muda junto, ou a foto
+      baixa duas vezes. Navegador sem AVIF ignora a linha.
+    -->
+    <link rel="preload" as="image" type="image/avif" href="/fotos/camisa-20.avif" imagesrcset="/fotos/camisa-20-600.avif 600w, /fotos/camisa-20.avif 1280w" imagesizes="(max-width: 1023px) 100vw, 56vw" fetchpriority="high" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!--

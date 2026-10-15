@@ -141,7 +141,7 @@ deslizando em sentidos opostos, no celular e no computador.
 Os filtros saíram do plano: com as fileiras separadas por tipo, eles
 seriam informação a mais.
 
-### Etapa 6: pacotes ✅ (em aprovação)
+### Etapa 6: pacotes ✅ (aprovada)
 
 A seção de preços foi refeita do zero, a pedido de vocês ("tá bem ruim").
 
@@ -156,7 +156,7 @@ A seção de preços foi refeita do zero, a pedido de vocês ("tá bem ruim").
 Embaixo, o DVD esportivo ("valor sob negociação") e, na landing, um cartão
 amarelo que leva ao pacote de empresas em /parceiros.
 
-### Etapa 6b: carregamento e celular ✅ (em aprovação)
+### Etapa 6b: carregamento e celular ✅ (aprovada)
 
 Medido na versão de produção, simulando celular em 4G e processador 4x mais
 lento.
@@ -187,7 +187,7 @@ então no celular lento há um instante em branco antes do conteúdo (1,5 a 2,3 
 na medição). Gerar o HTML pronto no build resolve, mas mexe nas animações de
 entrada da capa, por isso não entrou sem combinar.
 
-### Etapa 7: link com o nome da agência ✅ (em aprovação)
+### Etapa 7: link com o nome da agência ✅ (aprovada)
 
 Para mandar a página de parceiros já com o nome da agência, é só acrescentar
 `?agencia=` e o nome no fim do link, **com `+` no lugar dos espaços** (espaço
@@ -212,8 +212,26 @@ https://yzzodigital.vercel.app/parceiros?agencia=Sabu+Sports
   WhatsApp não roda o site, só lê o título fixo da página.
 - Nome comprido corta com reticências na barra do celular.
 
-### Etapa 8: acabamento e publicação ⏳
-Celular, acessibilidade, peso, textos para o Google e envio ao GitHub.
+### Etapa 8: acabamento e publicação ✅ (em aprovação)
+
+**Teste: a capa no jeito da Danielli.** A pedido de vocês, para ver como fica:
+a foto da camisa 20 grande, desmanchando no papel, e o texto centralizado
+onde ela some. No computador, a foto fica em pé à direita; no celular, no alto
+da tela, com o texto começando dentro do desmanche. Saíram o Motion por cima
+da foto e os cacos amarelos. Está num commit só ("Testa a capa no jeito da
+Danielli"): se não aprovarem, a capa anterior volta inteira.
+
+| o quê | como ficou |
+| --- | --- |
+| **Acessibilidade** | auditoria automática (axe) nas duas páginas, no computador e no celular: zero problemas. Os dois que apareceram eram de contraste: o texto de apoio cinza sobre o amarelo do #TimeYzzoDigital e a legenda "Peças no mês" dos cartões de pacote |
+| **Teclado** | "Pular para o conteúdo" no primeiro Tab, para quem navega sem mouse não passar pelo topo inteiro |
+| **Foto da capa** | em AVIF, 140 KB no lugar de 326 KB no celular de tela densa, e começa a baixar junto com a página, sem esperar o resto montar. No 4G lento ela chegava aos 12,8 s; agora chega aos 2,9 s |
+| **Link quebrado** | página própria, com a marca: "Essa jogada saiu pela linha de fundo." e o botão de voltar, no lugar da página de erro em inglês da Vercel |
+| **Google** | a logo entrou nos dados da agência que o Google lê (junto com nome, contato, Instagram e Linktree) |
+| **Vercel** | os arquivos do site ficam guardados no celular de quem já visitou (abre mais rápido na segunda vez), e os cabeçalhos básicos de segurança |
+
+Falta: subir para o GitHub, criar o projeto na Vercel e, quando houver
+domínio, trocar o endereço provisório.
 
 ---
 
@@ -245,3 +263,4 @@ npm run dev
 | `npm run fotos` | converte as imagens de `instagram/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera os cartões de link |
+| `npm run avif` | gera a versão AVIF da foto da capa |

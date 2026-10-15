@@ -52,6 +52,8 @@ function montarOrganizacao() {
     name: brand.nome,
     description: `${brand.descricao}: artes e conteúdo visual para o futebol, para atletas, assessorias esportivas e empresas do ramo.`,
     url: `${SITE_URL}/`,
+    /* PNG, e não WebP: é o que o Google aceita com certeza para logo. */
+    logo: `${SITE_URL}/marca/logo.png`,
     image: `${SITE_URL}/og-yzzo.jpg`,
     email: brand.email,
     telephone: `+${brand.whatsapp}`,

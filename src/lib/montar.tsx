@@ -26,8 +26,14 @@ export function montar(
 ) {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
+      {/* Só aparece com o Tab: quem navega pelo teclado pula o topo de uma vez. */}
+      <a href="#conteudo" className="pular">
+        Pular para o conteúdo
+      </a>
       <Topo links={topo?.links} inicio={topo?.inicio} mensagem={topo?.mensagem} />
-      <main>{pagina}</main>
+      <main id="conteudo" tabIndex={-1} className="outline-none">
+        {pagina}
+      </main>
       <Rodape />
     </StrictMode>,
   )

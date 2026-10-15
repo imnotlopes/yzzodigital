@@ -79,7 +79,8 @@ export default function TituloSecao({
         <p
           className={cn(
             'mt-6 max-w-[46ch] text-[1.0625rem]',
-            claro ? 'text-cinza-claro' : 'text-cinza',
+            /* Preto a 70%, e não o cinza: o cinza passa no papel e não passa no amarelo. */
+            claro ? 'text-cinza-claro' : 'text-preto/70',
             editorial && 'lg:mt-0 lg:border-l lg:pb-1.5 lg:pl-8',
             editorial && (claro ? 'lg:border-branco/15' : 'lg:border-preto/15'),
           )}

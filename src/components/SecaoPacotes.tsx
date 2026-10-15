@@ -200,7 +200,7 @@ function PecasDoMes({ pacote, escuro }: { pacote: PacoteAtleta; escuro: boolean 
 
   return (
     <div className="mt-6">
-      <p className={cn('rotulo text-[0.625rem]', escuro ? 'text-cinza-claro' : 'text-preto/55')}>
+      <p className={cn('rotulo text-[0.625rem]', escuro ? 'text-cinza-claro' : 'text-preto/70')}>
         Peças no mês · {pecas.length}
       </p>
       <ul className="mt-3 grid grid-cols-6 gap-1.5" aria-hidden>

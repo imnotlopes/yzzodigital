@@ -24,6 +24,8 @@ npm run dev
 | `npm run midia` | logo, ícones e Match Days de `banco-de-midia/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera `og-yzzo.jpg` e `og-parceiros.jpg`, os cartões de link |
+| `npm run miniaturas` | versões de 160px das artes, para os cartões de pacote |
+| `npm run avif` | versão AVIF da foto da capa (roda depois de `fotos`) |
 
 ## Onde mexer
 
@@ -46,6 +48,9 @@ npm run dev
 | `/` | `index.html` → `src/pages/Inicio.tsx` | quem chega pelo Instagram ou pela busca |
 | `/parceiros` | `parceiros.html` → `src/pages/Parceiros.tsx` | "como funciona a Yzzo": o pacote do atleta e o do empresário |
 
+Endereço que não existe cai em `public/404.html`: HTML puro, com a marca, que
+a Vercel serve sozinha.
+
 Cada página é um HTML próprio para ter o próprio cartão no WhatsApp (o robô
 do cartão não executa JavaScript). Para criar uma terceira: um HTML na raiz,
 uma entrada em `src/`, uma linha em `PAGINAS` (`vite.config.ts`) e outra em
@@ -56,6 +61,10 @@ uma entrada em `src/`, uma linha em `PAGINAS` (`vite.config.ts`) e outra em
 O dump do Instagram fica em `instagram/`, fora do Git. A tabela `MAPA` em
 `scripts/importar-instagram.mjs` traduz o número de cada arquivo para o
 caminho que o site usa, e cada imagem sai em duas larguras (cheia e 600px).
+
+A foto da capa tem também a versão AVIF (`npm run avif`), e é baixada antes
+do resto pelo `preload` do `index.html`. Trocando a foto, troque nos dois
+lugares: `fotoCapa` em `src/data/portfolio.ts` e o `preload`.
 
 ## Vídeos
 
@@ -70,3 +79,7 @@ Repositório: [imnotlopes/yzzodigital](https://github.com/imnotlopes/yzzodigital
 O histórico começa limpo, sem os commits da Danielli. O remoto dela continua
 configurado nesta pasta como `danielli` (e o histórico dela no ramo local
 `danielli-legado`): nunca dê push para ele daqui.
+
+O `vercel.json` liga os endereços sem `.html` (`/parceiros`), guarda em cache
+por um ano os arquivos de `assets/` (o nome deles muda a cada build) e por um
+mês as imagens e os vídeos, e põe os cabeçalhos básicos de segurança.

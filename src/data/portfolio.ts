@@ -50,6 +50,14 @@ export function srcsetDe(imagem: Imagem) {
 }
 
 /**
+ * O mesmo `srcset`, em AVIF. Só existe para as fotos que passaram por
+ * scripts/avif.mjs (as da primeira tela).
+ */
+export function srcsetAvif(imagem: Imagem) {
+  return srcsetDe(imagem).replace(/\.webp/g, '.avif')
+}
+
+/**
  * As artes, na ordem em que deslizam.
  *
  * A ordem alterna cor de fundo de propósito: amarelo, azul, amarelo, preto.
