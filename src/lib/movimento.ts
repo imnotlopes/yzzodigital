@@ -213,6 +213,12 @@ export function useTelaLarga(minimo = 1024): boolean {
  * Sem a medida, a altura seria um número escolhido no chute, e ele quebraria
  * no dia em que entrasse uma arte nova no portfólio.
  *
+ * O SENTIDO
+ * ---------
+ * `esquerda` (o padrão) começa no início do trilho e anda até o fim. `direita`
+ * começa já no fim e volta: é a fileira espelhada do portfólio, que anda no
+ * sentido contrário da de cima com a mesma rolagem.
+ *
  * O RITMO NÃO É 1:1, E ISSO É DELIBERADO
  * --------------------------------------
  * Na referência, um pixel rolado é um pixel andado. Lá são três cartões; aqui
@@ -224,7 +230,7 @@ export function useTelaLarga(minimo = 1024): boolean {
 export function useDeslizeHorizontal<
   E extends HTMLElement = HTMLDivElement,
   T extends HTMLElement = HTMLDivElement,
->(ativo: boolean, ritmo = 0.62) {
+>(ativo: boolean, ritmo = 0.62, sentido: 'esquerda' | 'direita' = 'esquerda') {
   const externo = useRef<E>(null)
   const trilho = useRef<T>(null)
 
@@ -294,7 +300,13 @@ export function useDeslizeHorizontal<
         ? rolado / (caixa.height - window.innerHeight)
         : 0
 
-      f.style.setProperty('--deslocamento', `${-(progresso * percurso).toFixed(1)}px`)
+      /*
+        Para a esquerda, o trilho sai do começo e anda até o fim. Para a
+        direita (a fileira espelhada), começa já deslocado até o fim e volta
+        ao começo: as peças andam no sentido contrário com a mesma rolagem.
+      */
+      const andado = sentido === 'esquerda' ? progresso : 1 - progresso
+      f.style.setProperty('--deslocamento', `${-(andado * percurso).toFixed(1)}px`)
     }
 
     function aoRolar() {
@@ -318,7 +330,7 @@ export function useDeslizeHorizontal<
       window.removeEventListener('resize', medir)
       observador.disconnect()
     }
-  }, [ativo, ritmo])
+  }, [ativo, ritmo, sentido])
 
   return { externo, trilho }
 }

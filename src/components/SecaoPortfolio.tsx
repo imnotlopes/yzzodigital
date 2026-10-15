@@ -1,5 +1,5 @@
 import { Maximize2 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, type CSSProperties } from 'react'
 
 import { artes, matchDays, srcsetDe, type Imagem } from '../data/portfolio'
 import { videosMotion } from '../data/videos'
@@ -8,10 +8,10 @@ import { cn } from '../lib/utils'
 import Revelar from './Revelar'
 import TituloSecao from './TituloSecao'
 import Video from './Video'
-import Visor from './Visor'
+import Visor, { type ItemVisor } from './Visor'
 
-/** Qual lista está aberta no visor, e em que imagem. */
-type Aberto = { lista: readonly Imagem[]; indice: number } | null
+/** Qual lista está aberta no visor, e em que peça. */
+type Aberto = { lista: readonly ItemVisor[]; indice: number } | null
 
 /**
  * Bloco 4, o portfólio. O coração do site.
@@ -21,8 +21,8 @@ type Aberto = { lista: readonly Imagem[]; indice: number } | null
  *
  *   1. ARTES      deslizando de lado. Arte de atleta é feita para ser vista
  *                 uma de cada vez, em tamanho de tela, como no feed.
- *   2. MATCH DAY  a arte do dia de jogo, em formato de Stories, numa fileira
- *                 de arrastar. Veio na mídia de outubro de 2026.
+ *   2. MATCH DAY  a arte do dia de jogo, em formato de Stories, na fileira
+ *                 espelhada: título à direita, andando no sentido contrário.
  *   3. MOTION     os dois Match Days em vídeo, ao lado do texto, sobre o
  *                 preto.
  *
@@ -30,8 +30,8 @@ type Aberto = { lista: readonly Imagem[]; indice: number } | null
  * a Yzzo não cobre jogo (áudio de outubro de 2026). Ela pega as fotos do jogo
  * em que o atleta se destacou, edita e publica, e isso já está nas artes.
  *
- * Toda arte abre em tela cheia no visor. Um visor só para as listas: a seta
- * de "próxima" percorre a lista de onde a pessoa clicou.
+ * Toda arte e todo Motion abrem em tela cheia no visor. Um visor só para as
+ * três listas: a seta de "próxima" percorre a lista de onde a pessoa clicou.
  */
 export default function SecaoPortfolio() {
   const [aberto, setAberto] = useState<Aberto>(null)
@@ -51,12 +51,23 @@ export default function SecaoPortfolio() {
         </Revelar>
       </div>
 
-      <Artes aoAbrir={(indice) => setAberto({ lista: artes, indice })} />
-      <MatchDays aoAbrir={(indice) => setAberto({ lista: matchDays, indice })} />
-      <Motion />
+      <Fileira
+        numero="01"
+        titulo="Artes"
+        imagens={artes}
+        aoAbrir={(indice) => setAberto({ lista: artes, indice })}
+      />
+      <Fileira
+        numero="02"
+        titulo="Match Day"
+        imagens={matchDays}
+        espelhada
+        aoAbrir={(indice) => setAberto({ lista: matchDays, indice })}
+      />
+      <Motion aoAbrir={(indice) => setAberto({ lista: videosMotion, indice })} />
 
       <Visor
-        imagens={aberto?.lista ?? []}
+        itens={aberto?.lista ?? []}
         indice={aberto?.indice ?? null}
         aoMudar={(indice) => setAberto((atual) => (atual && indice !== null ? { ...atual, indice } : null))}
       />
@@ -75,40 +86,78 @@ function Subtitulo({ numero, texto, claro }: { numero: string; texto: string; cl
 }
 
 /* ==========================================================================
-   1 · AS ARTES
+   1 E 2 · AS FILEIRAS QUE DESLIZAM
    ========================================================================== */
 
-/**
- * No computador a seção prende e as artes andam de lado com a rolagem; no
- * celular é um carrossel de arrastar. São duas montagens, e não duas
- * aparências: com media query as duas ficariam no HTML e o navegador baixaria
- * as imagens das duas.
- */
-function Artes({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
-  const larga = useTelaLarga(1024)
-  return larga ? <ArtesDeslizando aoAbrir={aoAbrir} /> : <ArtesCarrossel aoAbrir={aoAbrir} />
+interface FileiraProps {
+  numero: string
+  titulo: string
+  imagens: readonly Imagem[]
+  aoAbrir: (indice: number) => void
+  /**
+   * A fileira espelhada: título à direita, a primeira peça encostada na
+   * direita, e as peças andando no sentido contrário ao da fileira de cima.
+   */
+  espelhada?: boolean
 }
 
-function ArtesDeslizando({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
-  const { externo, trilho } = useDeslizeHorizontal<HTMLDivElement, HTMLDivElement>(true, 0.7)
+/**
+ * UMA FILEIRA QUE ANDA DE LADO COM A ROLAGEM.
+ * ==========================================
+ *
+ * A seção prende na tela e as peças atravessam de lado enquanto a pessoa rola
+ * para baixo: é o deslize da apresentação da Danielli. Vale no celular e no
+ * computador, a pedido da Yzzo (outubro de 2026): antes, no celular, era um
+ * carrossel de arrastar com o dedo, e quem só rolava a página nem percebia
+ * que tinha mais.
+ *
+ * AS DUAS FILEIRAS SÃO ESPELHO UMA DA OUTRA
+ * ----------------------------------------
+ *   01 Artes      título à esquerda; as artes andam para a esquerda.
+ *   02 Match Day  título à direita; a fileira começa encostada na direita e
+ *                 as artes andam para a direita.
+ *
+ * Duas fileiras seguidas andando no mesmo sentido leriam como a mesma seção
+ * repetida. Em sentidos opostos, a segunda é claramente outra coisa, e o
+ * movimento ganha o vai e vem de um campo de futebol.
+ *
+ * Na espelhada, a ordem das peças é invertida no HTML: a primeira do dado
+ * fica na ponta direita, que é onde a fileira começa. O visor recebe a ordem
+ * original, então "próxima" continua sendo a próxima.
+ */
+function Fileira({ numero, titulo, imagens, aoAbrir, espelhada = false }: FileiraProps) {
+  const larga = useTelaLarga(1024)
+  const { externo, trilho } = useDeslizeHorizontal<HTMLDivElement, HTMLDivElement>(
+    true,
+    /* No celular cada peça ocupa quase a tela: o trilho anda mais por rolagem. */
+    larga ? 0.62 : 0.8,
+    espelhada ? 'direita' : 'esquerda',
+  )
+
+  const ordem = imagens.map((imagem, indice) => ({ imagem, indice }))
+  if (espelhada) ordem.reverse()
 
   return (
-    <div ref={externo} className="deslize">
+    <div ref={externo} className="deslize" aria-label={titulo} role="region">
       <div className="deslize_janela">
-        <div className="container-yz mb-8 flex items-end justify-between">
-          <Subtitulo numero="01" texto="Artes" />
-          <p className="text-sm text-cinza">Role para ver mais →</p>
+        <div
+          className={cn(
+            'container-yz mb-6 flex items-end justify-between md:mb-8',
+            espelhada && 'flex-row-reverse',
+          )}
+        >
+          <Subtitulo numero={numero} texto={titulo} />
+          <p className="text-sm text-cinza">{espelhada ? '← Role para ver mais' : 'Role para ver mais →'}</p>
         </div>
 
-        <div ref={trilho} className="deslize_trilho pl-[max(3.5rem,calc((100%_-_var(--largura-conteudo))/2_+_3.5rem))] pr-14">
-          {artes.map((arte, indice) => (
+        <div ref={trilho} className="deslize_trilho">
+          {ordem.map(({ imagem, indice }) => (
             <CartaoArte
-              key={arte.src}
-              arte={arte}
-              /* As três primeiras já estão na tela quando a seção prende. */
-              adiantada={indice < 3}
+              key={imagem.src}
+              arte={imagem}
+              /* As que já estão na tela quando a seção prende. */
+              adiantada={espelhada ? indice >= imagens.length - 3 : indice < 3}
               aoAbrir={() => aoAbrir(indice)}
-              className="deslize_cartao"
             />
           ))}
         </div>
@@ -117,52 +166,28 @@ function ArtesDeslizando({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
   )
 }
 
-function ArtesCarrossel({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
-  return (
-    <div className="pt-[var(--secao-m)]">
-      <div className="container-yz mb-6 flex items-end justify-between">
-        <Subtitulo numero="01" texto="Artes" />
-        <p className="text-sm text-cinza">Arraste →</p>
-      </div>
-
-      <ul className="carrossel" aria-label="Artes">
-        {artes.map((arte, indice) => (
-          <li key={arte.src}>
-            <CartaoArte
-              arte={arte}
-              adiantada={indice < 2}
-              aoAbrir={() => aoAbrir(indice)}
-              className="w-full"
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
 function CartaoArte({
   arte,
   adiantada,
   aoAbrir,
-  className,
 }: {
   arte: Imagem
   adiantada: boolean
   aoAbrir: () => void
-  className?: string
 }) {
   return (
     <button
       type="button"
       onClick={aoAbrir}
       aria-label={`Ampliar: ${arte.alt}`}
-      className={cn('group relative block aspect-[4/5] overflow-hidden rounded-sm bg-borda', className)}
+      /* A proporção vem da própria arte: 4:5 nas do feed, 9:16 nos Match Days. */
+      style={{ '--proporcao': arte.largura / arte.altura } as CSSProperties}
+      className="deslize_cartao group relative block overflow-hidden rounded-sm bg-borda"
     >
       <img
         src={arte.pequena}
         srcSet={srcsetDe(arte)}
-        sizes="(max-width: 1023px) 78vw, 32rem"
+        sizes="(max-width: 1023px) 90vw, 32rem"
         alt=""
         width={arte.largura}
         height={arte.altura}
@@ -170,66 +195,14 @@ function CartaoArte({
         decoding="async"
         className="size-full object-cover transition-transform duration-700 ease-suave group-hover:scale-[1.03]"
       />
-      <IconeAmpliar />
+      <span
+        aria-hidden
+        className="absolute bottom-3 right-3 flex size-10 items-center justify-center rounded-full bg-preto/60 text-branco
+                   opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+      >
+        <Maximize2 size={16} strokeWidth={2} />
+      </span>
     </button>
-  )
-}
-
-function IconeAmpliar() {
-  return (
-    <span
-      aria-hidden
-      className="absolute bottom-3 right-3 flex size-10 items-center justify-center rounded-full bg-preto/60 text-branco
-                 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
-    >
-      <Maximize2 size={16} strokeWidth={2} />
-    </span>
-  )
-}
-
-/* ==========================================================================
-   2 · MATCH DAY
-   ========================================================================== */
-
-/**
- * Uma fileira de arrastar, em qualquer tela. São Stories (9:16): lado a lado
- * em grade, sete delas ocupariam três telas de altura; em fileira, ocupam uma
- * linha e a próxima aparece na borda dizendo que tem mais.
- */
-function MatchDays({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
-  return (
-    <div className="pt-[var(--secao-m)]">
-      <div className="container-yz mb-6 flex items-end justify-between md:mb-8">
-        <Subtitulo numero="02" texto="Match Day" />
-        <p className="text-sm text-cinza">Arraste →</p>
-      </div>
-
-      <ul className="carrossel carrossel--stories lg:px-[max(3.5rem,calc((100%_-_var(--largura-conteudo))/2_+_3.5rem))]" aria-label="Match Day">
-        {matchDays.map((arte, indice) => (
-          <li key={arte.src}>
-            <button
-              type="button"
-              onClick={() => aoAbrir(indice)}
-              aria-label={`Ampliar: ${arte.alt}`}
-              className="group relative block aspect-[9/16] w-full overflow-hidden rounded-sm bg-borda"
-            >
-              <img
-                src={arte.pequena}
-                srcSet={srcsetDe(arte)}
-                sizes="(max-width: 639px) 62vw, (max-width: 1023px) 34vw, 17rem"
-                alt=""
-                width={arte.largura}
-                height={arte.altura}
-                loading="lazy"
-                decoding="async"
-                className="size-full object-cover transition-transform duration-700 ease-suave group-hover:scale-[1.03]"
-              />
-              <IconeAmpliar />
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
   )
 }
 
@@ -244,7 +217,7 @@ function MatchDays({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
  * Os vídeos só baixam quando entram na tela e pausam quando saem. Ver
  * VideoVertical.
  */
-function Motion() {
+function Motion({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
   return (
     <div className="fundo-escuro mt-[var(--secao-m)] py-[var(--secao-m)] [--brilho-x:20%]">
       <div className="md:mx-auto md:grid md:max-w-conteudo md:grid-cols-3 md:items-end md:gap-5 md:px-10 lg:px-14">
@@ -258,8 +231,33 @@ function Motion() {
 
         <ul className="carrossel md:col-span-2 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0">
           {videosMotion.map((video, indice) => (
-            <Revelar key={video.arquivo} como="li" atraso={indice * 120} distancia="curta">
+            <Revelar
+              key={video.arquivo}
+              como="li"
+              atraso={indice * 120}
+              distancia="curta"
+              className="group relative isolate"
+            >
               <Video video={video} className="rounded-sm" />
+              {/*
+                O vídeo inteiro abre o visor. O botão fica por cima do vídeo e
+                por baixo da pausa (z-[2] no VideoVertical), que continua
+                funcionando: parar o vídeo é exigência de acessibilidade.
+              */}
+              <button
+                type="button"
+                onClick={() => aoAbrir(indice)}
+                aria-label={`Ver em tela cheia: ${video.alt}`}
+                className="absolute inset-0 z-[1] rounded-sm"
+              >
+                <span
+                  aria-hidden
+                  className="absolute left-3 top-3 flex size-10 items-center justify-center rounded-full bg-preto/60 text-branco
+                             opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100"
+                >
+                  <Maximize2 size={16} strokeWidth={2} />
+                </span>
+              </button>
             </Revelar>
           ))}
         </ul>

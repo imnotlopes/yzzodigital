@@ -107,3 +107,4 @@ export const novosClientes: Imagem[] = [
   imagem('clientes/novo-cliente-07', 'Post "Novo Cliente!" de um atleta com a camisa tricolor do Grêmio.'),
 ]
 
+

@@ -627,15 +627,15 @@
 }
 
 /* ==========================================================================
-   O DESLIZE DAS ARTES
+   AS FILEIRAS QUE DESLIZAM
    --------------------------------------------------------------------------
-   No computador, a seção prende na tela e as artes andam de lado enquanto a
-   pessoa rola. A altura é inventada: `100svh` fica preso, e `--percurso`
-   (medido pelo JavaScript, ver useDeslizeHorizontal) é o quanto a pessoa
-   rola enquanto a tela não sai do lugar.
+   A seção prende na tela e as peças andam de lado enquanto a pessoa rola,
+   no celular e no computador. A altura é inventada: `100svh` fica preso, e
+   `--percurso` (medido pelo JavaScript, ver useDeslizeHorizontal) é o quanto
+   a pessoa rola enquanto a tela não sai do lugar.
 
-   No celular não há prisão: é um carrossel de arrastar com o dedo, com a
-   próxima arte aparecendo na borda para dizer que tem mais.
+   O carrossel de arrastar (`.carrossel`) ficou só para os vídeos de Motion
+   no celular.
    ========================================================================== */
 @layer components {
   .deslize {
@@ -643,6 +643,10 @@
     height: calc(100svh + var(--percurso, 0px));
   }
 
+  /*
+    A janela presa reserva o topo fixo em cima: sem isso, no celular, o
+    subtítulo da fileira nasceria escondido atrás da barra com a logo.
+  */
   .deslize_janela {
     position: sticky;
     top: 0;
@@ -650,23 +654,61 @@
     height: 100svh;
     flex-direction: column;
     justify-content: center;
+    padding-top: var(--altura-topo);
     overflow: hidden;
   }
 
+  /*
+    As pontas do trilho têm a mesma margem do conteúdo da página: a primeira
+    peça nasce alinhada com o título, e a última termina alinhada com a borda
+    direita do conteúdo.
+  */
   .deslize_trilho {
+    --margem-trilho: max(1.25rem, calc((100% - var(--largura-conteudo)) / 2 + 1.25rem));
+
     display: flex;
     align-items: center;
     width: max-content;
+    padding-inline: var(--margem-trilho);
     transform: translate3d(var(--deslocamento, 0px), 0, 0);
     will-change: transform;
   }
 
-  /* A arte: 4:5, como no feed, com a altura mandando. */
+  @media (min-width: 768px) {
+    .deslize_trilho {
+      --margem-trilho: max(2.5rem, calc((100% - var(--largura-conteudo)) / 2 + 2.5rem));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .deslize_trilho {
+      --margem-trilho: max(3.5rem, calc((100% - var(--largura-conteudo)) / 2 + 3.5rem));
+    }
+  }
+
+  /*
+    A PEÇA: A ALTURA MANDA, MAS NUNCA PASSA DA TELA.
+
+    A proporção vem da própria arte em `--proporcao` (4:5 no feed, 9:16 no
+    Match Day). A altura é a menor de três: 62% da tela, 40rem, ou a que faz
+    a largura caber na tela com folga. É a terceira que vale no celular de
+    pé: uma arte 4:5 com 62% da altura sairia mais larga que o telefone.
+  */
   .deslize_cartao {
     flex-shrink: 0;
-    height: min(62svh, 40rem);
-    aspect-ratio: 4 / 5;
-    margin-right: 1.5rem;
+    height: min(62svh, 40rem, calc((var(--tela, 100vw) - 2.5rem) / var(--proporcao, 0.8)));
+    aspect-ratio: var(--proporcao, 0.8);
+    margin-right: 0.875rem;
+  }
+
+  .deslize_cartao:last-child {
+    margin-right: 0;
+  }
+
+  @media (min-width: 768px) {
+    .deslize_cartao {
+      margin-right: 1.5rem;
+    }
   }
 
   .carrossel {
@@ -692,31 +734,6 @@
   @media (min-width: 640px) {
     .carrossel > * {
       flex-basis: 46%;
-    }
-  }
-
-  /*
-    Stories (9:16): mais estreitos que as artes 4:5, senão um só ocuparia a
-    altura inteira da tela. No computador, largura fixa: a fileira mostra
-    quatro e meio, e o meio é o convite para arrastar.
-  */
-  .carrossel--stories > * {
-    flex-basis: 62%;
-  }
-
-  @media (min-width: 640px) {
-    .carrossel--stories > * {
-      flex-basis: 34%;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .carrossel--stories {
-      gap: 1rem;
-    }
-
-    .carrossel--stories > * {
-      flex-basis: 17rem;
     }
   }
 }
@@ -745,6 +762,32 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /*
+    A peça nova entra do lado para onde a pessoa foi: "próxima" vem da
+    direita, "anterior" vem da esquerda. Curto, para não atrasar quem passa
+    rápido.
+  */
+  .visor_peca--direita {
+    animation: visor-entra 420ms var(--ease-suave) both;
+    --visor-de: 2.5rem;
+  }
+
+  .visor_peca--esquerda {
+    animation: visor-entra 420ms var(--ease-suave) both;
+    --visor-de: -2.5rem;
+  }
+
+  @keyframes visor-entra {
+    from {
+      opacity: 0;
+      transform: translate3d(var(--visor-de), 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 

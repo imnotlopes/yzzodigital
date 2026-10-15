@@ -111,7 +111,7 @@ O conteúdo não mudou; mudou o acabamento.
 
 O hover só existe com mouse: no celular, nada fica preso no estado de hover depois do toque.
 
-### Etapa 4: capa e movimento ✅ (em aprovação)
+### Etapa 4: capa e movimento ✅ (aprovada)
 
 | onde | o que acontece |
 | --- | --- |
@@ -126,8 +126,20 @@ Quem pediu menos movimento no sistema vê tudo já no lugar: sem animação,
 sem contagem, e o vídeo vira a imagem parada. No celular, o vídeo da capa
 só baixa quando aparece na tela.
 
-### Etapa 5: portfólio ⏳
-Filtros por categoria, vídeo no visor e gesto de arrastar no celular.
+### Etapa 5: portfólio ✅ (em aprovação)
+
+Mudou no meio, a pedido de vocês: em vez de filtros, as duas fileiras
+deslizando em sentidos opostos, no celular e no computador.
+
+| o quê | como ficou |
+| --- | --- |
+| **01 Artes** | a seção prende na tela e as artes andam para a esquerda enquanto a pessoa rola. Vale no celular também: antes era um carrossel de arrastar, e quem só rolava a página nem percebia que tinha mais |
+| **02 Match Day** | espelho da de cima: título à direita, a fileira começa encostada na direita (com Brasil x Peru) e as artes andam para a direita |
+| **03 Motion** | os dois vídeos, que agora também abrem em tela cheia |
+| **Visor** | mostra arte e vídeo (tocando, com controles), troca com as setas, com os botões ou arrastando o dedo para o lado no celular. A peça nova entra do lado para onde a pessoa foi, e a vizinha já fica baixada |
+
+Os filtros saíram do plano: com as fileiras separadas por tipo, eles
+seriam informação a mais.
 
 ### Etapa 6: pacotes ⏳
 Cartões de preço e a seção de empresa e da Estrela do Mês no mesmo nível do

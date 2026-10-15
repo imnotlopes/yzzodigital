@@ -200,7 +200,7 @@ export default function VideoVertical({
 
               44px porque é o mínimo em que um polegar acerta.
             */
-            className="absolute bottom-2 right-2 inline-flex size-11 items-center justify-center
+            className="absolute bottom-2 right-2 z-[2] inline-flex size-11 items-center justify-center
                        bg-preto/60 text-branco transition-opacity duration-300 ease-suave
                        hover:bg-preto/85 sm:bottom-3 sm:right-3 sm:size-10 sm:opacity-0
                        sm:focus-visible:opacity-100 sm:group-hover:opacity-100"
