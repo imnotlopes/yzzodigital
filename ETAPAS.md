@@ -126,7 +126,7 @@ Quem pediu menos movimento no sistema vê tudo já no lugar: sem animação,
 sem contagem, e o vídeo vira a imagem parada. No celular, o vídeo da capa
 só baixa quando aparece na tela.
 
-### Etapa 5: portfólio ✅ (em aprovação)
+### Etapa 5: portfólio ✅ (aprovada)
 
 Mudou no meio, a pedido de vocês: em vez de filtros, as duas fileiras
 deslizando em sentidos opostos, no celular e no computador.
@@ -141,9 +141,20 @@ deslizando em sentidos opostos, no celular e no computador.
 Os filtros saíram do plano: com as fileiras separadas por tipo, eles
 seriam informação a mais.
 
-### Etapa 6: pacotes ⏳
-Cartões de preço e a seção de empresa e da Estrela do Mês no mesmo nível do
-resto.
+### Etapa 6: pacotes ✅ (em aprovação)
+
+A seção de preços foi refeita do zero, a pedido de vocês ("tá bem ruim").
+
+| no cartão | o quê |
+| --- | --- |
+| **Para quem é** | uma linha embaixo do nome. ⚠️ Texto meu, tirado da proposta: confirmar |
+| **Peças no mês, desenhadas** | uma miniatura de arte de verdade para cada peça do pacote: 4 no Essencial, 5 + 1 de novo clube no Profissional, 4 Motion (com play) + 1 de novo clube no Motion. A diferença entre os pacotes se vê, sem comparar listas |
+| **Preço** | grande, com o "R$" pequeno ao lado e "/mês" |
+| **Custo por arte** | o preço dividido pelas peças: R$ 22,50 · R$ 19,17 · R$ 28,00 |
+| **Destaque** | o cartão preto com borda amarela e a etiqueta "Melhor custo por arte" é o de menor custo por peça. É calculado: se o preço mudar, o destaque acompanha |
+
+Embaixo, o DVD esportivo ("valor sob negociação") e, na landing, um cartão
+amarelo que leva ao pacote de empresas em /parceiros.
 
 ### Etapa 7 (opcional): link com o nome da agência ⏳
 `/parceiros?agencia=Nome` preenchendo o "(NOME DA AGÊNCIA)" da proposta.

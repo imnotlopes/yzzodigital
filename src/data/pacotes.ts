@@ -19,33 +19,70 @@
  * Os valores são por mês: a proposta diz "até 4 artes por mês".
  */
 
+/** As peças que o pacote entrega no mês, por tipo. */
+export interface PecasDoMes {
+  /** Artes estáticas: Match Day, convocação, comemorativa. */
+  artes: number
+  /** Artes em vídeo. */
+  motion: number
+  /** Arte de anúncio de novo clube. */
+  novoClube: number
+}
+
 export interface PacoteAtleta {
   nome: string
   /** Em reais, por mês. */
   preco: number
+  /** Para quem ele é, numa linha. Leitura minha da proposta: confirmar. */
+  publico: string
   itens: readonly string[]
-  /** O cartão do meio, em amarelo. Só um. */
-  destaque?: boolean
+  /**
+   * O que chega no mês, peça por peça. Desenha as miniaturas do cartão e dá
+   * o custo por peça. Precisa bater com `itens`.
+   */
+  pecas: PecasDoMes
 }
 
 export const pacotesAtleta: PacoteAtleta[] = [
   {
     nome: 'Essencial',
     preco: 90,
+    publico: 'Para manter o perfil ativo, com arte nova toda semana.',
     itens: ['Até 4 artes por mês'],
+    pecas: { artes: 4, motion: 0, novoClube: 0 },
   },
   {
     nome: 'Profissional',
     preco: 115,
+    publico: 'Para quem está trocando de clube ou quer mais presença.',
     itens: ['Até 5 artes por mês', '1 arte de anúncio de novo clube'],
-    destaque: true,
+    pecas: { artes: 5, motion: 0, novoClube: 1 },
   },
   {
     nome: 'Motion',
     preco: 140,
+    publico: 'Para quem quer o perfil em movimento, nos Reels e Stories.',
     itens: ['4 artes em vídeo (Motion)', '1 arte de anúncio de novo clube'],
+    pecas: { artes: 0, motion: 4, novoClube: 1 },
   },
 ]
+
+export function totalDePecas(pecas: PecasDoMes) {
+  return pecas.artes + pecas.motion + pecas.novoClube
+}
+
+/** Quanto sai cada peça no pacote. É só a divisão: não é desconto nem promessa. */
+export function custoPorPeca(pacote: PacoteAtleta) {
+  return pacote.preco / totalDePecas(pacote.pecas)
+}
+
+/**
+ * O pacote em destaque: o de menor custo por peça. Calculado, e não marcado à
+ * mão, para continuar certo se a Yzzo mudar preço ou quantidade.
+ */
+export const pacoteVantajoso = pacotesAtleta.reduce((melhor, pacote) =>
+  custoPorPeca(pacote) < custoPorPeca(melhor) ? pacote : melhor,
+)
 
 /** O DVD não tem preço de tabela: é negociado à parte. */
 export const dvd = {
@@ -81,6 +118,11 @@ export const estrelaDoMes = {
     'Nossa recomendação: uma publicação por semana para o melhor atleta da semana. Fortalece a presença digital dele, valoriza o desempenho e mantém o perfil ativo.',
 } as const
 
-export function formatarPreco(reais: number) {
-  return reais.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 })
+export function formatarPreco(reais: number, centavos = false) {
+  return reais.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: centavos ? 2 : 0,
+    maximumFractionDigits: centavos ? 2 : 0,
+  })
 }
