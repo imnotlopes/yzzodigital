@@ -43,6 +43,7 @@ export default function SecaoPortfolio() {
           <TituloSecao
             id="titulo-portfolio"
             barra="Portfólio"
+            lado
             descricao="Mais de 700 projetos entre artes e vídeos. Aqui vai uma amostra."
           >
             Trabalho que <mark>entra em campo</mark>
@@ -245,7 +246,7 @@ function MatchDays({ aoAbrir }: { aoAbrir: (indice: number) => void }) {
  */
 function Motion() {
   return (
-    <div className="mt-[var(--secao-m)] bg-preto py-[var(--secao-m)]">
+    <div className="fundo-escuro mt-[var(--secao-m)] py-[var(--secao-m)] [--brilho-x:20%]">
       <div className="md:mx-auto md:grid md:max-w-conteudo md:grid-cols-3 md:items-end md:gap-5 md:px-10 lg:px-14">
         <div className="container-yz mb-8 md:mb-0 md:self-center md:px-0 md:pr-6">
           <Subtitulo numero="03" texto="Motion" claro />

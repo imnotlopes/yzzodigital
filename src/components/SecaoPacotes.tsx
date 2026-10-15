@@ -48,6 +48,7 @@ export default function SecaoPacotes({
           <TituloSecao
             id={`titulo-${id}`}
             barra="Para atletas"
+            lado
             descricao="Talento sem visibilidade não é visto. Escolha o pacote do mês: as artes chegam prontas para postar."
           >
             Pacotes para <mark>atletas</mark>
@@ -61,7 +62,7 @@ export default function SecaoPacotes({
               como="li"
               atraso={indice * 110}
               className={cn(
-                'flex flex-col rounded-sm p-7 md:p-9',
+                'cartao-elevar flex flex-col rounded-sm p-7 md:p-9',
                 pacote.destaque ? 'bg-amarelo' : 'border border-borda bg-branco',
               )}
             >
@@ -97,7 +98,7 @@ export default function SecaoPacotes({
 
         {/* O DVD, à parte: não tem valor de tabela. */}
         <Revelar className="mt-4">
-          <div className="flex flex-col gap-6 rounded-sm bg-preto p-7 text-branco md:flex-row md:items-center md:justify-between md:p-9">
+          <div className="fundo-escuro flex flex-col gap-6 overflow-hidden rounded-sm p-7 md:flex-row md:items-center md:justify-between md:p-9">
             <div>
               <h3 className="t-h3 text-amarelo">{dvd.nome}</h3>
               <p className="mt-2 text-[0.9375rem] text-cinza-claro">

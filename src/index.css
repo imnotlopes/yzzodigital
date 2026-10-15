@@ -82,6 +82,23 @@
   /* Altura do topo fixo, para as âncoras não pararem embaixo dele. */
   --altura-topo: 4.5rem;
 
+  /* --- Profundidade -----------------------------------------------------
+     Sombras em duas camadas: uma curta e firme, que assenta o objeto, e uma
+     longa e difusa, que dá a distância. Uma sombra só, de um jeito ou de
+     outro, lê como efeito de editor de imagem.
+     ---------------------------------------------------------------------- */
+  --sombra-cartao: 0 1px 2px rgb(0 0 0 / 0.06), 0 18px 40px -18px rgb(0 0 0 / 0.28);
+  --sombra-botao: 0 1px 2px rgb(0 0 0 / 0.08), 0 10px 24px -10px rgb(0 0 0 / 0.45);
+
+  /*
+    O GRÃO DAS SEÇÕES ESCURAS.
+
+    Ruído gerado por um filtro SVG, 160px, repetido. Preto chapado em tela
+    grande parece buraco; com um grão quase invisível, parece papel impresso,
+    que é de onde a linguagem da Yzzo vem (os posts).
+  */
+  --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
   color-scheme: light;
 }
 
@@ -178,6 +195,12 @@
   ::selection {
     background: var(--amarelo);
     color: var(--preto);
+  }
+
+  /* Barra de rolagem fina e da marca, onde o sistema deixa estilizar. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--preto-rgb) / 0.35) var(--papel);
   }
 }
 
@@ -280,12 +303,62 @@
   */
   .btn {
     @apply inline-flex min-h-12 items-center justify-center gap-2.5 rounded-full px-7 font-sans
-           text-[0.9375rem] font-semibold transition-[background-color,color,transform]
-           duration-300 ease-suave active:scale-[0.98];
+           text-[0.9375rem] font-semibold;
+    transition:
+      background-color 300ms var(--ease-suave),
+      color 300ms var(--ease-suave),
+      border-color 300ms var(--ease-suave),
+      box-shadow 400ms var(--ease-suave),
+      transform 400ms var(--ease-suave);
+  }
+
+  /*
+    O BOTÃO RESPONDE AO MOUSE, MAS SEM PULAR.
+
+    Sobe um pixel e ganha sombra: o suficiente para parecer que dá para
+    apertar, e não tanto que pareça que vai fugir do cursor. No toque não há
+    hover; o que sobra é o afundar do `:active`.
+  */
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--sombra-botao);
+    }
+  }
+
+  .btn:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: none;
+  }
+
+  /*
+    Os ícones acompanham: o do WhatsApp inclina, a seta anda para onde aponta.
+    É o detalhe que faz o botão parecer feito à mão, e não tirado de um kit.
+    As classes `lucide-*` vêm do próprio pacote de ícones.
+  */
+  .btn > svg {
+    transition: transform 400ms var(--ease-suave);
+  }
+
+  .btn:hover > svg:first-child:not([class*='lucide-arrow']) {
+    transform: rotate(-10deg) scale(1.08);
+  }
+
+  .btn:hover > .lucide-arrow-right {
+    transform: translateX(3px);
+  }
+
+  .btn:hover > .lucide-arrow-down {
+    transform: translateY(2px);
   }
 
   .btn-amarelo {
     @apply bg-amarelo text-preto hover:bg-preto hover:text-amarelo;
+  }
+
+  /* Sobre o preto, o hover preto sumiria no fundo: lá ele clareia. */
+  .fundo-escuro .btn-amarelo:hover {
+    @apply bg-branco text-preto;
   }
 
   /* Sobre o amarelo ou sobre foto clara, o botão é preto. */
@@ -299,6 +372,105 @@
 
   .btn-contorno-claro {
     @apply border border-branco/30 text-branco hover:border-amarelo hover:bg-amarelo hover:text-preto;
+  }
+
+  /* --- Superfícies ----------------------------------------------------- */
+
+  /*
+    O PRETO COM PROFUNDIDADE.
+
+    Toda seção escura usa esta classe no lugar de `bg-preto`. Por baixo do
+    conteúdo, duas camadas: um brilho amarelo muito fraco num canto, que é a
+    luz de estádio, e o grão. As duas ficam atrás de tudo (`z-index: -1`
+    dentro de um `isolation: isolate`) e nunca recebem clique.
+
+    `--brilho-x` e `--brilho-y` mudam o canto do brilho por seção, para duas
+    seções escuras seguidas não parecerem a mesma.
+
+    O brilho é quase branco, puxado para o quente. Amarelo de verdade, em
+    opacidade baixa sobre o preto, vira marrom, e parece sujeira na tela.
+  */
+  .fundo-escuro {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--preto);
+    color: var(--branco);
+  }
+
+  .fundo-escuro::before,
+  .fundo-escuro::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /*
+    Um brilho só, encostado no alto. Brilho no pé da seção faz emenda com a
+    seção escura de baixo: duas pretas seguidas passam a ter tons diferentes
+    bem na divisa.
+  */
+  .fundo-escuro::before {
+    background: radial-gradient(
+      55% 45% at var(--brilho-x, 88%) var(--brilho-y, 0%),
+      rgb(255 236 170 / 0.075),
+      transparent 70%
+    );
+  }
+
+  .fundo-escuro::after {
+    background-image: var(--grao);
+    opacity: 0.05;
+    mix-blend-mode: screen;
+  }
+
+  /*
+    O CARTÃO QUE SOBE.
+
+    Para cartão que é escolha (serviço, pacote, modalidade): sobe quatro
+    pixels e ganha a sombra longa. Só com mouse; no toque ficaria preso no
+    estado de hover depois do toque.
+  */
+  .cartao-elevar {
+    transition:
+      transform 500ms var(--ease-suave),
+      box-shadow 500ms var(--ease-suave);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cartao-elevar:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--sombra-cartao);
+    }
+  }
+
+  /*
+    O link do menu: um fio amarelo que cresce da esquerda no hover. É a barra
+    do #TimeYzzoDigital em miniatura.
+  */
+  .link-topo {
+    position: relative;
+    padding-block: 0.375rem;
+  }
+
+  .link-topo::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--amarelo);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 400ms var(--ease-suave);
+  }
+
+  .link-topo:hover::after,
+  .link-topo:focus-visible::after {
+    transform: scaleX(1);
   }
 
   /* --- Moldura e dupla (herdadas da Danielli) -------------------------- */
@@ -585,12 +757,18 @@
     hook nasce visível sem `IntersectionObserver` ou com menos movimento
     pedido. Nenhum caminho deixa texto invisível. Ver lib/movimento.ts.
   */
+  /*
+    A entrada: sobe e aparece, mais devagar que um clique e mais rápido que
+    uma leitura. A opacidade chega antes do movimento terminar (700 contra
+    1000 ms), e é isso que dá a sensação de que o bloco "pousa", em vez de
+    surgir e depois deslizar.
+  */
   .revelar {
     opacity: 0;
     transform: translate3d(0, var(--revelar-distancia, 1.75rem), 0);
     transition:
-      opacity 800ms var(--ease-suave) var(--revelar-atraso, 0ms),
-      transform 800ms var(--ease-suave) var(--revelar-atraso, 0ms);
+      opacity 700ms var(--ease-suave) var(--revelar-atraso, 0ms),
+      transform 1000ms var(--ease-suave) var(--revelar-atraso, 0ms);
   }
 
   .revelar-visivel {

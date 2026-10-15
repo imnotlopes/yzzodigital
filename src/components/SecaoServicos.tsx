@@ -15,10 +15,10 @@ import TituloSecao from './TituloSecao'
  */
 export default function SecaoServicos() {
   return (
-    <section id="servicos" className="bg-preto text-branco" aria-labelledby="titulo-servicos">
+    <section id="servicos" className="fundo-escuro" aria-labelledby="titulo-servicos">
       <div className="container-yz secao">
         <Revelar>
-          <TituloSecao id="titulo-servicos" barra="A Yzzo" claro descricao={sobre}>
+          <TituloSecao id="titulo-servicos" barra="A Yzzo" claro lado descricao={sobre}>
             O que a <mark>Yzzo</mark> faz
           </TituloSecao>
         </Revelar>
@@ -29,7 +29,7 @@ export default function SecaoServicos() {
               key={servico.titulo}
               como="li"
               atraso={(indice % 3) * 90}
-              className="group flex flex-col overflow-hidden rounded-sm bg-grafite"
+              className="cartao-elevar group flex flex-col overflow-hidden rounded-sm bg-grafite ring-1 ring-branco/[0.06]"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img

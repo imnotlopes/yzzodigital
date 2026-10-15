@@ -31,6 +31,15 @@ export default {
         sans: ['var(--font-corpo)'],
       },
 
+      /*
+        O canto da marca. Era o 2px padrão do `rounded-sm`, que de longe lê
+        como canto reto mal cortado. 6px é o raio dos posts: arredonda sem
+        virar botão de aplicativo. Todo `rounded-sm` do site acompanha.
+      */
+      borderRadius: {
+        sm: '0.375rem',
+      },
+
       maxWidth: {
         conteudo: 'var(--largura-conteudo)',
       },

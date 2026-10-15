@@ -76,7 +76,7 @@ pelo site e quero o pacote Profissional (R$ 115/mês)").
 Onde mexer: `src/data/servicos.ts` (serviços) e `src/data/pacotes.ts`
 (pacotes, modalidades, parceria e Estrela do Mês).
 
-### Etapa 2: logo oficial e mídia nova ✅ (em aprovação)
+### Etapa 2: logo oficial e mídia nova ✅ (aprovada)
 
 A mídia está em `banco-de-midia/` (fora do Git, são 200 MB).
 
@@ -94,9 +94,22 @@ outros posts de texto, para não voltar a encher a página.
 Para refazer depois de trocar algum arquivo: `npm run midia` (logo, ícones e
 artes) e `npm run videos` (vídeos, a partir de `videos-originais/`).
 
-### Etapa 3: visual mais sofisticado ⏳
-Tipografia, espaçamento, textura nas seções escuras e pequenas animações nos
-botões e cartões.
+### Etapa 3: visual mais sofisticado ✅ (em aprovação)
+
+O conteúdo não mudou; mudou o acabamento.
+
+| o quê | como ficou |
+| --- | --- |
+| **Títulos de seção** | versão editorial no computador: título à esquerda, linha de apoio à direita, separados por um fio. No celular, como antes |
+| **Seções escuras** | grão quase invisível e um brilho de luz no alto, no lugar do preto chapado |
+| **Rodapé** | escuro, continuando o convite: a página termina num bloco só, com a logo clara e o fecho da proposta |
+| **Botões** | sobem 1px com sombra no mouse; o ícone do WhatsApp inclina e as setas andam para onde apontam. Nas seções escuras, o amarelo fica branco no hover em vez de sumir no fundo |
+| **Cartões** (serviços, pacotes, modalidades) | sobem 4px com sombra longa no mouse |
+| **Menu** | um fio amarelo cresce embaixo do link no hover |
+| **Cantos e sombras** | cantos de 6px em todo o site; sombras em duas camadas |
+| **Entrada das seções** | mais lenta e suave: o bloco "pousa" |
+
+O hover só existe com mouse: no celular, nada fica preso no estado de hover depois do toque.
 
 ### Etapa 4: capa e movimento ⏳
 O Motion na capa, o título aparecendo palavra por palavra e o "+700"

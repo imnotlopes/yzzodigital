@@ -81,7 +81,7 @@ export default function Topo({ links = LINKS_INICIO, inicio = '#inicio', mensage
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-sm font-medium text-preto/75 transition-colors hover:text-preto"
+                  className="link-topo text-sm font-medium text-preto/75 transition-colors hover:text-preto"
                 >
                   {link.texto}
                 </a>

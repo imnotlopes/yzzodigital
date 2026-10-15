@@ -25,6 +25,7 @@ export default function SecaoTime() {
           <TituloSecao
             id="titulo-time"
             barra={false}
+            lado
             descricao="Atletas que confiaram a própria imagem à Yzzo. Cada um ganhou o seu post de boas-vindas."
           >
             Quem já é #TimeYzzoDigital

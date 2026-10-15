@@ -26,13 +26,14 @@ import { MENSAGEM_PARCEIRO } from './mensagens'
  */
 export default function SecaoEmpresas() {
   return (
-    <section id="empresas" className="bg-preto text-branco" aria-labelledby="titulo-empresas">
+    <section id="empresas" className="fundo-escuro" aria-labelledby="titulo-empresas">
       <div className="container-yz secao">
         <Revelar>
           <TituloSecao
             id="titulo-empresas"
             barra="Para empresas"
             claro
+            lado
             descricao="Parcerias com empresas e assessorias esportivas, com contratação semanal, quinzenal ou mensal, conforme a necessidade de cada parceiro."
           >
             Pacote para <mark>empresas</mark> e assessorias
@@ -45,7 +46,7 @@ export default function SecaoEmpresas() {
               key={modalidade.nome}
               como="li"
               atraso={indice * 100}
-              className="rounded-sm border border-branco/15 bg-grafite p-6 md:p-7"
+              className="cartao-elevar rounded-sm border border-branco/10 bg-grafite p-6 md:p-7"
             >
               <h3 className="t-h2 mb-6 text-branco">{modalidade.nome}</h3>
               <Ritmo semanas={modalidade.semanas} escuro />
