@@ -156,6 +156,37 @@ A seção de preços foi refeita do zero, a pedido de vocês ("tá bem ruim").
 Embaixo, o DVD esportivo ("valor sob negociação") e, na landing, um cartão
 amarelo que leva ao pacote de empresas em /parceiros.
 
+### Etapa 6b: carregamento e celular ✅ (em aprovação)
+
+Medido na versão de produção, simulando celular em 4G e processador 4x mais
+lento.
+
+| o quê | antes | depois |
+| --- | --- | --- |
+| **Página pulando enquanto carrega** (CLS, bom é abaixo de 0,1) | 0,124 na landing · 0,229 em /parceiros | 0,007 · 0,011 |
+| **Peso da abertura da landing** | 349 KB | 203 KB |
+| **Miniaturas dos pacotes** | arte de 600px (até 92 KB cada) para um selo de 50px | versão de 160px (8 KB) |
+
+O que foi feito:
+
+- **Fontes de reserva na medida:** enquanto a fonte da marca não chega, o
+  texto aparece numa fonte do sistema ajustada para ocupar o mesmo espaço. Era
+  a causa de quase todo o pulo: o título quebrava em mais linhas e tudo descia.
+- **Fontes sem travar a página:** o CSS do Google Fonts deixou de bloquear a
+  primeira pintura.
+- **Pôsteres dos vídeos:** só baixam quando o vídeo está a uma tela de
+  distância.
+- **Miniaturas:** `npm run miniaturas` gera a versão de 160px das artes.
+- **Serviços no celular:** um por linha, imagem ao lado do texto. Em duas
+  colunas, numa tela de 360px, o texto quebrava em cinco linhas miúdas.
+- **Preços no tablet e em 1024px:** coluna centralizada até 1024px, e o nome do
+  pacote acompanha a largura ("Profissional" não cabia).
+
+Fica para depois, se quiserem ir além: a página é montada pelo JavaScript,
+então no celular lento há um instante em branco antes do conteúdo (1,5 a 2,3 s
+na medição). Gerar o HTML pronto no build resolve, mas mexe nas animações de
+entrada da capa, por isso não entrou sem combinar.
+
 ### Etapa 7 (opcional): link com o nome da agência ⏳
 `/parceiros?agencia=Nome` preenchendo o "(NOME DA AGÊNCIA)" da proposta.
 
