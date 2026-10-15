@@ -230,10 +230,10 @@ amarelos.
 | **Google** | a logo entrou nos dados da agência que o Google lê (junto com nome, contato, Instagram e Linktree) |
 | **Vercel** | os arquivos do site ficam guardados no celular de quem já visitou (abre mais rápido na segunda vez), e os cabeçalhos básicos de segurança |
 
-Falta: subir para o GitHub, criar o projeto na Vercel e, quando houver
+No GitHub desde 15/10/2026. Falta criar o projeto na Vercel e, quando houver
 domínio, trocar o endereço provisório.
 
-### Etapa 9: site mais leve e mais rápido ✅ (em aprovação)
+### Etapa 9: site mais leve e mais rápido ✅ (aprovada)
 
 Medido na versão de produção, simulando um celular de tela densa no 4G lento
 (1,6 Mbps) e com o processador 4x mais lento. Cada número é a mediana de três
