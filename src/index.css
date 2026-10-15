@@ -3,6 +3,54 @@
 @tailwind utilities;
 
 /* ==========================================================================
+   AS FONTES DE RESERVA, NA MEDIDA DAS FONTES DA MARCA
+   --------------------------------------------------------------------------
+   Enquanto a fonte do Google não chega, o navegador desenha o texto com uma
+   fonte do sistema. A Sofia Sans Extra Condensed ocupa 60% da largura da
+   Arial: com a Arial no tamanho normal, o título da capa quebrava em mais
+   linhas, e quando a fonte certa chegava tudo abaixo subia uns 55 pixels.
+   Era o maior pulo da página (CLS 0,12 na landing e 0,23 em /parceiros).
+
+   Estas são a Arial (ou a Helvetica do iPhone, ou a Roboto do Android)
+   encolhida ou esticada até ocupar a mesma largura. A letra de reserva fica
+   diferente, por um instante, mas no mesmo espaço: nada pula.
+
+   As porcentagens foram medidas no navegador, com os títulos e textos reais
+   do site, em outubro de 2026. Trocou a fonte da marca, mede de novo.
+   ========================================================================== */
+@font-face {
+  font-family: 'Sofia Reserva';
+  font-weight: 700;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'), local('Helvetica-Bold'),
+    local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 60.3%;
+}
+
+@font-face {
+  font-family: 'Sofia Reserva';
+  font-weight: 900;
+  font-style: italic;
+  src: local('Arial Bold Italic'), local('Arial-BoldItalicMT'), local('Helvetica Bold Oblique'),
+    local('Helvetica-BoldOblique'), local('Roboto Bold Italic'), local('Roboto-BoldItalic');
+  size-adjust: 56.7%;
+}
+
+@font-face {
+  font-family: 'Poppins Reserva';
+  font-weight: 400;
+  src: local('Arial'), local('ArialMT'), local('Helvetica'), local('Roboto'), local('Roboto-Regular');
+  size-adjust: 112.3%;
+}
+
+@font-face {
+  font-family: 'Poppins Reserva';
+  font-weight: 500 700;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'), local('Helvetica-Bold'),
+    local('Roboto Bold'), local('Roboto-Bold');
+  size-adjust: 107%;
+}
+
+/* ==========================================================================
    DESIGN TOKENS: Yzzo Digital
    Fonte única de verdade. O tailwind.config.ts apenas referencia estas vars.
 
@@ -57,8 +105,8 @@
        CORPO   Poppins. É a do "Seu desempenho fala por você" e do
                "#TimeYzzoDigital": geométrica, redonda, o "a" de um andar só.
      ---------------------------------------------------------------------- */
-  --font-display: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
-  --font-corpo: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Sofia Sans Extra Condensed', 'Sofia Reserva', sans-serif;
+  --font-corpo: 'Poppins', 'Poppins Reserva', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /*
     Condensada pede corpo grande. A letra ocupa metade da largura de uma

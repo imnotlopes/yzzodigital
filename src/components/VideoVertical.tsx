@@ -91,11 +91,40 @@ export default function VideoVertical({
   })
 
   const [carregar, setCarregar] = useState(false)
+  const [perto, setPerto] = useState(false)
   const [naTela, setNaTela] = useState(false)
   const [tocando, setTocando] = useState(true)
   /* Decidido uma vez, na montagem: trocar de ideia no meio faria o vídeo
      aparecer e sumir se a pessoa mudasse a preferência do sistema. */
   const [semMovimento] = useState(movimentoReduzido)
+
+  /*
+    O PÔSTER TAMBÉM ESPERA.
+
+    O atributo `poster` baixa a imagem na hora em que o vídeo existe na
+    página, esteja ele onde estiver: eram 150 KB de pôster baixados na
+    abertura, de vídeos que estavam três telas abaixo. Agora o pôster só entra
+    quando o vídeo está a uma tela de distância, com folga para já estar
+    pronto quando aparecer.
+  */
+  useEffect(() => {
+    const alvo = moldura.current
+    if (!alvo || typeof IntersectionObserver === 'undefined') {
+      setPerto(true)
+      return
+    }
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          setPerto(true)
+          observador.disconnect()
+        }
+      },
+      { rootMargin: '100% 0px' },
+    )
+    observador.observe(alvo)
+    return () => observador.disconnect()
+  }, [])
 
   /* O observador só responde uma coisa: está na tela ou não. */
   useEffect(() => {
@@ -167,14 +196,14 @@ export default function VideoVertical({
       className={cn('group relative overflow-hidden bg-preto', className)}
     >
       {semMovimento ? (
-        <img src={poster} alt={alt} className="aspect-[9/16] w-full object-cover" />
+        <img src={poster} alt={alt} loading="lazy" decoding="async" className="aspect-[9/16] w-full object-cover" />
       ) : (
         <>
           <video
             ref={video}
             /* Vazio até entrar na tela, é isto que segura o download. */
             src={carregar ? arquivo : undefined}
-            poster={poster}
+            poster={perto ? poster : undefined}
             muted
             loop
             playsInline

@@ -72,7 +72,11 @@ export default function SecaoPacotes({
           </TituloSecao>
         </Revelar>
 
-        <ul className="mt-14 grid items-stretch gap-4 lg:mt-16 lg:grid-cols-3 lg:gap-5">
+        {/*
+          Uma coluna até 1024px, mas estreita e no centro: esticado na largura
+          de um tablet, o cartão vira uma faixa com o preço perdido no meio.
+        */}
+        <ul className="mx-auto mt-14 grid max-w-xl items-stretch gap-4 lg:mt-16 lg:max-w-none lg:grid-cols-3 lg:gap-5">
           {pacotesAtleta.map((pacote, indice) => (
             <Revelar key={pacote.nome} como="li" atraso={indice * 110} className="flex">
               <CartaoPacote pacote={pacote} origem={origem} />
@@ -111,8 +115,19 @@ function CartaoPacote({ pacote, origem }: { pacote: PacoteAtleta; origem: SecaoP
       )}
 
       <p className={cn('rotulo text-[0.6875rem]', destaque ? 'text-amarelo' : 'text-cinza')}>Pacote</p>
-      <h3 className={cn('t-h2 mt-1', destaque ? 'text-branco' : 'text-preto')}>{pacote.nome}</h3>
-      <p className={cn('mt-2 min-h-[2lh] text-[0.9375rem] leading-snug', destaque ? 'text-cinza-claro' : 'text-cinza')}>
+      {/*
+        O nome acompanha a largura da tela: no tamanho de título de seção,
+        "Profissional" não cabia no cartão entre 1024 e 1280px.
+      */}
+      <h3
+        className={cn(
+          't-h2 mt-1 text-[clamp(2.75rem,4.2vw,4.25rem)]',
+          destaque ? 'text-branco' : 'text-preto',
+        )}
+      >
+        {pacote.nome}
+      </h3>
+      <p className={cn('mt-2 text-[0.9375rem] leading-snug lg:min-h-[3lh] xl:min-h-[2lh]', destaque ? 'text-cinza-claro' : 'text-cinza')}>
         {pacote.publico}
       </p>
 
@@ -198,7 +213,7 @@ function PecasDoMes({ pacote, escuro }: { pacote: PacoteAtleta; escuro: boolean 
             )}
           >
             <img
-              src={imagem.pequena}
+              src={imagem.mini}
               alt=""
               loading="lazy"
               decoding="async"

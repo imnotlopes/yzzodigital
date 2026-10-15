@@ -24,6 +24,8 @@ export interface Imagem {
   src: string
   /** Versão de 600px de largura, para grade e faixa. */
   pequena: string
+  /** Versão de 160px, para miniatura (scripts/miniaturas.mjs). Só artes e Match Days têm. */
+  mini: string
   /** O que se vê, para quem não vê. */
   alt: string
   largura: number
@@ -35,6 +37,7 @@ function imagem(caminho: string, alt: string, largura = 1280, altura = 1600): Im
   return {
     src: `/${caminho}.webp`,
     pequena: `/${caminho}-600.webp`,
+    mini: `/${caminho}-160.webp`,
     alt,
     largura,
     altura,

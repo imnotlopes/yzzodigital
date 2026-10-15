@@ -42,10 +42,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&display=swap"
-      rel="stylesheet"
-    />
+    <!--
+      As fontes chegam sem travar a primeira pintura: o CSS do Google vem como
+      "preload" e vira folha de estilo quando termina de baixar. Enquanto isso,
+      o texto aparece nas fontes de reserva, medidas para ocupar o mesmo espaço
+      (ver o começo de src/index.css), e por isso a troca não faz a página pular.
+    -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&display=swap" /></noscript>
   </head>
   <body>
     <div id="root"></div>

@@ -23,15 +23,20 @@ export default function SecaoServicos() {
           </TituloSecao>
         </Revelar>
 
-        <ul className="mt-14 grid grid-cols-2 gap-3 md:gap-4 lg:mt-16 lg:grid-cols-3">
+        {/*
+          No celular, um serviço por linha, com a imagem quadrada ao lado do
+          texto. Em duas colunas, numa tela de 360px, cada cartão ficava com
+          140px de largura e o texto quebrava em cinco linhas de letra miúda.
+        */}
+        <ul className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:mt-16 lg:grid-cols-3">
           {servicos.map((servico, indice) => (
             <Revelar
               key={servico.titulo}
               como="li"
               atraso={(indice % 3) * 90}
-              className="cartao-elevar group flex flex-col overflow-hidden rounded-sm bg-grafite ring-1 ring-branco/[0.06]"
+              className="cartao-elevar group flex overflow-hidden rounded-sm bg-grafite ring-1 ring-branco/[0.06] sm:flex-col"
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-square w-[36%] shrink-0 overflow-hidden sm:aspect-[4/3] sm:w-auto">
                 <img
                   src={servico.imagem}
                   alt={servico.alt}
@@ -43,9 +48,9 @@ export default function SecaoServicos() {
                   {String(indice + 1).padStart(2, '0')}
                 </span>
               </div>
-              <div className="flex flex-1 flex-col p-4 md:p-6">
-                <h3 className="t-h3 text-[1.5rem] text-branco md:text-[2.25rem]">{servico.titulo}</h3>
-                <p className="mt-2 text-[0.8125rem] leading-relaxed text-cinza-claro md:mt-3 md:text-[0.9375rem]">
+              <div className="flex flex-1 flex-col justify-center p-4 sm:justify-start md:p-6">
+                <h3 className="t-h3 text-[1.75rem] text-branco md:text-[2.25rem]">{servico.titulo}</h3>
+                <p className="mt-1.5 text-[0.875rem] leading-snug text-cinza-claro md:mt-3 md:text-[0.9375rem] md:leading-relaxed">
                   {servico.texto}
                 </p>
               </div>
