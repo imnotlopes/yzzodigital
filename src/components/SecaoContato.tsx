@@ -34,7 +34,7 @@ export default function SecaoContato({ texto = TEXTO_ATLETA, mensagem }: SecaoCo
   return (
     <section
       id="contato"
-      className="fundo-escuro overflow-hidden [--brilho-x:15%] [--brilho-y:0%]"
+      className="fundo-escuro adiar overflow-hidden [--brilho-x:15%] [--brilho-y:0%]"
       aria-labelledby="titulo-contato"
     >
       {/* O raio do post, entrando pelo canto. */}

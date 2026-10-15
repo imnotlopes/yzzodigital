@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
 
-import react from '@vitejs/plugin-react'
+import preact from '@preact/preset-vite'
 import { defineConfig, type Plugin } from 'vite'
 
 import { pluginSeo } from './scripts/seo.js'
@@ -44,7 +44,16 @@ function rotasDasPaginas(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), rotasDasPaginas(), pluginSeo()],
+  /*
+    PREACT NO LUGAR DO REACT.
+
+    O código continua escrevendo `import { useState } from 'react'`: o preset
+    troca o React pelo Preact no build, pela camada de compatibilidade dele.
+    O Preact faz o mesmo com uns 4 KB, contra uns 60 KB do React. No celular
+    fraco é a maior parte do tempo que a página leva para aparecer, porque
+    nada aparece antes do JavaScript rodar.
+  */
+  plugins: [preact(), rotasDasPaginas(), pluginSeo()],
 
   build: {
     rollupOptions: {

@@ -1,10 +1,11 @@
 import { Maximize2 } from 'lucide-react'
 import { useState, type CSSProperties } from 'react'
 
-import { artes, matchDays, srcsetDe, type Imagem } from '../data/portfolio'
+import { artes, matchDays, type Imagem } from '../data/portfolio'
 import { videosMotion } from '../data/videos'
 import { useDeslizeHorizontal, useTelaLarga } from '../lib/movimento'
 import { cn } from '../lib/utils'
+import Foto from './Foto'
 import Revelar from './Revelar'
 import TituloSecao from './TituloSecao'
 import Video from './Video'
@@ -155,8 +156,6 @@ function Fileira({ numero, titulo, imagens, aoAbrir, espelhada = false }: Fileir
             <CartaoArte
               key={imagem.src}
               arte={imagem}
-              /* As que já estão na tela quando a seção prende. */
-              adiantada={espelhada ? indice >= imagens.length - 3 : indice < 3}
               aoAbrir={() => aoAbrir(indice)}
             />
           ))}
@@ -166,15 +165,22 @@ function Fileira({ numero, titulo, imagens, aoAbrir, espelhada = false }: Fileir
   )
 }
 
-function CartaoArte({
-  arte,
-  adiantada,
-  aoAbrir,
-}: {
-  arte: Imagem
-  adiantada: boolean
-  aoAbrir: () => void
-}) {
+/**
+ * A largura do cartão na tela, para o navegador escolher a versão certa.
+ *
+ * É a conta do `.deslize_cartao` (index.css) passada para largura: a altura
+ * é o menor entre 62% da tela, 40rem e o que cabe na largura, e a largura é
+ * a altura vezes a proporção da arte. Antes era um "90vw" para tudo, e o
+ * Match Day, que é estreito, baixava a versão grande sem precisar.
+ */
+function tamanhoNoDeslize(arte: Imagem) {
+  const proporcao = arte.largura / arte.altura
+  const vh = +(62 * proporcao).toFixed(1)
+  const rem = +(40 * proporcao).toFixed(2)
+  return `min(${vh}vh, ${rem}rem, calc(100vw - 2.5rem))`
+}
+
+function CartaoArte({ arte, aoAbrir }: { arte: Imagem; aoAbrir: () => void }) {
   return (
     <button
       type="button"
@@ -184,14 +190,17 @@ function CartaoArte({
       style={{ '--proporcao': arte.largura / arte.altura } as CSSProperties}
       className="deslize_cartao group relative block overflow-hidden rounded-sm bg-borda"
     >
-      <img
-        src={arte.pequena}
-        srcSet={srcsetDe(arte)}
-        sizes="(max-width: 1023px) 90vw, 32rem"
+      <Foto
+        imagem={arte}
+        sizes={tamanhoNoDeslize(arte)}
         alt=""
-        width={arte.largura}
-        height={arte.altura}
-        loading={adiantada ? 'eager' : 'lazy'}
+        /*
+          Todas "lazy", até as três da frente: o portfólio fica a umas quatro
+          telas da capa, e o navegador já começa a baixar quando a pessoa se
+          aproxima. Antes as da frente eram baixadas na abertura, e no 4G
+          disputavam a conexão com a foto da capa (ela chegava 2 s depois).
+        */
+        loading="lazy"
         decoding="async"
         className="size-full object-cover transition-transform duration-700 ease-suave group-hover:scale-[1.03]"
       />

@@ -212,15 +212,14 @@ https://yzzodigital.vercel.app/parceiros?agencia=Sabu+Sports
   WhatsApp não roda o site, só lê o título fixo da página.
 - Nome comprido corta com reticências na barra do celular.
 
-### Etapa 8: acabamento e publicação ✅ (em aprovação)
+### Etapa 8: acabamento e publicação ✅ (aprovada)
 
-**Teste: a capa no jeito da Danielli.** A pedido de vocês, para ver como fica:
+**A capa no jeito da Danielli** (era teste, foi aprovada):
 a foto da camisa 20 grande, desmanchando no papel, e o texto centralizado
 onde ela some. No computador, a foto fica em pé à direita; no celular, no alto
 da tela, com o texto começando dentro do desmanche (sem a barra amarela, que
 ali caía em cima da camisa). Saíram o Motion por cima da foto e os cacos
-amarelos. Está num commit só ("Testa a capa no jeito da
-Danielli"): se não aprovarem, a capa anterior volta inteira.
+amarelos.
 
 | o quê | como ficou |
 | --- | --- |
@@ -233,6 +232,54 @@ Danielli"): se não aprovarem, a capa anterior volta inteira.
 
 Falta: subir para o GitHub, criar o projeto na Vercel e, quando houver
 domínio, trocar o endereço provisório.
+
+### Etapa 9: site mais leve e mais rápido ✅ (em aprovação)
+
+Medido na versão de produção, simulando um celular de tela densa no 4G lento
+(1,6 Mbps) e com o processador 4x mais lento. Cada número é a mediana de três
+medições (no mesmo computador, uma medição varia uns 30% da outra).
+
+| página inicial | antes | depois |
+| --- | --- | --- |
+| **Capa completa, com a foto** | 12,8 s (a foto chegava por último) | 2,0 s |
+| **Primeiro texto na tela** | 2,9 s | 1,7 s |
+| **Travadas na abertura** (tempo em que o celular não responde ao toque) | 1,1 s | 0,2 s |
+| **JavaScript** | 74 KB | 24 KB |
+| **Página inteira, rolada até o fim** | 6,3 MB | 3,5 MB |
+
+| /parceiros | antes | depois |
+| --- | --- | --- |
+| **Primeiro texto na tela** | 1,7 s | 1,5 s |
+| **JavaScript** | 73 KB | 23 KB |
+| **Página inteira, rolada até o fim** | 1,3 MB | 0,9 MB |
+
+O que foi feito:
+
+- **Artes em AVIF e numa largura do tamanho da tela.** No celular, cada arte
+  do portfólio vinha na versão cheia (200 a 416 KB). Agora há uma versão de
+  1080px (a largura do Instagram) e todas existem em AVIF: a mesma arte sai
+  com 55 a 130 KB, sem diferença que se veja. `npm run versoes` gera tudo.
+- **Preact no lugar do React.** O mesmo código, numa biblioteca de 4 KB no
+  lugar de 60 KB. É a parte que mais pesa no celular fraco, porque nada
+  aparece antes do JavaScript rodar.
+- **Fontes servidas pelo próprio site.** Antes vinham do Google Fonts, que
+  abre duas conexões a mais antes do texto. Também são menores (64 KB contra
+  86 KB). E o Google deixa de receber o endereço de quem visita.
+- **Foto da capa baixa primeiro, e na versão de 57 KB no celular.** As artes
+  do portfólio, que ficam a quatro telas dali, não disputam mais a conexão
+  com ela.
+- **Seções montadas só quando chegam perto.** O navegador deixa para depois
+  o layout de serviços, pacotes, #TimeYzzoDigital, contato e rodapé. Era o
+  que mais travava a abertura.
+- **Vídeos 30% menores**, com um ajuste de compressão próprio para arte
+  animada, conferido quadro a quadro. O de celular do Brasil x Paraguai foi
+  de 1,05 MB para 0,76 MB.
+- **Logo do topo** na versão de 360px: 11 KB em vez de 26 KB.
+
+Fica para depois, se quiserem ir além: gerar o HTML pronto no build. Hoje a
+página só aparece depois que o JavaScript roda; com o HTML pronto, o texto
+apareceria uns meio segundo antes no celular lento. Mexe nas animações de
+entrada, por isso não entrou sem combinar.
 
 ---
 
@@ -264,4 +311,5 @@ npm run dev
 | `npm run fotos` | converte as imagens de `instagram/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera os cartões de link |
-| `npm run avif` | gera a versão AVIF da foto da capa |
+| `npm run versoes` | gera a versão de 1080px e as AVIF das imagens, e a logo pequena |
+| `npm run fontes` | copia as fontes da marca para `public/fontes/` |

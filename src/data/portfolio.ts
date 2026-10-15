@@ -3,8 +3,9 @@
  * ============
  *
  * Tudo veio do Instagram da agência, convertido por
- * scripts/importar-instagram.mjs. Cada imagem existe em duas larguras: a cheia
- * e a de 600px (`-600.webp`), e é o `srcset` que escolhe.
+ * scripts/importar-instagram.mjs. Cada imagem existe em até três larguras (a
+ * de 600px, a de 1080 e a cheia), em WebP e em AVIF (scripts/versoes.mjs), e
+ * é o `<picture>` de components/Foto.tsx que escolhe.
  *
  * DUAS LISTAS, PORQUE SÃO DOIS TRABALHOS DIFERENTES
  * -------------------------------------------------
@@ -44,17 +45,19 @@ function imagem(caminho: string, alt: string, largura = 1280, altura = 1600): Im
   }
 }
 
-/** `srcset` pronto para as duas versões. */
-export function srcsetDe(imagem: Imagem) {
-  return `${imagem.pequena} 600w, ${imagem.src} ${imagem.largura}w`
-}
+/** A largura do meio. Só existe nas imagens mais largas que ela. */
+const LARGURA_MEDIA = 1080
 
 /**
- * O mesmo `srcset`, em AVIF. Só existe para as fotos que passaram por
- * scripts/avif.mjs (as da primeira tela).
+ * `srcset` pronto: 600, 1080 (quando houver) e a cheia, no formato pedido.
+ * Ver o porquê das larguras em scripts/versoes.mjs.
  */
-export function srcsetAvif(imagem: Imagem) {
-  return srcsetDe(imagem).replace(/\.webp/g, '.avif')
+export function srcsetDe(imagem: Imagem, formato: 'webp' | 'avif' = 'webp') {
+  const base = imagem.src.replace(/\.webp$/, '')
+  const versoes = [`${base}-600.${formato} 600w`]
+  if (imagem.largura > LARGURA_MEDIA) versoes.push(`${base}-${LARGURA_MEDIA}.${formato} ${LARGURA_MEDIA}w`)
+  versoes.push(`${base}.${formato} ${imagem.largura}w`)
+  return versoes.join(', ')
 }
 
 /**

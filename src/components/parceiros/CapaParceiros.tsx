@@ -2,13 +2,14 @@ import { ArrowDown } from 'lucide-react'
 import type { CSSProperties } from 'react'
 
 import { numeros } from '../../data/numeros'
-import { artes, srcsetDe } from '../../data/portfolio'
+import { artes } from '../../data/portfolio'
 import { agenciaDoLink } from '../../lib/agencia'
 import { useRevelar } from '../../lib/movimento'
 import { cn } from '../../lib/utils'
 import Barra from '../Barra'
 import BotaoWhatsapp from '../BotaoWhatsapp'
 import Contador from '../Contador'
+import Foto from '../Foto'
 import Revelar from '../Revelar'
 import TituloAnimado from '../TituloAnimado'
 import { MENSAGEM_PARCEIRO } from './mensagens'
@@ -102,14 +103,10 @@ export default function CapaParceiros() {
           className={cn('leque relative mx-auto aspect-[5/4] w-full max-w-xl', aberto && 'esta-aberto')}
         >
           {LEQUE.map(({ arte, tx, ty, giro }, indice) => (
-            <img
+            <Foto
               key={arte.src}
-              src={arte.pequena}
-              srcSet={srcsetDe(arte)}
+              imagem={arte}
               sizes="(max-width: 1023px) 50vw, 22vw"
-              alt={arte.alt}
-              width={arte.largura}
-              height={arte.altura}
               fetchPriority={indice === 2 ? 'high' : undefined}
               decoding="async"
               style={{ '--tx': tx, '--ty': ty, '--giro': giro } as CSSProperties}

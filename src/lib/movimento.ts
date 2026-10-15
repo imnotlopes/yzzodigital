@@ -13,12 +13,13 @@ import { useEffect, useRef, useState } from 'react'
  * A recomendação inicial era usar uma biblioteca de animação. Duas coisas
  * mudaram a conta:
  *
- *  1. São QUATRO aplicações independentes (ver entradas/comum.tsx), cada uma
- *     com o próprio bundle. Uma dependência de ~30 KB não é paga uma vez.
- *  2. O que este projeto precisa é revelar ao entrar, escalonar e um
- *     deslocamento de parallax. Nada disso é animação de layout, é transição
- *     de CSS disparada por um observador. Biblioteca resolveria o mesmo com
- *     uma API maior.
+ *  1. São duas páginas independentes (ver lib/montar.tsx), cada uma com o
+ *     próprio bundle, e o bundle inteiro de cada uma tem uns 20 KB. Uma
+ *     dependência de ~30 KB dobraria o peso.
+ *  2. O que este projeto precisa é revelar ao entrar, escalonar e as
+ *     fileiras que andam com a rolagem. Nada disso é animação de layout, é
+ *     transição de CSS disparada por um observador. Biblioteca resolveria o
+ *     mesmo com uma API maior.
  *
  * O custo de fazer à mão é não ter interpolação entre estados arbitrários.
  * Se um dia aparecer transição de página ou reordenação animada de grade,
@@ -105,69 +106,6 @@ export function useRevelar<T extends HTMLElement = HTMLDivElement>({
   }, [visivel, margem])
 
   return { alvo, visivel }
-}
-
-/**
- * Deslocamento lento de uma imagem enquanto a página rola.
- *
- * O efeito é DE PROPÓSITO discreto: `intensidade` é a fração da altura da
- * tela que a imagem percorre a mais, e o padrão de 0,12 dá o suficiente para
- * a foto parecer atrás do texto sem virar carrossel de fundo.
- *
- * Escreve numa CSS variable em vez de mexer em `style.transform` para não
- * disputar a propriedade com nenhuma classe do Tailwind.
- */
-export function useParallax<T extends HTMLElement = HTMLDivElement>(intensidade = 0.12) {
-  const alvo = useRef<T>(null)
-
-  useEffect(() => {
-    const elemento = alvo.current
-    if (!elemento || movimentoReduzido()) return
-
-    let agendado = false
-
-    function posicionar() {
-      agendado = false
-      const atual = alvo.current
-      if (!atual) return
-
-      const caixa = atual.getBoundingClientRect()
-      const alturaTela = window.innerHeight || 1
-
-      /* Fora da tela não gasta cálculo nem pinta. */
-      if (caixa.bottom < 0 || caixa.top > alturaTela) return
-
-      /*
-        -1 quando o bloco está inteiro abaixo da tela, +1 quando já passou
-        inteiro por cima. No meio da tela dá 0, que é onde a foto fica na
-        posição neutra, é isso que impede o corte aparecer na borda.
-      */
-      const progresso = (caixa.top + caixa.height / 2 - alturaTela / 2) / alturaTela
-      const limitado = Math.max(-1, Math.min(1, progresso))
-
-      atual.style.setProperty(
-        '--parallax',
-        `${(limitado * intensidade * alturaTela).toFixed(1)}px`,
-      )
-    }
-
-    function aoRolar() {
-      if (agendado) return
-      agendado = true
-      requestAnimationFrame(posicionar)
-    }
-
-    posicionar()
-    window.addEventListener('scroll', aoRolar, { passive: true })
-    window.addEventListener('resize', aoRolar)
-
-    return () => {
-      window.removeEventListener('scroll', aoRolar)
-      window.removeEventListener('resize', aoRolar)
-    }
-  }, [intensidade])
-
-  return alvo
 }
 
 /**

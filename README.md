@@ -1,7 +1,8 @@
 # Yzzo Digital: landing page
 
 Site de uma página da Yzzo Digital, agência de marketing esportivo para
-atletas de futebol. Vite + React + Tailwind, estático na Vercel.
+atletas de futebol. Vite + Preact (pela camada de compatibilidade com o
+React: o código escreve `react`) + Tailwind, estático na Vercel.
 
 As etapas do projeto, o que já está feito e o que falta: **[ETAPAS.md](ETAPAS.md)**.
 
@@ -25,7 +26,8 @@ npm run dev
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera `og-yzzo.jpg` e `og-parceiros.jpg`, os cartões de link |
 | `npm run miniaturas` | versões de 160px das artes, para os cartões de pacote |
-| `npm run avif` | versão AVIF da foto da capa (roda depois de `fotos`) |
+| `npm run versoes` | versão de 1080px e as AVIF de artes, Match Days e capa, e a logo de 360px (roda depois de `fotos` e `midia`) |
+| `npm run fontes` | copia as fontes da marca de `@fontsource` para `public/fontes/` |
 
 ## Onde mexer
 
@@ -61,10 +63,17 @@ uma entrada em `src/`, uma linha em `PAGINAS` (`vite.config.ts`) e outra em
 O dump do Instagram fica em `instagram/`, fora do Git. A tabela `MAPA` em
 `scripts/importar-instagram.mjs` traduz o número de cada arquivo para o
 caminho que o site usa, e cada imagem sai em duas larguras (cheia e 600px).
+Depois, `npm run versoes` gera a de 1080px e a AVIF de cada largura.
 
-A foto da capa tem também a versão AVIF (`npm run avif`), e é baixada antes
-do resto pelo `preload` do `index.html`. Trocando a foto, troque nos dois
-lugares: `fotoCapa` em `src/data/portfolio.ts` e o `preload`.
+Toda imagem do portfólio passa por `src/components/Foto.tsx`: um `<picture>`
+com AVIF para quem abre e WebP para o resto. O `sizes` de cada uso diz a
+largura que a imagem ocupa na tela; errar para mais faz o celular baixar a
+versão grande.
+
+A foto da capa é baixada antes do resto pelo `preload` do `index.html`.
+Trocando a foto, troque nos dois lugares: `fotoCapa` em
+`src/data/portfolio.ts` e o `preload` (o `imagesizes` dele repete o `sizes`
+de `src/components/Capa.tsx`).
 
 ## Vídeos
 
@@ -81,5 +90,6 @@ configurado nesta pasta como `danielli` (e o histórico dela no ramo local
 `danielli-legado`): nunca dê push para ele daqui.
 
 O `vercel.json` liga os endereços sem `.html` (`/parceiros`), guarda em cache
-por um ano os arquivos de `assets/` (o nome deles muda a cada build) e por um
-mês as imagens e os vídeos, e põe os cabeçalhos básicos de segurança.
+por um ano os arquivos de `assets/` (o nome deles muda a cada build) e as
+fontes, por um mês as imagens e os vídeos, e põe os cabeçalhos básicos de
+segurança.

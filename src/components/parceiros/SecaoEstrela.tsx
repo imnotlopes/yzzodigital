@@ -20,7 +20,7 @@ import Video from '../Video'
  */
 export default function SecaoEstrela() {
   return (
-    <section id="estrela" className="overflow-hidden bg-amarelo" aria-labelledby="titulo-estrela">
+    <section id="estrela" className="adiar overflow-hidden bg-amarelo" aria-labelledby="titulo-estrela">
       <div className="container-yz secao grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-20">
         <div>
           <Revelar>

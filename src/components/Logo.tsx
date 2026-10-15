@@ -5,6 +5,8 @@ interface LogoProps {
   tom?: 'escuro' | 'claro'
   /** Primeira coisa da página: carrega sem esperar a rolagem. */
   prioridade?: boolean
+  /** A largura dela na tela, para escolher entre a versão de 360 e a de 720. */
+  sizes?: string
   className?: string
 }
 
@@ -21,10 +23,13 @@ interface LogoProps {
  *
  * NUNCA SOBRE O AMARELO: a seta é da mesma cor e some.
  */
-export default function Logo({ tom = 'escuro', prioridade = false, className }: LogoProps) {
+export default function Logo({ tom = 'escuro', prioridade = false, sizes = '7rem', className }: LogoProps) {
+  const nome = tom === 'claro' ? 'logo-claro' : 'logo'
   return (
     <img
-      src={tom === 'claro' ? '/marca/logo-claro.webp' : '/marca/logo.webp'}
+      src={`/marca/${nome}.webp`}
+      srcSet={`/marca/${nome}-360.webp 360w, /marca/${nome}.webp 720w`}
+      sizes={sizes}
       alt="Yzzo Digital"
       width={720}
       height={198}

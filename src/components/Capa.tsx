@@ -1,11 +1,12 @@
 import { ArrowDown } from 'lucide-react'
 
 import { numeros } from '../data/numeros'
-import { fotoCapa, srcsetAvif, srcsetDe } from '../data/portfolio'
+import { fotoCapa } from '../data/portfolio'
 import { brand } from '../lib/brand'
 import Barra from './Barra'
 import BotaoWhatsapp from './BotaoWhatsapp'
 import Contador from './Contador'
+import Foto from './Foto'
 import Revelar from './Revelar'
 import TituloAnimado from './TituloAnimado'
 
@@ -42,8 +43,16 @@ import TituloAnimado from './TituloAnimado'
  * chega palavra por palavra e o amarelo pinta o "imagem" depois. O "+700"
  * sobe contando.
  */
-/** A largura da foto na tela: inteira no celular, a coluna da direita no desktop. */
-const TAMANHO_FOTO = '(max-width: 1023px) 100vw, 56vw'
+/**
+ * A largura da foto na tela: inteira no celular, a coluna da direita no
+ * desktop.
+ *
+ * No celular o valor é de propósito MENOR que a tela (360px): o navegador
+ * multiplica pela densidade (3 no iPhone) e cai na versão de 1080, com 57 KB,
+ * em vez da cheia, com 143 KB. A foto é desfocada e granulada, e a diferença
+ * de nitidez não aparece; a de tempo, no 4G, aparece.
+ */
+const TAMANHO_FOTO = '(max-width: 480px) 360px, (max-width: 1023px) 100vw, 56vw'
 
 export default function Capa() {
   const [destaque] = numeros
@@ -61,26 +70,17 @@ export default function Capa() {
       */}
       <div className="capa_foto absolute inset-x-0 top-0 h-[78svh] overflow-hidden lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[56%]">
         {/*
-          Em AVIF para quem abre (quase todo navegador): no celular de tela
-          densa, 140 KB em vez de 326. O `sizes` e o `srcset` repetem o
-          preload do index.html; se um mudar, o outro muda junto, ou a foto
-          baixa duas vezes.
+          O `sizes` e o `srcset` em AVIF repetem o preload do index.html; se
+          um mudar, o outro muda junto, ou a foto baixa duas vezes.
         */}
-        <picture className="block size-full">
-          <source type="image/avif" srcSet={srcsetAvif(fotoCapa)} sizes={TAMANHO_FOTO} />
-          <img
-            src={fotoCapa.src}
-            srcSet={srcsetDe(fotoCapa)}
-            sizes={TAMANHO_FOTO}
-            alt={fotoCapa.alt}
-            width={fotoCapa.largura}
-            height={fotoCapa.altura}
-            /* Primeira imagem da página: define quando a pessoa vê alguma coisa. */
-            fetchPriority="high"
-            decoding="async"
-            className="size-full object-cover object-[50%_30%]"
-          />
-        </picture>
+        <Foto
+          imagem={fotoCapa}
+          sizes={TAMANHO_FOTO}
+          /* Primeira imagem da página: define quando a pessoa vê alguma coisa. */
+          fetchPriority="high"
+          decoding="async"
+          className="size-full object-cover object-[50%_30%]"
+        />
       </div>
 
       <div className="relative px-6 pb-16 pt-[54svh] text-center sm:px-10 md:pb-24 md:pt-[58svh] lg:w-[48%] lg:px-10 lg:py-28 xl:px-16">

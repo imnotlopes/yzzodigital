@@ -19,7 +19,10 @@ export const sobre =
 export interface Servico {
   titulo: string
   texto: string
-  /** Caminho em public/, na versão de 600px: o cartão é pequeno. */
+  /**
+   * Caminho em public/, na versão de 600px: o cartão é pequeno. Precisa ter
+   * a irmã .avif ao lado (scripts/versoes.mjs).
+   */
   imagem: string
   alt: string
 }

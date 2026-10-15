@@ -59,7 +59,7 @@ export default function SecaoPacotes({
   fundo = 'papel',
 }: SecaoPacotesProps) {
   return (
-    <section id={id} className={fundo === 'branco' ? 'bg-branco' : 'bg-papel'} aria-labelledby={`titulo-${id}`}>
+    <section id={id} className={cn('adiar', fundo === 'branco' ? 'bg-branco' : 'bg-papel')} aria-labelledby={`titulo-${id}`}>
       <div className="container-yz secao">
         <Revelar>
           <TituloSecao

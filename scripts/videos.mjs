@@ -18,9 +18,15 @@ import sharp from 'sharp'
  *
  * O ALVO
  * ------
- * CRF 31 veio calibrado do projeto da Danielli, olhando quadro a quadro. Arte
- * de motion tem texto fino, que sofre mais que foto: conferir na primeira leva
- * se as letras sobrevivem, e descer o CRF do vídeo que borrar.
+ * CRF 33 no computador e 36 no celular, com `-tune animation`, que é o ajuste
+ * do x264 para arte de cor chapada e contorno. Calibrado olhando quadro a
+ * quadro (outubro de 2026): contra o CRF 31/33 de antes, cada vídeo de celular
+ * ficou uns 30% menor, e o número da camisa e a data continuam limpos. Arte de
+ * motion tem texto fino, que sofre mais que foto: se um vídeo novo borrar as
+ * letras, desça o CRF dele no PLANO.
+ *
+ * AV1 foi testado e não compensou: o granulado destas artes pesa tanto em AV1
+ * quanto em H.264, e o AV1 ainda não toca em todo iPhone.
  *
  * Depois de rodar, apontar `src`, `srcCelular` e `poster` em
  * src/data/videos.ts. O placeholder vira vídeo sozinho.
@@ -46,13 +52,13 @@ const SAIDA = 'public/videos'
  * que cabem, e vídeo é 90% do peso desta página.
  *
  * 540 cobre retina com folga e derruba quase metade dos bytes. O CRF sobe
- * junto (33 contra 31): num quadro pequeno, a compressão a mais não aparece.
+ * junto (36 contra 33): num quadro pequeno, a compressão a mais não aparece.
  *
  * O arquivo grande continua existindo para o computador, onde a coluna do
  * tríptico tem 390px e pede os 720.
  */
 const LARGURA_CELULAR = 540
-const CRF_CELULAR = 33
+const CRF_CELULAR = 36
 
 /**
  * O plano de cada vídeo.
@@ -63,9 +69,9 @@ const CRF_CELULAR = 33
  */
 const PLANO = [
   /* O Match Day do FC Estrela pela Copa Goiás: rosto de perfil e o lance. */
-  { arquivo: 'estrela-x-vila-nova.mp4', crf: 31, posterEm: 6, celular: LARGURA_CELULAR },
+  { arquivo: 'estrela-x-vila-nova.mp4', crf: 33, posterEm: 6, celular: LARGURA_CELULAR },
   /* O Match Day da Seleção contra o Paraguai, em amarelo e azul. */
-  { arquivo: 'brasil-x-paraguai.mp4', crf: 31, posterEm: 10, celular: LARGURA_CELULAR },
+  { arquivo: 'brasil-x-paraguai.mp4', crf: 33, posterEm: 10, celular: LARGURA_CELULAR },
 ]
 
 function ffmpeg(args) {
@@ -102,6 +108,7 @@ for (const { arquivo, crf, posterEm, celular } of PLANO) {
     '-c:v', 'libx264',
     '-crf', String(crf),
     '-preset', 'slow',
+    '-tune', 'animation',
     /* `high` + yuv420p é a combinação que toca em todo lugar, iOS incluído. */
     '-profile:v', 'high',
     '-pix_fmt', 'yuv420p',
@@ -129,6 +136,7 @@ for (const { arquivo, crf, posterEm, celular } of PLANO) {
       '-c:v', 'libx264',
       '-crf', String(CRF_CELULAR),
       '-preset', 'slow',
+    '-tune', 'animation',
       '-profile:v', 'high',
       '-pix_fmt', 'yuv420p',
       '-movflags', '+faststart',

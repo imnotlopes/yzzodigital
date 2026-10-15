@@ -11,13 +11,31 @@
 
       A Vercel mostra este arquivo para qualquer endereço que não existe, no
       lugar da página de erro dela, que é em inglês e sem a marca. HTML puro,
-      sem React: é uma página que ninguém procura, e tem que abrir na hora.
+      sem JavaScript: é uma página que ninguém procura, e tem que abrir na hora.
     -->
     <title>Página não encontrada | Yzzo Digital</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Sofia+Sans+Extra+Condensed:wght@700&display=swap" />
     <style>
+      @font-face {
+        font-family: 'Sofia Sans Extra Condensed';
+        font-weight: 700;
+        font-display: swap;
+        src: url('/fontes/sofia-700.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Poppins';
+        font-weight: 400;
+        font-display: swap;
+        src: url('/fontes/poppins-400.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Poppins';
+        font-weight: 600;
+        font-display: swap;
+        src: url('/fontes/poppins-600.woff2') format('woff2');
+      }
+
       *,
       *::before,
       *::after {

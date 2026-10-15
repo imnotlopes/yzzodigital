@@ -19,7 +19,7 @@ import TituloSecao from './TituloSecao'
  */
 export default function SecaoTime() {
   return (
-    <section className="overflow-hidden bg-amarelo" aria-labelledby="titulo-time">
+    <section className="adiar overflow-hidden bg-amarelo" aria-labelledby="titulo-time">
       <div className="container-yz pt-[var(--secao-m)]">
         <Revelar>
           <TituloSecao

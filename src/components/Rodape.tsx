@@ -23,11 +23,11 @@ const LINKS = [
  */
 export default function Rodape() {
   return (
-    <footer className="fundo-escuro [--brilho-y:-60%]">
+    <footer className="fundo-escuro adiar [--brilho-y:-60%]">
       <div className="container-yz">
         <div className="flex flex-col gap-8 border-t border-branco/10 py-12 md:flex-row md:items-end md:justify-between md:py-16">
           <div className="flex flex-col gap-4">
-            <Logo tom="claro" className="w-36 md:w-44" />
+            <Logo tom="claro" sizes="11rem" className="w-36 md:w-44" />
             <p className="max-w-[36ch] text-sm text-cinza-claro">{brand.slogan}</p>
           </div>
 

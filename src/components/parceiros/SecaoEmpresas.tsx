@@ -27,7 +27,7 @@ import { MENSAGEM_PARCEIRO } from './mensagens'
  */
 export default function SecaoEmpresas() {
   return (
-    <section id="empresas" className="fundo-escuro" aria-labelledby="titulo-empresas">
+    <section id="empresas" className="fundo-escuro adiar" aria-labelledby="titulo-empresas">
       <div className="container-yz secao">
         <Revelar>
           <TituloSecao

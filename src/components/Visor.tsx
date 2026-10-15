@@ -5,6 +5,28 @@ import { srcsetDe, type Imagem } from '../data/portfolio'
 import type { EspacoDeVideo } from '../data/videos'
 import { movimentoReduzido } from '../lib/movimento'
 import { cn } from '../lib/utils'
+import Foto from './Foto'
+
+/** A largura da arte no visor: a tela inteira no celular, 70% da altura no resto. */
+const TAMANHO_NO_VISOR = '(max-width: 767px) 100vw, 70vh'
+
+/**
+ * Baixa uma arte antes de ela aparecer, na mesma versão que o visor vai
+ * pedir: um `<picture>` solto, com os mesmos `srcset` e `sizes` da `<Foto>`.
+ * Uma `<img>` comum baixaria o WebP, e o visor depois pediria o AVIF.
+ */
+function adiantar(imagem: Imagem) {
+  const picture = document.createElement('picture')
+  const fonte = document.createElement('source')
+  fonte.type = 'image/avif'
+  fonte.srcset = srcsetDe(imagem, 'avif')
+  fonte.sizes = TAMANHO_NO_VISOR
+  const img = document.createElement('img')
+  img.sizes = TAMANHO_NO_VISOR
+  img.srcset = srcsetDe(imagem)
+  picture.append(fonte, img)
+  img.src = imagem.pequena
+}
 
 /** O que o visor mostra: uma arte ou um Motion. */
 export type ItemVisor = Imagem | EspacoDeVideo
@@ -64,11 +86,7 @@ export default function Visor({ itens, indice, aoMudar }: VisorProps) {
     if (indice === null || itens.length < 2) return
     for (const passo of [1, -1]) {
       const vizinha = itens[(indice + passo + itens.length) % itens.length]
-      if (!ehVideo(vizinha)) {
-        const imagem = new Image()
-        imagem.srcset = srcsetDe(vizinha)
-        imagem.src = vizinha.src
-      }
+      if (!ehVideo(vizinha)) adiantar(vizinha)
     }
   }, [indice, itens])
 
@@ -136,11 +154,9 @@ export default function Visor({ itens, indice, aoMudar }: VisorProps) {
                 className="max-h-[86svh] max-w-[calc(100vw-2rem)] rounded-sm"
               />
             ) : !ehVideo(atual) ? (
-              <img
-                src={atual.src}
-                srcSet={srcsetDe(atual)}
-                sizes="(max-width: 767px) 100vw, 70vh"
-                alt={atual.alt}
+              <Foto
+                imagem={atual}
+                sizes={TAMANHO_NO_VISOR}
                 className="max-h-[86svh] max-w-[calc(100vw-2rem)] select-none object-contain"
                 draggable={false}
               />

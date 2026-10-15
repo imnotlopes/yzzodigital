@@ -15,7 +15,7 @@ import TituloSecao from './TituloSecao'
  */
 export default function SecaoServicos() {
   return (
-    <section id="servicos" className="fundo-escuro" aria-labelledby="titulo-servicos">
+    <section id="servicos" className="fundo-escuro adiar" aria-labelledby="titulo-servicos">
       <div className="container-yz secao">
         <Revelar>
           <TituloSecao id="titulo-servicos" barra="A Yzzo" claro lado descricao={sobre}>
@@ -37,13 +37,18 @@ export default function SecaoServicos() {
               className="cartao-elevar group flex overflow-hidden rounded-sm bg-grafite ring-1 ring-branco/[0.06] sm:flex-col"
             >
               <div className="relative aspect-square w-[36%] shrink-0 overflow-hidden sm:aspect-[4/3] sm:w-auto">
-                <img
-                  src={servico.imagem}
-                  alt={servico.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="size-full object-cover object-[50%_22%] transition-transform duration-700 ease-suave group-hover:scale-105"
-                />
+                {/* AVIF para quem abre: os seis cartões ficam logo abaixo da capa, e
+                    no 4G disputavam a conexão com a foto dela. */}
+                <picture className="contents">
+                  <source type="image/avif" srcSet={servico.imagem.replace(/\.webp$/, '.avif')} />
+                  <img
+                    src={servico.imagem}
+                    alt={servico.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="size-full object-cover object-[50%_22%] transition-transform duration-700 ease-suave group-hover:scale-105"
+                  />
+                </picture>
                 <span className="t-h3 absolute left-0 top-0 bg-amarelo px-2.5 pb-0.5 pt-1.5 text-[1.375rem] text-preto md:px-3 md:pb-1 md:pt-2 md:text-[2rem]">
                   {String(indice + 1).padStart(2, '0')}
                 </span>

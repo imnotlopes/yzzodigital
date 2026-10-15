@@ -37,24 +37,22 @@
     <meta name="twitter:image" content="https://yzzodigital.vercel.app/og-yzzo.jpg" />
 
     <!--
-      A foto da capa começa a baixar junto com o resto, sem esperar o React
-      montar a página: no 4G fraco eram uns dois segundos de capa vazia. O
-      `imagesrcset` e o `imagesizes` são os mesmos do <picture> de
+      A foto da capa começa a baixar junto com o resto, sem esperar o
+      JavaScript montar a página: no 4G fraco eram uns dois segundos de capa
+      vazia. O `imagesrcset` e o `imagesizes` são os mesmos da <Foto> de
       src/components/Capa.tsx; se um mudar, o outro muda junto, ou a foto
       baixa duas vezes. Navegador sem AVIF ignora a linha.
     -->
-    <link rel="preload" as="image" type="image/avif" href="/fotos/camisa-20.avif" imagesrcset="/fotos/camisa-20-600.avif 600w, /fotos/camisa-20.avif 1280w" imagesizes="(max-width: 1023px) 100vw, 56vw" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/avif" href="/fotos/camisa-20.avif" imagesrcset="/fotos/camisa-20-600.avif 600w, /fotos/camisa-20-1080.avif 1080w, /fotos/camisa-20.avif 1280w" imagesizes="(max-width: 480px) 360px, (max-width: 1023px) 100vw, 56vw" fetchpriority="high" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!--
-      As fontes chegam sem travar a primeira pintura: o CSS do Google vem como
-      "preload" e vira folha de estilo quando termina de baixar. Enquanto isso,
-      o texto aparece nas fontes de reserva, medidas para ocupar o mesmo espaço
-      (ver o começo de src/index.css), e por isso a troca não faz a página pular.
+      As duas fontes da primeira tela (o título e o texto) começam a baixar
+      junto com a página. As outras vêm quando aparecem; até lá, o texto usa
+      as fontes de reserva, medidas para ocupar o mesmo espaço (ver o começo
+      de src/index.css), e por isso a troca não faz a página pular.
     -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Sofia+Sans+Extra+Condensed:ital,wght@0,700;0,900;1,900&display=swap" /></noscript>
+    <link rel="preload" as="font" type="font/woff2" href="/fontes/sofia-700.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fontes/poppins-400.woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>
