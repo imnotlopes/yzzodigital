@@ -83,13 +83,17 @@ export default function Capa() {
         </picture>
       </div>
 
-      <div className="relative px-6 pb-16 pt-[50svh] text-center sm:px-10 md:pb-24 md:pt-[54svh] lg:w-[48%] lg:px-10 lg:py-28 xl:px-16">
+      <div className="relative px-6 pb-16 pt-[54svh] text-center sm:px-10 md:pb-24 md:pt-[58svh] lg:w-[48%] lg:px-10 lg:py-28 xl:px-16">
         <div className="mx-auto flex max-w-xl flex-col items-center md:max-w-2xl lg:max-w-xl">
-          <Revelar distancia="curta" naPrimeiraTela className="w-full">
+          {/*
+            A barra só no desktop, onde mora no papel. No celular ela caía em
+            cima da camisa: amarelo sobre amarelo, embolado.
+          */}
+          <Revelar distancia="curta" naPrimeiraTela className="hidden w-full lg:block">
             <Barra className="mx-auto" />
           </Revelar>
 
-          <h1 id="titulo-capa" className="mt-6 font-normal md:mt-10">
+          <h1 id="titulo-capa" className="font-normal lg:mt-10">
             <Revelar como="span" distancia="curta" atraso={80} naPrimeiraTela className="block">
               <span className="block font-sans text-[1.25rem] font-normal leading-tight md:text-[1.625rem]">
                 Seu <strong className="font-bold">desempenho</strong> fala por você.

@@ -217,8 +217,9 @@ https://yzzodigital.vercel.app/parceiros?agencia=Sabu+Sports
 **Teste: a capa no jeito da Danielli.** A pedido de vocês, para ver como fica:
 a foto da camisa 20 grande, desmanchando no papel, e o texto centralizado
 onde ela some. No computador, a foto fica em pé à direita; no celular, no alto
-da tela, com o texto começando dentro do desmanche. Saíram o Motion por cima
-da foto e os cacos amarelos. Está num commit só ("Testa a capa no jeito da
+da tela, com o texto começando dentro do desmanche (sem a barra amarela, que
+ali caía em cima da camisa). Saíram o Motion por cima da foto e os cacos
+amarelos. Está num commit só ("Testa a capa no jeito da
 Danielli"): se não aprovarem, a capa anterior volta inteira.
 
 | o quê | como ficou |
