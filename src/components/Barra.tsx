@@ -19,7 +19,8 @@ interface BarraProps {
 export default function Barra({ texto, className }: BarraProps) {
   return (
     <span className={cn('barra', className)}>
-      <span className="whitespace-nowrap">
+      {/* Nome comprido (o da agência, no link) corta com reticências em vez de estourar a tela. */}
+      <span className="min-w-0 truncate">
         {texto ?? (
           <>
             #Time<strong className="font-bold">YzzoDigital</strong>
@@ -27,7 +28,7 @@ export default function Barra({ texto, className }: BarraProps) {
         )}
       </span>
       <span aria-hidden className="barra_fio" />
-      <span className="whitespace-nowrap">{new Date().getFullYear()} ©</span>
+      <span className="shrink-0 whitespace-nowrap">{new Date().getFullYear()} ©</span>
     </span>
   )
 }

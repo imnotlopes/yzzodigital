@@ -118,6 +118,13 @@ export const estrelaDoMes = {
     'Nossa recomendação: uma publicação por semana para o melhor atleta da semana. Fortalece a presença digital dele, valoriza o desempenho e mantém o perfil ativo.',
 } as const
 
+/** O texto da Estrela do Mês, com o nome da agência quando o link traz um. */
+export function textoEstrela(agencia: string) {
+  return agencia
+    ? `A ${agencia} pode escolher um atleta para ser a Estrela do Mês, com mais destaque nas publicações e nos conteúdos produzidos.`
+    : estrelaDoMes.texto
+}
+
 export function formatarPreco(reais: number, centavos = false) {
   return reais.toLocaleString('pt-BR', {
     style: 'currency',

@@ -1,5 +1,6 @@
 import { definicoesDaParceria, modalidades } from '../../data/pacotes'
 import { servicos } from '../../data/servicos'
+import { agenciaDoLink } from '../../lib/agencia'
 import BotaoWhatsapp from '../BotaoWhatsapp'
 import Revelar from '../Revelar'
 import Ritmo from '../Ritmo'
@@ -55,11 +56,13 @@ export default function SecaoEmpresas() {
         </ul>
 
         {/* Como funciona a parceria: os quatro pontos da proposta. */}
-        <div className="mt-20 grid gap-12 lg:mt-24 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
+        <div className="mt-20 grid grid-cols-1 gap-12 lg:mt-24 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
           <Revelar>
             <h3 className="t-h2 text-branco">Como funciona a parceria</h3>
             <p className="mt-6 max-w-[42ch] text-[1.0625rem] text-cinza-claro">
-              Depois de fechar a parceria entre a Yzzo Digital e a sua empresa,
+              {/* O "(NOME DA AGÊNCIA)" da proposta da Yzzo, preenchido pelo link. */}
+              Depois de fechar a parceria entre a Yzzo Digital e a{' '}
+              {agenciaDoLink || 'sua empresa'},
               definimos juntos:
             </p>
           </Revelar>

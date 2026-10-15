@@ -1,7 +1,8 @@
 import { Star } from 'lucide-react'
 
-import { estrelaDoMes } from '../../data/pacotes'
+import { estrelaDoMes, textoEstrela } from '../../data/pacotes'
 import { matchDayEstrela } from '../../data/videos'
+import { agenciaDoLink } from '../../lib/agencia'
 import Revelar from '../Revelar'
 import Video from '../Video'
 
@@ -20,7 +21,7 @@ import Video from '../Video'
 export default function SecaoEstrela() {
   return (
     <section id="estrela" className="overflow-hidden bg-amarelo" aria-labelledby="titulo-estrela">
-      <div className="container-yz secao grid items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-20">
+      <div className="container-yz secao grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-20">
         <div>
           <Revelar>
             <p className="flex items-center gap-2">
@@ -37,7 +38,7 @@ export default function SecaoEstrela() {
 
           <Revelar atraso={120}>
             <p className="mt-8 max-w-[44ch] text-[1.1875rem] leading-snug md:text-[1.375rem]">
-              {estrelaDoMes.texto}
+              {textoEstrela(agenciaDoLink)}
             </p>
             <p className="mt-6 max-w-[52ch] border-l-2 border-preto pl-5 text-[1rem] text-preto/75">
               {estrelaDoMes.recomendacao}

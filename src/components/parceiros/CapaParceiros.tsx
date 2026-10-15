@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react'
 
 import { numeros } from '../../data/numeros'
 import { artes, srcsetDe } from '../../data/portfolio'
+import { agenciaDoLink } from '../../lib/agencia'
 import { useRevelar } from '../../lib/movimento'
 import { cn } from '../../lib/utils'
 import Barra from '../Barra'
@@ -45,10 +46,11 @@ export default function CapaParceiros() {
     <section id="inicio" className="relative overflow-hidden bg-papel pt-topo" aria-labelledby="titulo-parceiros">
       <div aria-hidden className="caco caco--a -bottom-px right-0 h-24 w-1/2 -scale-x-100 md:h-36" />
 
-      <div className="container-yz relative grid items-center gap-14 pb-20 pt-10 lg:min-h-[calc(100svh-var(--altura-topo))] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:py-12">
+      <div className="container-yz relative grid grid-cols-1 items-center gap-14 pb-20 pt-10 lg:min-h-[calc(100svh-var(--altura-topo))] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:py-12">
         <div>
           <Revelar distancia="curta" naPrimeiraTela>
-            <Barra texto="Para atletas e empresários" />
+            {/* Com ?agencia= no link, a barra diz para quem é esta página. */}
+            <Barra texto={agenciaDoLink ? `Para ${agenciaDoLink}` : 'Para atletas e empresários'} />
           </Revelar>
 
           <h1 id="titulo-parceiros" className="t-display mt-9">

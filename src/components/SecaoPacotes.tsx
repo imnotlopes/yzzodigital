@@ -22,7 +22,7 @@ interface SecaoPacotesProps {
    * assim que a Yzzo sabe se o contato veio da landing ou da página de
    * parceiros, sem ferramenta nenhuma.
    */
-  origem: 'pelo site' | 'pela página de parceiros'
+  origem: string
   /** Na landing, o convite para o pacote de empresas, que mora em /parceiros. */
   comLinkEmpresas?: boolean
   fundo?: 'papel' | 'branco'

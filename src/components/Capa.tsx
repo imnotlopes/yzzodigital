@@ -60,7 +60,7 @@ export default function Capa() {
       {/* Os cacos do fundo, como os do canto dos posts. */}
       <div aria-hidden className="caco caco--a -bottom-px left-0 h-28 w-2/3 opacity-90 md:h-40 md:w-1/2" />
 
-      <div className="container-yz relative grid items-center gap-12 pb-20 pt-10 md:pb-28 lg:min-h-[calc(100svh-var(--altura-topo))] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 lg:py-12">
+      <div className="container-yz relative grid grid-cols-1 items-center gap-12 pb-20 pt-10 md:pb-28 lg:min-h-[calc(100svh-var(--altura-topo))] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 lg:py-12">
         <div>
           <Revelar distancia="curta" naPrimeiraTela>
             <Barra />

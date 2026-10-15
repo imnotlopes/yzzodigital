@@ -187,8 +187,30 @@ então no celular lento há um instante em branco antes do conteúdo (1,5 a 2,3 
 na medição). Gerar o HTML pronto no build resolve, mas mexe nas animações de
 entrada da capa, por isso não entrou sem combinar.
 
-### Etapa 7 (opcional): link com o nome da agência ⏳
-`/parceiros?agencia=Nome` preenchendo o "(NOME DA AGÊNCIA)" da proposta.
+### Etapa 7: link com o nome da agência ✅ (em aprovação)
+
+Para mandar a página de parceiros já com o nome da agência, é só acrescentar
+`?agencia=` e o nome no fim do link, **com `+` no lugar dos espaços** (espaço
+quebra o link no WhatsApp):
+
+```
+https://yzzodigital.vercel.app/parceiros?agencia=Sabu+Sports
+```
+
+| onde | sem o nome | com `?agencia=Sabu+Sports` |
+| --- | --- | --- |
+| Barra da capa | Para atletas e empresários | Para Sabu Sports |
+| Como funciona a parceria | "…entre a Yzzo Digital e a sua empresa" | "…entre a Yzzo Digital e a Sabu Sports" |
+| Estrela do Mês | "Cada agência pode escolher…" | "A Sabu Sports pode escolher…" |
+| Mensagem do WhatsApp | "Vim pela página de parceiros…" | "Sou da Sabu Sports e vim pela página de parceiros…" |
+| Aba do navegador | Como funciona a Yzzo \| Para atletas e empresários | Como funciona a Yzzo \| Para Sabu Sports |
+
+- Aceita letras com acento, números, espaço e `& . - '` (R&M Assessoria,
+  F.C. Sports), até 40 caracteres. Qualquer outra coisa no link é ignorada e a
+  página mostra a versão sem nome.
+- O cartão que aparece ao colar o link no WhatsApp não muda: o robô do
+  WhatsApp não roda o site, só lê o título fixo da página.
+- Nome comprido corta com reticências na barra do celular.
 
 ### Etapa 8: acabamento e publicação ⏳
 Celular, acessibilidade, peso, textos para o Google e envio ao GitHub.

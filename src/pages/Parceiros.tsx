@@ -1,5 +1,5 @@
 import CapaParceiros from '../components/parceiros/CapaParceiros'
-import { MENSAGEM_PARCEIRO } from '../components/parceiros/mensagens'
+import { MENSAGEM_PARCEIRO, ORIGEM_PARCEIROS } from '../components/parceiros/mensagens'
 import SecaoEmpresas from '../components/parceiros/SecaoEmpresas'
 import SecaoEstrela from '../components/parceiros/SecaoEstrela'
 import FaixaPalavras from '../components/FaixaPalavras'
@@ -35,7 +35,7 @@ export default function Parceiros() {
     <>
       <CapaParceiros />
       <FaixaPalavras palavras={SERVICOS} />
-      <SecaoPacotes id="atletas" origem="pela página de parceiros" fundo="branco" />
+      <SecaoPacotes id="atletas" origem={ORIGEM_PARCEIROS} fundo="branco" />
       <SecaoEmpresas />
       <SecaoEstrela />
       <SecaoContato
