@@ -941,6 +941,65 @@
     transform: translate3d(0, var(--parallax, 0px), 0);
     will-change: transform;
   }
+
+  /*
+    A FOTO QUE SE DESMANCHA NO PAPEL (a capa no jeito da Danielli).
+
+    O véu é desenhado por cima da própria foto, e não da seção: no celular a
+    seção cresce com o texto, e paradas medidas na seção cairiam em lugares
+    diferentes a cada tela.
+
+    No celular desmancha para baixo, a partir do meio, onde o texto começa.
+    No pé da caixa é papel chapado, e a emenda com o fundo some.
+  */
+  .capa_foto::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgb(var(--papel-rgb) / 0) 40%,
+      rgb(var(--papel-rgb) / 0.86) 64%,
+      rgb(var(--papel-rgb) / 1) 88%
+    );
+  }
+
+  /*
+    No desktop a foto fica em pé à direita e desmancha para a esquerda, nos
+    primeiros 26% dela, que é onde ela encosta no texto. E um pouco no pé,
+    para a faixa de baixo não cortar a camisa numa linha seca.
+  */
+  @media (min-width: 1024px) {
+    .capa_foto::after {
+      background:
+        linear-gradient(
+          to right,
+          rgb(var(--papel-rgb) / 1) 0%,
+          rgb(var(--papel-rgb) / 0.6) 10%,
+          rgb(var(--papel-rgb) / 0) 26%
+        ),
+        linear-gradient(
+          to bottom,
+          rgb(var(--papel-rgb) / 0) 80%,
+          rgb(var(--papel-rgb) / 0.9) 100%
+        );
+    }
+  }
+
+  /*
+    A foto chega assentando: começa um pouco mais perto e volta ao lugar.
+    Só escala, sem transparência, para ela contar como pintada desde o
+    primeiro quadro (é a maior imagem da primeira tela).
+  */
+  .capa_foto img {
+    animation: capa-assenta 1800ms var(--ease-suave) both;
+  }
+
+  @keyframes capa-assenta {
+    from {
+      transform: scale(1.08);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -955,6 +1014,10 @@
   .parallax > img,
   .flutuar {
     transform: none;
+  }
+
+  .capa_foto img {
+    animation: none;
   }
 }
 

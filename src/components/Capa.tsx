@@ -2,15 +2,12 @@ import { ArrowDown } from 'lucide-react'
 
 import { numeros } from '../data/numeros'
 import { fotoCapa, srcsetDe } from '../data/portfolio'
-import { matchDayBrasil } from '../data/videos'
 import { brand } from '../lib/brand'
-import { useParallax } from '../lib/movimento'
 import Barra from './Barra'
 import BotaoWhatsapp from './BotaoWhatsapp'
 import Contador from './Contador'
 import Revelar from './Revelar'
 import TituloAnimado from './TituloAnimado'
-import Video from './Video'
 
 /**
  * Bloco 1, a abertura.
@@ -22,62 +19,74 @@ import Video from './Video'
  * inventei slogan: o melhor resumo do que a agência vende já estava escrito
  * por ela, e repetir aqui é o que liga o site ao feed de onde a pessoa veio.
  *
- * A FOTO E O MOTION, UM SOBRE O OUTRO
+ * A CAPA DA DANIELLI, COM A CAMISA 20
  * -----------------------------------
- * A camisa 20 de costas diz "imagem do atleta" sem legenda. Por cima da borda
- * dela, com moldura branca e levemente girado, o Match Day em Motion: é a
- * dupla de fotos da Danielli com o trabalho da Yzzo no lugar da foto pequena.
- * A foto mostra o atleta; o vídeo mostra o que a Yzzo faz com ele.
+ * (Em teste: a capa anterior, com o Motion por cima da foto, está no commit
+ * antes deste.)
  *
- * O vídeo começa no segundo 7,2, pulando a vinheta de cor: na capa, quem
- * chega precisa ver o atleta. Ele só baixa depois da foto, e com menos
- * movimento pedido no sistema vira o pôster.
+ * É a capa da apresentação da Danielli Noivas: uma foto só, grande, que se
+ * desmancha no papel, e o texto centralizado ali onde ela some.
+ *
+ *   CELULAR     a foto ocupa o alto da tela e desmancha para baixo; o texto
+ *               começa dentro do desmanche, com a ponta da foto atrás dele.
+ *   DESKTOP     a foto fica em pé na coluna da direita e desmancha para a
+ *               esquerda; o texto mora no papel da esquerda, centralizado.
+ *
+ * A camisa 20 de costas diz "imagem do atleta" sem legenda: o nome e o número
+ * são exatamente o que a Yzzo põe em destaque nas artes. As paradas do
+ * desmanche estão em `.capa_foto`, no index.css.
  *
  * O MOVIMENTO
  * -----------
- * O título chega palavra por palavra e o amarelo pinta o "imagem" depois. A
- * foto anda um pouco mais devagar que a página e os cacos amarelos andam no
- * sentido contrário: três planos, e é isso que dá profundidade. O "+700"
+ * A foto chega assentando, de um pouco mais perto para o lugar; o título
+ * chega palavra por palavra e o amarelo pinta o "imagem" depois. O "+700"
  * sobe contando.
- *
- * NO CELULAR O TEXTO VEM PRIMEIRO
- * -------------------------------
- * A frase é o que a pessoa precisa ler; a foto vem logo embaixo, com a ponta
- * aparecendo no pé da tela para dizer que a página continua.
  */
 export default function Capa() {
   const [destaque] = numeros
-  const foto = useParallax<HTMLDivElement>(0.05)
-  const cacoAlto = useParallax<HTMLDivElement>(-0.09)
-  const cacoBaixo = useParallax<HTMLDivElement>(-0.05)
 
   return (
     <section
       id="inicio"
-      className="relative overflow-hidden bg-papel pt-topo"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-papel lg:flex-row lg:items-center"
       aria-labelledby="titulo-capa"
     >
-      {/* Os cacos do fundo, como os do canto dos posts. */}
-      <div aria-hidden className="caco caco--a -bottom-px left-0 h-28 w-2/3 opacity-90 md:h-40 md:w-1/2" />
+      {/*
+        Fora do fluxo, como na Danielli: no celular cobre o alto da tela, no
+        desktop só a coluna da direita. O véu que desmancha a foto no papel é
+        o ::after da caixa (`.capa_foto`, no index.css).
+      */}
+      <div className="capa_foto absolute inset-x-0 top-0 h-[78svh] overflow-hidden lg:inset-y-0 lg:left-auto lg:h-auto lg:w-[56%]">
+        <img
+          src={fotoCapa.src}
+          srcSet={srcsetDe(fotoCapa)}
+          sizes="(max-width: 1023px) 100vw, 56vw"
+          alt={fotoCapa.alt}
+          width={fotoCapa.largura}
+          height={fotoCapa.altura}
+          /* Primeira imagem da página: define quando a pessoa vê alguma coisa. */
+          fetchPriority="high"
+          decoding="async"
+          className="size-full object-cover object-[50%_30%]"
+        />
+      </div>
 
-      <div className="container-yz relative grid grid-cols-1 items-center gap-12 pb-20 pt-10 md:pb-28 lg:min-h-[calc(100svh-var(--altura-topo))] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-16 lg:py-12">
-        <div>
-          <Revelar distancia="curta" naPrimeiraTela>
-            <Barra />
+      <div className="relative px-6 pb-16 pt-[50svh] text-center sm:px-10 md:pb-24 md:pt-[54svh] lg:w-[48%] lg:px-10 lg:py-28 xl:px-16">
+        <div className="mx-auto flex max-w-xl flex-col items-center md:max-w-2xl lg:max-w-xl">
+          <Revelar distancia="curta" naPrimeiraTela className="w-full">
+            <Barra className="mx-auto" />
           </Revelar>
 
-          <h1 id="titulo-capa" className="mt-9 font-normal">
+          <h1 id="titulo-capa" className="mt-6 font-normal md:mt-10">
             <Revelar como="span" distancia="curta" atraso={80} naPrimeiraTela className="block">
-              <span className="block font-sans text-[1.375rem] font-normal leading-tight md:text-[1.75rem]">
-                Seu <strong className="font-bold">desempenho</strong>
-                <br />
-                fala por você.
+              <span className="block font-sans text-[1.25rem] font-normal leading-tight md:text-[1.625rem]">
+                Seu <strong className="font-bold">desempenho</strong> fala por você.
               </span>
             </Revelar>
             <TituloAnimado
               naPrimeiraTela
               atraso={260}
-              className="t-display mt-4"
+              className="t-display mt-4 max-md:text-[min(4rem,17vw)] lg:text-[clamp(5rem,7.6vw,8rem)]"
               linhas={[
                 ['Sua', { texto: 'imagem', estilo: 'marca' }],
                 ['também', 'deveria.'],
@@ -86,12 +95,13 @@ export default function Capa() {
           </h1>
 
           <Revelar distancia="curta" atraso={640} naPrimeiraTela>
-            <p className="mt-7 max-w-[40ch] text-[1.0625rem] text-cinza">
+            <span aria-hidden className="mx-auto mt-6 block h-[3px] w-12 rounded-full bg-amarelo md:mt-8" />
+            <p className="mx-auto mt-5 max-w-[38ch] text-[1.0625rem] text-cinza md:mt-7">
               Artes e conteúdo visual para o futebol: Match Days, Motion,
               convocação, novo clube e DVD esportivo.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center md:mt-9 lg:flex-col lg:items-center xl:flex-row">
               <BotaoWhatsapp texto="Quero falar com a Yzzo" />
               <a href="#portfolio" className="btn btn-contorno">
                 Ver portfólio
@@ -100,48 +110,13 @@ export default function Capa() {
             </div>
 
             {destaque && (
-              <p className="mt-10 flex items-baseline gap-3">
+              <p className="mt-8 flex items-baseline justify-center gap-3 md:mt-10">
                 <Contador valor={destaque.valor} className="t-h3 text-[2.75rem]" />
                 <span className="text-sm font-medium text-cinza">
                   {destaque.rotulo} · {brand.assinatura}
                 </span>
               </p>
             )}
-          </Revelar>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div ref={cacoAlto} aria-hidden className="caco caco--c flutuar -right-6 -top-6 size-28 md:size-36" />
-
-          <Revelar distancia="nenhuma" atraso={160} naPrimeiraTela>
-            <div ref={foto} className="parallax relative aspect-[4/5] rounded-sm">
-              <img
-                src={fotoCapa.src}
-                srcSet={srcsetDe(fotoCapa)}
-                sizes="(max-width: 1023px) 90vw, 40vw"
-                alt={fotoCapa.alt}
-                width={fotoCapa.largura}
-                height={fotoCapa.altura}
-                /* Primeira imagem da página: define quando a pessoa vê alguma coisa. */
-                fetchPriority="high"
-                decoding="async"
-                className="size-full object-cover"
-              />
-            </div>
-          </Revelar>
-
-          <div ref={cacoBaixo} aria-hidden className="caco caco--b flutuar -bottom-6 -right-5 h-20 w-24 md:h-28 md:w-32" />
-
-          {/* O Motion, por cima da borda da foto. */}
-          <Revelar
-            distancia="curta"
-            atraso={900}
-            naPrimeiraTela
-            className="absolute -bottom-10 left-3 w-[38%] sm:-left-6 lg:-left-14 lg:w-[40%]"
-          >
-            <div className="moldura -rotate-3 rounded-[0.6rem] shadow-[var(--sombra-cartao)]">
-              <Video video={matchDayBrasil} inicio={7.2} className="rounded-[0.3rem]" />
-            </div>
           </Revelar>
         </div>
       </div>
