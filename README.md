@@ -19,14 +19,14 @@ npm run dev
 | comando | o que faz |
 | --- | --- |
 | `npm run dev` | servidor de desenvolvimento |
-| `npm run build` | gera `dist/` para publicar |
+| `npm run build` | gera `dist/` para publicar, já com as páginas prontas no HTML |
 | `npm run lint` | roda o oxlint |
 | `npm run fotos` | converte as imagens de `instagram/` para `public/` |
 | `npm run midia` | logo, ícones e Match Days de `banco-de-midia/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera `og-yzzo.jpg` e `og-parceiros.jpg`, os cartões de link |
 | `npm run miniaturas` | versões de 160px das artes, para os cartões de pacote |
-| `npm run versoes` | versão de 1080px e as AVIF de artes, Match Days e capa, e a logo de 360px (roda depois de `fotos` e `midia`) |
+| `npm run versoes` | larguras de 320, 800 e 1080px e as AVIF de artes, Match Days e capa, e a logo de 360px (roda depois de `fotos` e `midia`) |
 | `npm run fontes` | copia as fontes da marca de `@fontsource` para `public/fontes/` |
 
 ## Onde mexer
@@ -53,6 +53,13 @@ npm run dev
 Endereço que não existe cai em `public/404.html`: HTML puro, com a marca, que
 a Vercel serve sozinha.
 
+O build monta as páginas e escreve o resultado dentro do HTML
+(`scripts/prerender.mjs`, a partir de `src/prerender.tsx`); o navegador só
+acorda o que chegou pronto. Regra para quem mexer: **o primeiro render no
+navegador tem de sair igual ao do build**. Nada que leia a janela, a URL ou a
+preferência de movimento entra no estado inicial; entra num efeito (ver
+`src/lib/movimento.ts` e `src/lib/agencia.ts`).
+
 Cada página é um HTML próprio para ter o próprio cartão no WhatsApp (o robô
 do cartão não executa JavaScript). Para criar uma terceira: um HTML na raiz,
 uma entrada em `src/`, uma linha em `PAGINAS` (`vite.config.ts`) e outra em
@@ -63,7 +70,7 @@ uma entrada em `src/`, uma linha em `PAGINAS` (`vite.config.ts`) e outra em
 O dump do Instagram fica em `instagram/`, fora do Git. A tabela `MAPA` em
 `scripts/importar-instagram.mjs` traduz o número de cada arquivo para o
 caminho que o site usa, e cada imagem sai em duas larguras (cheia e 600px).
-Depois, `npm run versoes` gera a de 1080px e a AVIF de cada largura.
+Depois, `npm run versoes` gera as de 320, 800 e 1080px e a AVIF de cada largura.
 
 Toda imagem do portfólio passa por `src/components/Foto.tsx`: um `<picture>`
 com AVIF para quem abre e WebP para o resto. O `sizes` de cada uso diz a

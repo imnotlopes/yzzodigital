@@ -148,13 +148,18 @@ A seção de preços foi refeita do zero, a pedido de vocês ("tá bem ruim").
 | no cartão | o quê |
 | --- | --- |
 | **Para quem é** | uma linha embaixo do nome. ⚠️ Texto meu, tirado da proposta: confirmar |
-| **Peças no mês, desenhadas** | uma miniatura de arte de verdade para cada peça do pacote: 4 no Essencial, 5 + 1 de novo clube no Profissional, 4 Motion (com play) + 1 de novo clube no Motion. A diferença entre os pacotes se vê, sem comparar listas |
+| **Peças no mês, desenhadas** | uma miniatura de arte de verdade para cada peça do pacote: 4 no Essencial, 5 no Profissional, 4 Motion (com play) no Motion. A diferença entre os pacotes se vê, sem comparar listas |
 | **Preço** | grande, com o "R$" pequeno ao lado e "/mês" |
-| **Custo por arte** | o preço dividido pelas peças: R$ 22,50 · R$ 19,17 · R$ 28,00 |
+| **Custo por arte** | o preço dividido pelas peças: R$ 22,50 · R$ 23,00 · R$ 35,00 |
 | **Destaque** | o cartão preto com borda amarela e a etiqueta "Melhor custo por arte" é o de menor custo por peça. É calculado: se o preço mudar, o destaque acompanha |
 
 Embaixo, o DVD esportivo ("valor sob negociação") e, na landing, um cartão
 amarelo que leva ao pacote de empresas em /parceiros.
+
+**Ajuste de 17/10/2026, a pedido do Yan:** o Profissional ficou com 5 artes e
+o Motion com 4 artes em vídeo; a arte de anúncio de novo clube saiu dos dois.
+Com isso, o menor custo por arte passou a ser o do Essencial (R$ 22,50, contra
+R$ 23,00 do Profissional), e o destaque "Melhor custo por arte" foi para ele.
 
 ### Etapa 6b: carregamento e celular ✅ (aprovada)
 
@@ -276,10 +281,33 @@ O que foi feito:
   de 1,05 MB para 0,76 MB.
 - **Logo do topo** na versão de 360px: 11 KB em vez de 26 KB.
 
-Fica para depois, se quiserem ir além: gerar o HTML pronto no build. Hoje a
-página só aparece depois que o JavaScript roda; com o HTML pronto, o texto
-apareceria uns meio segundo antes no celular lento. Mexe nas animações de
-entrada, por isso não entrou sem combinar.
+### Etapa 10: página pronta no HTML, SEO e imagens ✅ (no ar)
+
+Medido com o Lighthouse (a mesma ferramenta do PageSpeed), no celular, no
+site publicado em yzzodigital.vercel.app:
+
+| | antes | depois |
+| --- | --- | --- |
+| **Nota de velocidade** | 99 (inicial) · 97 (/parceiros) | 100 · 100 |
+| **Acessibilidade, boas práticas e SEO** | 100 | 100 |
+| **Travamento** (tempo em que o celular não responde) | 80 ms · 180 ms | 30 ms · 40 ms |
+| **Página desenhada** (Speed Index) | 1,7 s · 1,8 s | 1,3 s · 1,3 s |
+| **Imagens maiores que o necessário** | 580 KB · 99 KB | 206 KB · nenhuma apontada |
+
+O que foi feito:
+
+- **A página chega pronta no HTML.** Antes o HTML era uma caixa vazia, e a
+  página só aparecia depois que o JavaScript rodava. Agora o build monta as
+  duas páginas e o navegador só "acorda" o que já está na tela. É também o
+  que o Google lê primeiro: textos, pacotes e links estão no HTML.
+- **O CSS vem dentro do HTML**, sem um segundo arquivo para esperar.
+- **As animações da primeira tela são só CSS**: começam junto com a página.
+  Sem JavaScript, nada fica escondido.
+- **Imagens em mais tamanhos** (320 e 800 px, e miniaturas de 96 px nos
+  pacotes), para os celulares de tela menos densa não baixarem a versão
+  grande.
+- **Google:** os três pacotes, com preço por mês, entraram nos dados da
+  agência que o Google lê, e o sitemap diz a data da última atualização.
 
 ---
 
@@ -288,7 +316,7 @@ entrada, por isso não entrou sem combinar.
 | o que | situação |
 | --- | --- |
 | **Domínio** | provisório: `yzzodigital.vercel.app` (`src/lib/brand.ts`, `index.html`, `parceiros.html`) |
-| **Vercel** | criar o projeto ligado ao repositório |
+| **Vercel** | ✅ no ar em `yzzodigital.vercel.app`, publicando sozinho a cada envio ao GitHub |
 | **Autorização de imagem** | boa parte dos atletas é menor de idade. Confirmar que o contrato com os responsáveis cobre o site |
 | **Arte "2025"** | tem a marca da Sabu Sports. Hoje não aparece em destaque; se voltar, combinar com eles |
 
@@ -307,9 +335,9 @@ npm run dev
 | comando | o que faz |
 | --- | --- |
 | `npm run dev` | servidor de desenvolvimento |
-| `npm run build` | gera `dist/` para publicar |
+| `npm run build` | gera `dist/` para publicar, já com as páginas prontas no HTML |
 | `npm run fotos` | converte as imagens de `instagram/` para `public/` |
 | `npm run videos` | comprime os vídeos de `videos-originais/` para `public/videos/` |
 | `npm run og` | gera os cartões de link |
-| `npm run versoes` | gera a versão de 1080px e as AVIF das imagens, e a logo pequena |
+| `npm run versoes` | gera as larguras de 320, 800 e 1080px e as AVIF das imagens, e a logo pequena |
 | `npm run fontes` | copia as fontes da marca para `public/fontes/` |
