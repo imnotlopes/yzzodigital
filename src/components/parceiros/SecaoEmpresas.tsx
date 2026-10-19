@@ -1,11 +1,11 @@
 import { definicoesDaParceria, modalidades } from '../../data/pacotes'
 import { servicos } from '../../data/servicos'
-import { agenciaDoLink } from '../../lib/agencia'
+import { useAgencia } from '../../lib/agencia'
 import BotaoWhatsapp from '../BotaoWhatsapp'
 import Revelar from '../Revelar'
 import Ritmo from '../Ritmo'
 import TituloSecao from '../TituloSecao'
-import { MENSAGEM_PARCEIRO } from './mensagens'
+import { mensagemParceiro } from './mensagens'
 
 /**
  * O PACOTE PARA EMPRESAS E ASSESSORIAS.
@@ -26,6 +26,8 @@ import { MENSAGEM_PARCEIRO } from './mensagens'
  * imagem, mora na landing.
  */
 export default function SecaoEmpresas() {
+  const agencia = useAgencia()
+
   return (
     <section id="empresas" className="fundo-escuro adiar" aria-labelledby="titulo-empresas">
       <div className="container-yz secao">
@@ -62,7 +64,7 @@ export default function SecaoEmpresas() {
             <p className="mt-6 max-w-[42ch] text-[1.0625rem] text-cinza-claro">
               {/* O "(NOME DA AGÊNCIA)" da proposta da Yzzo, preenchido pelo link. */}
               Depois de fechar a parceria entre a Yzzo Digital e a{' '}
-              {agenciaDoLink || 'sua empresa'},
+              {agencia || 'sua empresa'},
               definimos juntos:
             </p>
           </Revelar>
@@ -104,7 +106,7 @@ export default function SecaoEmpresas() {
               </p>
               <BotaoWhatsapp
                 texto="Quero fechar uma parceria"
-                mensagem={MENSAGEM_PARCEIRO}
+                mensagem={mensagemParceiro(agencia)}
                 className="mt-8 w-full sm:w-auto"
               />
             </Revelar>

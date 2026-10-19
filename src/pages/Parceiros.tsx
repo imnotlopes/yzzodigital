@@ -1,10 +1,11 @@
 import CapaParceiros from '../components/parceiros/CapaParceiros'
-import { MENSAGEM_PARCEIRO, ORIGEM_PARCEIROS } from '../components/parceiros/mensagens'
+import { mensagemParceiro, origemParceiros } from '../components/parceiros/mensagens'
 import SecaoEmpresas from '../components/parceiros/SecaoEmpresas'
 import SecaoEstrela from '../components/parceiros/SecaoEstrela'
 import FaixaPalavras from '../components/FaixaPalavras'
 import SecaoContato from '../components/SecaoContato'
 import SecaoPacotes from '../components/SecaoPacotes'
+import { useAgencia } from '../lib/agencia'
 
 /** A faixa de baixo da capa: os serviços da proposta. */
 const SERVICOS = ['Match Day', 'Motion', 'Convocação', 'Novo clube', 'Comemorativas', 'DVD esportivo']
@@ -31,16 +32,18 @@ const SERVICOS = ['Match Day', 'Motion', 'Convocação', 'Novo clube', 'Comemora
  *   +  o convite, no fim
  */
 export default function Parceiros() {
+  const agencia = useAgencia()
+
   return (
     <>
       <CapaParceiros />
       <FaixaPalavras palavras={SERVICOS} />
-      <SecaoPacotes id="atletas" origem={ORIGEM_PARCEIROS} fundo="branco" />
+      <SecaoPacotes id="atletas" origem={origemParceiros(agencia)} fundo="branco" />
       <SecaoEmpresas />
       <SecaoEstrela />
       <SecaoContato
         texto="Conte quantos atletas você atende e quais artes precisa. A gente responde no WhatsApp com a proposta da parceria."
-        mensagem={MENSAGEM_PARCEIRO}
+        mensagem={mensagemParceiro(agencia)}
       />
     </>
   )

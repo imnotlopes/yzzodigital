@@ -1,4 +1,4 @@
-import { servicos, sobre } from '../data/servicos'
+import { servicos, sobre, srcsetServico } from '../data/servicos'
 import Revelar from './Revelar'
 import TituloSecao from './TituloSecao'
 
@@ -13,6 +13,12 @@ import TituloSecao from './TituloSecao'
  * O preto é o do post "Grandes conquistas": depois da capa de papel, a troca
  * de fundo diz "mudou o assunto" sem precisar de título nenhum.
  */
+/**
+ * A largura da imagem do cartão: 36% da linha no celular, metade da tela em
+ * duas colunas, um terço do container em três.
+ */
+const TAMANHO_SERVICO = '(max-width: 639px) calc(36vw - 1rem), (max-width: 1023px) 46vw, 25rem'
+
 export default function SecaoServicos() {
   return (
     <section id="servicos" className="fundo-escuro adiar" aria-labelledby="titulo-servicos">
@@ -40,9 +46,11 @@ export default function SecaoServicos() {
                 {/* AVIF para quem abre: os seis cartões ficam logo abaixo da capa, e
                     no 4G disputavam a conexão com a foto dela. */}
                 <picture className="contents">
-                  <source type="image/avif" srcSet={servico.imagem.replace(/\.webp$/, '.avif')} />
+                  <source type="image/avif" srcSet={srcsetServico(servico.imagem, 'avif')} sizes={TAMANHO_SERVICO} />
                   <img
                     src={servico.imagem}
+                    srcSet={srcsetServico(servico.imagem, 'webp')}
+                    sizes={TAMANHO_SERVICO}
                     alt={servico.alt}
                     loading="lazy"
                     decoding="async"

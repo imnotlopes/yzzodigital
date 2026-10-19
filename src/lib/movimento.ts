@@ -28,8 +28,16 @@ import { useEffect, useRef, useState } from 'react'
  * ACESSIBILIDADE NÃO É OPCIONAL AQUI
  * ----------------------------------
  * Quem pediu `prefers-reduced-motion` costuma ter enjoo ou vertigem com
- * paralaxe. Neste arquivo o respeito a isso não é um `if` no fim: o estado
- * inicial já nasce "visível", então nenhum elemento chega a se mover.
+ * paralaxe. Neste arquivo o respeito a isso não é um `if` no fim: o elemento
+ * é revelado no primeiro efeito, sem transição (o CSS desliga todas).
+ *
+ * O HTML VEM PRONTO DO BUILD
+ * --------------------------
+ * As páginas são montadas no build (scripts/prerender.mjs) e o navegador só
+ * "acorda" o HTML que já chegou. Nessa hora o Preact confere o texto, mas
+ * NÃO as classes e os atributos: o primeiro render no navegador precisa
+ * sair igual ao do build. Por isso nenhum estado inicial aqui lê a janela;
+ * o que depende dela (tela, preferência de movimento) entra num efeito.
  */
 
 /** `true` quando o sistema pediu para reduzir movimento. */
@@ -49,7 +57,6 @@ export function movimentoReduzido(): boolean {
  * texto é o produto, a animação é o embrulho.
  */
 function comecaRevelado(): boolean {
-  if (typeof window === 'undefined') return true
   if (typeof IntersectionObserver === 'undefined') return true
   return movimentoReduzido()
 }
@@ -77,10 +84,15 @@ export function useRevelar<T extends HTMLElement = HTMLDivElement>({
   margem = '0px 0px -10% 0px',
 }: OpcoesRevelar = {}) {
   const alvo = useRef<T>(null)
-  const [visivel, setVisivel] = useState(comecaRevelado)
+  /* Começa escondido no build e no navegador; ver "O HTML VEM PRONTO". */
+  const [visivel, setVisivel] = useState(false)
 
   useEffect(() => {
     if (visivel) return
+    if (comecaRevelado()) {
+      setVisivel(true)
+      return
+    }
     const elemento = alvo.current
     if (!elemento) return
 
@@ -117,9 +129,8 @@ export function useRevelar<T extends HTMLElement = HTMLDivElement>({
  * navegador baixaria as fotos das duas.
  */
 export function useTelaLarga(minimo = 1024): boolean {
-  const [larga, setLarga] = useState(
-    () => typeof window !== 'undefined' && window.innerWidth >= minimo,
-  )
+  /* Celular no build; a largura de verdade entra no efeito. */
+  const [larga, setLarga] = useState(false)
 
   useEffect(() => {
     const consulta = window.matchMedia(`(min-width: ${minimo}px)`)

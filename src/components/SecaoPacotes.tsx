@@ -39,18 +39,19 @@ interface SecaoPacotesProps {
  * ----------------------------------------
  *   1. o nome e para quem ele é
  *   2. AS PEÇAS DO MÊS, DESENHADAS: uma miniatura de arte de verdade para
- *      cada peça que o pacote entrega. "Até 5 artes + 1 de novo clube" é uma
- *      frase que se lê; seis miniaturas lado a lado é uma quantidade que se
- *      vê, e a diferença entre os pacotes fica óbvia sem comparar listas.
+ *      cada peça que o pacote entrega. "Até 5 artes" é uma frase que se lê;
+ *      cinco miniaturas lado a lado é uma quantidade que se vê, e a diferença
+ *      entre os pacotes fica óbvia sem comparar listas.
  *   3. o preço, grande, com o "R$" pequeno: é o número que a pessoa procura
  *   4. quanto sai cada peça, que é só a divisão do preço pelas peças
  *   5. a lista e o botão, que abre o WhatsApp já com o pacote e o valor
  *
  * O DESTAQUE É CALCULADO
  * ----------------------
- * O cartão escuro é o de menor custo por peça (hoje o Profissional, R$ 19,17
- * por arte). Não é escolha minha de "mais vendido", que eu não sei: é a
- * conta, e continua certa se a Yzzo mudar preço ou quantidade.
+ * O cartão escuro é o de menor custo por peça (desde o ajuste de outubro de
+ * 2026, o Essencial: R$ 22,50 por arte, contra R$ 23,00 do Profissional). Não
+ * é escolha minha de "mais vendido", que eu não sei: é a conta, e continua
+ * certa se a Yzzo mudar preço ou quantidade.
  */
 export default function SecaoPacotes({
   id = 'pacotes',
@@ -185,6 +186,8 @@ const MINIATURAS = {
   novoClube: artes.find((arte) => arte.src.includes('temporada-2025')) ?? artes[0],
 }
 
+const ALGUM_COM_NOVO_CLUBE = pacotesAtleta.some((pacote) => pacote.pecas.novoClube > 0)
+
 /**
  * AS PEÇAS DO MÊS, UMA MINIATURA POR PEÇA.
  *
@@ -214,6 +217,9 @@ function PecasDoMes({ pacote, escuro }: { pacote: PacoteAtleta; escuro: boolean 
           >
             <img
               src={imagem.mini}
+              /* Uns 50px na tela: a de 96 basta até densidade 1,9; acima, a de 160. */
+              srcSet={`${imagem.mini.replace(/-160\.webp$/, '-96.webp')} 96w, ${imagem.mini} 160w`}
+              sizes="3.25rem"
               alt=""
               loading="lazy"
               decoding="async"
@@ -230,19 +236,22 @@ function PecasDoMes({ pacote, escuro }: { pacote: PacoteAtleta; escuro: boolean 
       {/*
         A legenda existe nos três cartões, invisível onde não se aplica: sem
         ela, o preço do Essencial ficaria mais alto que o dos vizinhos e os
-        três valores deixariam de se alinhar.
+        três valores deixariam de se alinhar. Se nenhum pacote tem a arte de
+        novo clube (hoje é assim), ela some de todos.
       */}
-      <p
-        aria-hidden={pacote.pecas.novoClube === 0 || undefined}
-        className={cn(
-          'mt-2 flex items-center gap-1.5 text-[0.75rem]',
-          escuro ? 'text-cinza-claro' : 'text-cinza',
-          pacote.pecas.novoClube === 0 && 'invisible',
-        )}
-      >
-        <span className="inline-block size-2.5 rounded-[2px] ring-2 ring-amarelo" />
-        anúncio de novo clube
-      </p>
+      {ALGUM_COM_NOVO_CLUBE && (
+        <p
+          aria-hidden={pacote.pecas.novoClube === 0 || undefined}
+          className={cn(
+            'mt-2 flex items-center gap-1.5 text-[0.75rem]',
+            escuro ? 'text-cinza-claro' : 'text-cinza',
+            pacote.pecas.novoClube === 0 && 'invisible',
+          )}
+        >
+          <span className="inline-block size-2.5 rounded-[2px] ring-2 ring-amarelo" />
+          anúncio de novo clube
+        </p>
+      )}
     </div>
   )
 }

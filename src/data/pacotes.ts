@@ -25,7 +25,11 @@ export interface PecasDoMes {
   artes: number
   /** Artes em vídeo. */
   motion: number
-  /** Arte de anúncio de novo clube. */
+  /**
+   * Arte de anúncio de novo clube. Saiu dos pacotes em outubro de 2026, a
+   * pedido da Yzzo (o Profissional ficou com 5 artes e o Motion com 4); fica
+   * aqui para voltar com um número, se um dia voltar.
+   */
   novoClube: number
 }
 
@@ -54,16 +58,16 @@ export const pacotesAtleta: PacoteAtleta[] = [
   {
     nome: 'Profissional',
     preco: 115,
-    publico: 'Para quem está trocando de clube ou quer mais presença.',
-    itens: ['Até 5 artes por mês', '1 arte de anúncio de novo clube'],
-    pecas: { artes: 5, motion: 0, novoClube: 1 },
+    publico: 'Para quem quer mais presença, com uma arte a mais por mês.',
+    itens: ['Até 5 artes por mês'],
+    pecas: { artes: 5, motion: 0, novoClube: 0 },
   },
   {
     nome: 'Motion',
     preco: 140,
     publico: 'Para quem quer o perfil em movimento, nos Reels e Stories.',
-    itens: ['4 artes em vídeo (Motion)', '1 arte de anúncio de novo clube'],
-    pecas: { artes: 0, motion: 4, novoClube: 1 },
+    itens: ['4 artes em vídeo (Motion)'],
+    pecas: { artes: 0, motion: 4, novoClube: 0 },
   },
 ]
 

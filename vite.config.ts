@@ -55,6 +55,16 @@ export default defineConfig({
   */
   plugins: [preact(), rotasDasPaginas(), pluginSeo()],
 
+  /*
+    A versão de servidor (scripts/prerender.mjs) carrega as dependências
+    direto do Node, sem passar pelo preset do Preact. O lucide-react importa
+    `react`, que não está instalado: ele vai junto no pacote do servidor, e
+    aí o `react` dele vira Preact como no resto do site.
+  */
+  ssr: {
+    noExternal: ['lucide-react'],
+  },
+
   build: {
     rollupOptions: {
       input: Object.fromEntries(

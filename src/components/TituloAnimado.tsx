@@ -40,8 +40,8 @@ interface TituloAnimadoProps {
  * --------------
  * As palavras são texto de verdade, separadas por espaços de verdade, dentro
  * do elemento de título: o leitor de tela lê a frase inteira, normalmente.
- * Com `prefers-reduced-motion`, ou sem `IntersectionObserver`, tudo nasce no
- * lugar (o hook já começa visível, ver lib/movimento.ts).
+ * Sem JavaScript, ou com `prefers-reduced-motion`, tudo aparece no lugar (ver
+ * o `.js` em index.css e lib/movimento.ts).
  */
 export default function TituloAnimado({
   linhas,
@@ -50,14 +50,19 @@ export default function TituloAnimado({
   naPrimeiraTela = false,
   className,
 }: TituloAnimadoProps) {
-  const { alvo, visivel } = useRevelar<HTMLSpanElement>(
-    naPrimeiraTela ? { margem: '0px' } : undefined,
-  )
+  const { alvo, visivel } = useRevelar<HTMLSpanElement>()
 
   let ordem = 0
 
+  /*
+    Na primeira tela, a entrada é só CSS (`--entrada`, no index.css): começa
+    com o HTML pronto do build, sem esperar o JavaScript. No resto, espera o
+    título entrar na tela.
+  */
+  const classe = naPrimeiraTela ? 'titulo-animado--entrada' : visivel && 'esta-visivel'
+
   return (
-    <span ref={alvo} className={cn('titulo-animado block', visivel && 'esta-visivel', className)}>
+    <span ref={naPrimeiraTela ? undefined : alvo} className={cn('titulo-animado block', classe, className)}>
       {linhas.map((linha, l) => (
         <span key={l} className="block">
           {linha.map((pedaco, p) => {

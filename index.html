@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Antes de tudo: marca que há JavaScript. O que anima ao entrar na tela só
+      se esconde com esta classe (ver o `.js` em src/index.css); sem
+      JavaScript, a página vem inteira e visível, do jeito que o build montou.
+    -->
+    <script>document.documentElement.classList.add('js')</script>
     <meta name="theme-color" content="#F3F3F3" />
 
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -43,7 +49,7 @@
       src/components/Capa.tsx; se um mudar, o outro muda junto, ou a foto
       baixa duas vezes. Navegador sem AVIF ignora a linha.
     -->
-    <link rel="preload" as="image" type="image/avif" href="/fotos/camisa-20.avif" imagesrcset="/fotos/camisa-20-600.avif 600w, /fotos/camisa-20-1080.avif 1080w, /fotos/camisa-20.avif 1280w" imagesizes="(max-width: 480px) 360px, (max-width: 1023px) 100vw, 56vw" fetchpriority="high" />
+    <link rel="preload" as="image" type="image/avif" href="/fotos/camisa-20.avif" imagesrcset="/fotos/camisa-20-320.avif 320w, /fotos/camisa-20-600.avif 600w, /fotos/camisa-20-800.avif 800w, /fotos/camisa-20-1080.avif 1080w, /fotos/camisa-20.avif 1280w" imagesizes="(max-width: 480px) 360px, (max-width: 1023px) 100vw, 56vw" fetchpriority="high" />
 
     <!--
       As duas fontes da primeira tela (o título e o texto) começam a baixar

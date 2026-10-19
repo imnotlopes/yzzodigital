@@ -1,5 +1,5 @@
 import { Pause, Play } from 'lucide-react'
-import { useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
 
 import { movimentoReduzido } from '../lib/movimento'
 import { cn } from '../lib/utils'
@@ -50,8 +50,11 @@ export default function Faixa<T>({
   className,
 }: FaixaProps<T>) {
   const [parada, setParada] = useState(false)
+  /* No efeito, e não no render: o HTML pronto do build não sabe a preferência. */
+  const [semMovimento, setSemMovimento] = useState(false)
+  useEffect(() => setSemMovimento(movimentoReduzido()), [])
 
-  if (movimentoReduzido()) {
+  if (semMovimento) {
     return (
       <ul className={cn('flex flex-wrap items-center justify-center gap-4', className)}>
         {itens.map((item) => (

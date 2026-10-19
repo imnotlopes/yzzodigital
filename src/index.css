@@ -868,34 +868,69 @@
    ========================================================================== */
 @layer components {
   /*
-    Fica escondido SÓ depois que o JavaScript confirma que sabe revelar: o
-    hook nasce visível sem `IntersectionObserver` ou com menos movimento
-    pedido. Nenhum caminho deixa texto invisível. Ver lib/movimento.ts.
-  */
-  /*
+    ESCONDIDO SÓ COM JAVASCRIPT.
+
+    O HTML vem pronto do build. O `.js` no <html> é posto por uma linha no
+    <head> (index.html e parceiros.html), antes de qualquer pintura: sem
+    JavaScript, nada fica escondido à espera de quem revele. Com ele, o
+    elemento espera o observador de lib/movimento.ts, que revela de cara sem
+    `IntersectionObserver` ou com menos movimento pedido.
+
     A entrada: sobe e aparece, mais devagar que um clique e mais rápido que
     uma leitura. A opacidade chega antes do movimento terminar (700 contra
     1000 ms), e é isso que dá a sensação de que o bloco "pousa", em vez de
     surgir e depois deslizar.
   */
   .revelar {
-    opacity: 0;
-    transform: translate3d(0, var(--revelar-distancia, 1.75rem), 0);
     transition:
       opacity 700ms var(--ease-suave) var(--revelar-atraso, 0ms),
       transform 1000ms var(--ease-suave) var(--revelar-atraso, 0ms);
   }
 
-  .revelar-visivel {
-    opacity: 1;
-    transform: none;
+  .js .revelar:not(.revelar-visivel) {
+    opacity: 0;
+    transform: translate3d(0, var(--revelar-distancia, 1.75rem), 0);
+  }
+
+  /* O número do Contador, enquanto espera o JavaScript começar a contar. */
+  .js .contador-espera > [aria-hidden] {
+    visibility: hidden;
+  }
+
+  /*
+    A MESMA ENTRADA, NA PRIMEIRA TELA, SÓ COM CSS.
+
+    O que já está na tela quando a página abre não espera o JavaScript: a
+    animação começa na primeira pintura do HTML pronto. Mesmos tempos da
+    de cima.
+  */
+  .revelar-entrada {
+    animation:
+      revelar-opacidade 700ms var(--ease-suave) var(--revelar-atraso, 0ms) both,
+      revelar-sobe 1000ms var(--ease-suave) var(--revelar-atraso, 0ms) both;
+  }
+
+  @keyframes revelar-opacidade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes revelar-sobe {
+    from {
+      transform: translate3d(0, var(--revelar-distancia, 1.75rem), 0);
+    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .revelar {
+  .js .revelar:not(.revelar-visivel) {
     opacity: 1;
     transform: none;
+  }
+
+  .revelar-entrada {
+    animation: none;
   }
 }
 
@@ -922,25 +957,50 @@
     margin-block: -0.12em -0.2em;
   }
 
+  /*
+    Como no `.revelar`: a palavra só se esconde com JavaScript para
+    revelar (ver o `.js` lá). A da primeira tela (`--entrada`) não espera
+    ninguém: anima com o CSS, assim que a página pinta.
+  */
   .titulo-animado .palavra > span {
     display: inline-block;
-    transform: translate3d(0, 110%, 0);
     transition: transform 1100ms var(--ease-suave) var(--atraso, 0ms);
   }
 
-  .titulo-animado.esta-visivel .palavra > span {
-    transform: none;
+  .js .titulo-animado:not(.titulo-animado--entrada):not(.esta-visivel) .palavra > span {
+    transform: translate3d(0, 110%, 0);
+  }
+
+  .titulo-animado--entrada .palavra > span {
+    animation: palavra-sobe 1100ms var(--ease-suave) var(--atraso, 0ms) both;
+  }
+
+  @keyframes palavra-sobe {
+    from {
+      transform: translate3d(0, 110%, 0);
+    }
   }
 
   /* O marca-texto pinta da esquerda para a direita, depois que a palavra chega. */
   .titulo-animado .marca-anima {
-    background-size: 0% 100%;
+    /* Explícito: o `background` da .marca-texto deixa o tamanho em `auto`, que não anima. */
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     transition: background-size 750ms var(--ease-suave) var(--atraso-marca, 600ms);
   }
 
-  .titulo-animado.esta-visivel .marca-anima {
-    background-size: 100% 100%;
+  .js .titulo-animado:not(.titulo-animado--entrada):not(.esta-visivel) .marca-anima {
+    background-size: 0% 100%;
+  }
+
+  .titulo-animado--entrada .marca-anima {
+    animation: marca-pinta 750ms var(--ease-suave) var(--atraso-marca, 600ms) both;
+  }
+
+  @keyframes marca-pinta {
+    from {
+      background-size: 0% 100%;
+    }
   }
 
   /*
@@ -1004,12 +1064,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .titulo-animado .palavra > span {
+  .js .titulo-animado:not(.titulo-animado--entrada):not(.esta-visivel) .palavra > span {
     transform: none;
   }
 
-  .titulo-animado .marca-anima {
+  .js .titulo-animado:not(.titulo-animado--entrada):not(.esta-visivel) .marca-anima {
     background-size: 100% 100%;
+  }
+
+  .titulo-animado--entrada .palavra > span,
+  .titulo-animado--entrada .marca-anima {
+    animation: none;
   }
 
   .capa_foto img {

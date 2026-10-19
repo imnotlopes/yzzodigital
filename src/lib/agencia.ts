@@ -22,7 +22,17 @@
  * Vale letra (com acento), número, espaço e os sinais que aparecem em nome de
  * empresa: & . - ' (R&M Assessoria, F.C. Sports, D'Ávila). Até 40 caracteres:
  * mais que isso quebra a barra da capa no celular.
+ *
+ * ENTRA DEPOIS DA MONTAGEM
+ * ------------------------
+ * A página vem pronta do build (scripts/prerender.mjs), na versão neutra, e
+ * o nome entra no primeiro efeito, pelo `ProvedorDaAgencia`
+ * (components/ProvedorDaAgencia.tsx). Lido direto na
+ * montagem, ele trocaria o texto, mas não os links do WhatsApp: ao "acordar"
+ * o HTML pronto, o Preact confere o texto e não confere atributos, e a
+ * mensagem sairia sem o nome da agência.
  */
+import { createContext, useContext } from 'react'
 
 const NOME_VALIDO = /^[\p{L}\p{N}][\p{L}\p{N}\s&.'’-]*$/u
 
@@ -33,11 +43,16 @@ export function nomeDaAgencia(bruto: string | null): string {
   return NOME_VALIDO.test(limpo) ? limpo : ''
 }
 
-/**
- * O nome da agência que veio no link desta página, ou vazio.
- *
- * Lido uma vez: o endereço não muda enquanto a pessoa está na página (as
- * âncoras só mexem no `#`).
- */
-export const agenciaDoLink: string =
-  typeof window === 'undefined' ? '' : nomeDaAgencia(new URLSearchParams(window.location.search).get('agencia'))
+/** O nome da agência que veio no link desta página, ou vazio. Só no navegador. */
+export function agenciaDaUrl(): string {
+  if (typeof window === 'undefined') return ''
+  return nomeDaAgencia(new URLSearchParams(window.location.search).get('agencia'))
+}
+
+/** O nome da agência do link, para quem estiver dentro do `ProvedorDaAgencia`. */
+export const AgenciaContexto = createContext('')
+
+/** O nome da agência do link, ou vazio. Vazio também no build e na primeira montagem. */
+export function useAgencia(): string {
+  return useContext(AgenciaContexto)
+}

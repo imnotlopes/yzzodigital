@@ -27,7 +27,11 @@ interface RevelarProps {
    * disparo e fica invisível até a pessoa rolar, mesmo estando na tela.
    *
    * Foi o que aconteceu com a palavra colossal da capa, que é justamente a
-   * âncora da folha. Com isto ligado, basta o elemento tocar a tela.
+   * âncora da folha.
+   *
+   * Com isto ligado, a entrada é só CSS (`.revelar-entrada`): começa assim
+   * que a página pinta, com o HTML que vem pronto do build, sem esperar o
+   * JavaScript. Esperar por ele deixava a capa em branco no 4G.
    */
   naPrimeiraTela?: boolean
   /** Elemento renderizado. `div` por padrão; use `li`, `figure`, `section`. */
@@ -59,21 +63,42 @@ export default function Revelar({
   como: Como = 'div',
   className,
 }: RevelarProps) {
-  const { alvo, visivel } = useRevelar<HTMLElement>(
-    naPrimeiraTela ? { margem: '0px' } : undefined,
-  )
+  const estilo = {
+    '--revelar-atraso': `${atraso}ms`,
+    '--revelar-distancia': DISTANCIAS[distancia],
+  } as CSSProperties
+
+  if (naPrimeiraTela) {
+    return (
+      <Como className={cn('revelar-entrada', className)} style={estilo}>
+        {children}
+      </Como>
+    )
+  }
 
   return (
-    <Como
-      ref={alvo}
-      className={cn('revelar', visivel && 'revelar-visivel', className)}
-      style={
-        {
-          '--revelar-atraso': `${atraso}ms`,
-          '--revelar-distancia': DISTANCIAS[distancia],
-        } as CSSProperties
-      }
-    >
+    <RevelarAoRolar como={Como} className={className} estilo={estilo}>
+      {children}
+    </RevelarAoRolar>
+  )
+}
+
+/** O de sempre: revela quando o elemento entra na tela. */
+function RevelarAoRolar({
+  children,
+  como: Como,
+  className,
+  estilo,
+}: {
+  children: ReactNode
+  como: ElementType
+  className?: string
+  estilo: CSSProperties
+}) {
+  const { alvo, visivel } = useRevelar<HTMLElement>()
+
+  return (
+    <Como ref={alvo} className={cn('revelar', visivel && 'revelar-visivel', className)} style={estilo}>
       {children}
     </Como>
   )

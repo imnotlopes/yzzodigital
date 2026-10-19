@@ -1,6 +1,6 @@
 /**
- * Gera as versões que deixam as imagens leves: a de 1080px, as AVIF e a
- * logo de 360px.
+ * Gera as versões que deixam as imagens leves: as larguras intermediárias
+ * (320, 800 e 1080), as AVIF e a logo de 360px.
  *
  *   node scripts/versoes.mjs
  *
@@ -15,6 +15,15 @@
  * cheia não aparece na tela. O tamanho cai mais que a largura: a foto de
  * Instagram tem granulado, e reduzir alisa o granulado, que é o que mais pesa.
  * Só sai para quem é mais larga que 1080 (os Match Days, de 900, não têm).
+ *
+ * E AS DE 320 E 800
+ * -----------------
+ * As telas menos densas (o celular que o PageSpeed simula tem densidade 1,75,
+ * e muito Android barato fica entre 1,5 e 2) pedem menos: 650px para a arte
+ * do deslize, 300px para a carta do leque e o cartão de serviço. Sem as
+ * intermediárias, o navegador pulava para a de cima, com o dobro do peso.
+ * Cada largura só existe se a imagem cheia for mais larga que ela; a regra é
+ * a mesma de `srcsetDe`, em src/data/portfolio.ts.
  *
  * POR QUE AVIF
  * ------------
@@ -34,7 +43,8 @@ import path from 'node:path'
 import sharp from 'sharp'
 
 const PUBLICO = path.resolve(import.meta.dirname, '..', 'public')
-const LARGURA_MEDIA = 1080
+/** As larguras intermediárias. Precisam bater com `LARGURAS` em src/data/portfolio.ts. */
+const LARGURAS = [320, 800, 1080]
 
 /** As pastas e a qualidade de cada uma. `fotos` é só a da capa: as outras não aparecem no site. */
 const PASTAS = [
@@ -66,7 +76,7 @@ async function gerar(origem, destino, formato, qualidade, largura) {
 
 for (const { pasta, qualidade, so } of PASTAS) {
   const arquivos = (await readdir(path.join(PUBLICO, pasta))).filter(
-    (nome) => nome.endsWith('.webp') && !/-(160|600|1080)\.webp$/.test(nome),
+    (nome) => nome.endsWith('.webp') && !/-(96|160|320|600|800|1080)\.webp$/.test(nome),
   )
 
   for (const arquivo of arquivos) {
@@ -77,39 +87,45 @@ for (const { pasta, qualidade, so } of PASTAS) {
     const base = path.join(PUBLICO, pasta, nome)
     const { width } = await sharp(cheia).metadata()
 
-    if (width > LARGURA_MEDIA) {
-      await gerar(cheia, `${base}-1080.webp`, 'webp', qualidade, LARGURA_MEDIA)
-      await gerar(cheia, `${base}-1080.avif`, 'avif', qualidade, LARGURA_MEDIA)
+    for (const largura of LARGURAS.filter((l) => width > l)) {
+      await gerar(cheia, `${base}-${largura}.webp`, 'webp', qualidade, largura)
+      await gerar(cheia, `${base}-${largura}.avif`, 'avif', qualidade, largura)
     }
     await gerar(cheia, `${base}.avif`, 'avif', qualidade)
     await gerar(`${base}-600.webp`, `${base}-600.avif`, 'avif', qualidade)
 
     const antes = (await stat(cheia)).size
-    const depois = (await stat(width > LARGURA_MEDIA ? `${base}-1080.avif` : `${base}.avif`)).size
+    const depois = (await stat(width > 1080 ? `${base}-1080.avif` : `${base}.avif`)).size
     economia += antes - depois
   }
 }
 
 /*
-  AS AVULSAS: imagens que o site usa numa largura só, fora do portfólio (os
-  cartões de serviço). Ganham só a AVIF da mesma largura.
+  AS AVULSAS: imagens que o site usa fora do portfólio (os cartões de
+  serviço que não vêm de uma arte). Ganham a AVIF e a versão de 320, a do
+  cartão no celular; ver src/data/servicos.ts.
 */
 const AVULSAS = ['fotos/chute-600', 'videos/brasil-x-paraguai']
 for (const avulsa of AVULSAS) {
-  await gerar(path.join(PUBLICO, `${avulsa}.webp`), path.join(PUBLICO, `${avulsa}.avif`), 'avif', 55)
+  const origem = path.join(PUBLICO, `${avulsa}.webp`)
+  const pequena = path.join(PUBLICO, `${avulsa.replace(/-600$/, '')}-320`)
+  await gerar(origem, path.join(PUBLICO, `${avulsa}.avif`), 'avif', 55)
+  await gerar(origem, `${pequena}.webp`, 'webp', 55, 320)
+  await gerar(origem, `${pequena}.avif`, 'avif', 55, 320)
 }
 
 /*
   A LOGO PEQUENA. O topo mostra a logo com uns 110px de largura; a de 720px
   (26 KB) era para o rodapé de tela retina. A de 360 cobre o topo em qualquer
-  tela, com uns 8 KB. Sai do PNG, que não tem perda.
+  tela, com uns 6 KB. Sai do PNG, que não tem perda. Qualidade 82: a 92 o
+  PageSpeed apontava 5 KB a ganhar, e a diferença não aparece.
 */
 for (const nome of ['logo', 'logo-claro']) {
   const destino = path.join(PUBLICO, 'marca', `${nome}-360.webp`)
   if (await existe(destino)) continue
   await sharp(path.join(PUBLICO, 'marca', `${nome}.png`))
     .resize({ width: 360 })
-    .webp({ quality: 92, alphaQuality: 100 })
+    .webp({ quality: 82, alphaQuality: 90 })
     .toFile(destino)
   feitas++
 }

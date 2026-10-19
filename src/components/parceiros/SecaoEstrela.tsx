@@ -2,7 +2,7 @@ import { Star } from 'lucide-react'
 
 import { estrelaDoMes, textoEstrela } from '../../data/pacotes'
 import { matchDayEstrela } from '../../data/videos'
-import { agenciaDoLink } from '../../lib/agencia'
+import { useAgencia } from '../../lib/agencia'
 import Revelar from '../Revelar'
 import Video from '../Video'
 
@@ -19,6 +19,8 @@ import Video from '../Video'
  * Copa Goiás; a coincidência do nome é bem-vinda, mas não é o motivo.
  */
 export default function SecaoEstrela() {
+  const agencia = useAgencia()
+
   return (
     <section id="estrela" className="adiar overflow-hidden bg-amarelo" aria-labelledby="titulo-estrela">
       <div className="container-yz secao grid grid-cols-1 items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-20">
@@ -38,7 +40,7 @@ export default function SecaoEstrela() {
 
           <Revelar atraso={120}>
             <p className="mt-8 max-w-[44ch] text-[1.1875rem] leading-snug md:text-[1.375rem]">
-              {textoEstrela(agenciaDoLink)}
+              {textoEstrela(agencia)}
             </p>
             <p className="mt-6 max-w-[52ch] border-l-2 border-preto pl-5 text-[1rem] text-preto/75">
               {estrelaDoMes.recomendacao}

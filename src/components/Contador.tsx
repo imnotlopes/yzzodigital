@@ -30,10 +30,20 @@ export default function Contador({ valor, duracao = 1600, className }: ContadorP
   const fim = partes ? Number(partes[2]) : 0
 
   const { alvo, visivel } = useRevelar<HTMLSpanElement>({ margem: '0px' })
-  const [atual, setAtual] = useState(() => (partes && !movimentoReduzido() ? 0 : fim))
+  /*
+    No HTML pronto do build vai o valor final, que é o que o Google e quem
+    não roda JavaScript leem. Com JavaScript, o número espera escondido
+    (`.contador-espera`, no index.css) e aparece já contando do zero: sem
+    isso, ele piscaria 700, 0, 700.
+  */
+  const [atual, setAtual] = useState(fim)
+  const [esperando, setEsperando] = useState(true)
 
   useEffect(() => {
-    if (!visivel || !partes || movimentoReduzido()) return
+    if (!visivel || !partes) return
+    setEsperando(false)
+    if (movimentoReduzido()) return
+    setAtual(0)
 
     let quadro = 0
     const inicio = performance.now()
@@ -56,7 +66,7 @@ export default function Contador({ valor, duracao = 1600, className }: ContadorP
   return (
     <span
       ref={alvo}
-      className={cn('inline-block tabular-nums', className)}
+      className={cn('inline-block tabular-nums', esperando && 'contador-espera', className)}
       style={{ minWidth: `${valor.length * 0.5}em` }}
     >
       <span aria-hidden>

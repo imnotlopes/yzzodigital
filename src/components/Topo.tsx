@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { useAgencia } from '../lib/agencia'
 import { linkWhatsapp } from '../lib/brand'
 import { cn } from '../lib/utils'
 import { IconeWhatsapp } from './icones'
@@ -30,8 +31,11 @@ interface TopoProps {
    * parceiros, a landing, que é onde está o portfólio.
    */
   inicio?: string
-  /** A mensagem pronta do botão de WhatsApp. Sem ela, a padrão de brand.ts. */
-  mensagem?: string
+  /**
+   * A mensagem pronta do botão de WhatsApp. Sem ela, a padrão de brand.ts.
+   * Como função, recebe o nome da agência do link (ver lib/agencia.ts).
+   */
+  mensagem?: string | ((agencia: string) => string)
 }
 
 /**
@@ -54,6 +58,8 @@ interface TopoProps {
  * começa a passar por baixo dele.
  */
 export default function Topo({ links = LINKS_INICIO, inicio = '#inicio', mensagem }: TopoProps) {
+  const agencia = useAgencia()
+  const texto = typeof mensagem === 'function' ? mensagem(agencia) : mensagem
   const [rolou, setRolou] = useState(false)
 
   useEffect(() => {
@@ -91,7 +97,7 @@ export default function Topo({ links = LINKS_INICIO, inicio = '#inicio', mensage
         </nav>
 
         <a
-          href={linkWhatsapp(mensagem)}
+          href={linkWhatsapp(texto)}
           target="_blank"
           rel="noopener noreferrer"
           className="btn btn-preto min-h-11 px-5 text-sm"

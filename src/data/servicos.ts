@@ -21,10 +21,17 @@ export interface Servico {
   texto: string
   /**
    * Caminho em public/, na versão de 600px: o cartão é pequeno. Precisa ter
-   * a irmã .avif ao lado (scripts/versoes.mjs).
+   * ao lado a irmã .avif e a versão de 320 (scripts/versoes.mjs), que é a do
+   * cartão no celular.
    */
   imagem: string
   alt: string
+}
+
+/** O `srcset` do cartão, no formato pedido: a versão de 320 e a de 600. */
+export function srcsetServico(imagem: string, formato: 'webp' | 'avif') {
+  const pequena = imagem.replace(/(-600)?\.webp$/, `-320.${formato}`)
+  return `${pequena} 320w, ${imagem.replace(/\.webp$/, `.${formato}`)} 600w`
 }
 
 export const servicos: Servico[] = [

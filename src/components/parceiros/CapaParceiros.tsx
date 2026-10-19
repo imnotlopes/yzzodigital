@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 
 import { numeros } from '../../data/numeros'
 import { artes } from '../../data/portfolio'
-import { agenciaDoLink } from '../../lib/agencia'
+import { useAgencia } from '../../lib/agencia'
 import { useRevelar } from '../../lib/movimento'
 import { cn } from '../../lib/utils'
 import Barra from '../Barra'
@@ -12,7 +12,7 @@ import Contador from '../Contador'
 import Foto from '../Foto'
 import Revelar from '../Revelar'
 import TituloAnimado from '../TituloAnimado'
-import { MENSAGEM_PARCEIRO } from './mensagens'
+import { mensagemParceiro } from './mensagens'
 
 /**
  * As três artes do leque: amarela, azul e preta, para não virarem uma mancha
@@ -42,6 +42,7 @@ const LEQUE = [
  */
 export default function CapaParceiros() {
   const { alvo: leque, visivel: aberto } = useRevelar<HTMLDivElement>({ margem: '0px' })
+  const agencia = useAgencia()
 
   return (
     <section id="inicio" className="relative overflow-hidden bg-papel pt-topo" aria-labelledby="titulo-parceiros">
@@ -51,7 +52,7 @@ export default function CapaParceiros() {
         <div>
           <Revelar distancia="curta" naPrimeiraTela>
             {/* Com ?agencia= no link, a barra diz para quem é esta página. */}
-            <Barra texto={agenciaDoLink ? `Para ${agenciaDoLink}` : 'Para atletas e empresários'} />
+            <Barra texto={agencia ? `Para ${agencia}` : 'Para atletas e empresários'} />
           </Revelar>
 
           <h1 id="titulo-parceiros" className="t-display mt-9">
@@ -80,7 +81,7 @@ export default function CapaParceiros() {
                 Ver os pacotes
                 <ArrowDown size={17} strokeWidth={2} aria-hidden />
               </a>
-              <BotaoWhatsapp texto="Falar com a Yzzo" mensagem={MENSAGEM_PARCEIRO} />
+              <BotaoWhatsapp texto="Falar com a Yzzo" mensagem={mensagemParceiro(agencia)} />
             </div>
 
             {numeros.map((numero) => (
@@ -106,7 +107,8 @@ export default function CapaParceiros() {
             <Foto
               key={arte.src}
               imagem={arte}
-              sizes="(max-width: 1023px) 50vw, 22vw"
+              /* Cada carta tem 46% do leque, que ocupa a largura (até 36rem). */
+              sizes="(max-width: 1023px) calc(46vw - 1.4rem), 16.5rem"
               fetchPriority={indice === 2 ? 'high' : undefined}
               decoding="async"
               style={{ '--tx': tx, '--ty': ty, '--giro': giro } as CSSProperties}

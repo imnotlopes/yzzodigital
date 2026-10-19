@@ -45,19 +45,25 @@ function imagem(caminho: string, alt: string, largura = 1280, altura = 1600): Im
   }
 }
 
-/** A largura do meio. Só existe nas imagens mais largas que ela. */
-const LARGURA_MEDIA = 1080
+/**
+ * As larguras de cada imagem, além da cheia. A de 600 sai de
+ * scripts/importar-instagram.mjs; as outras, de scripts/versoes.mjs, e só
+ * existem quando a imagem cheia é mais larga que elas (a mesma regra lá).
+ */
+const LARGURAS = [320, 600, 800, 1080]
 
 /**
- * `srcset` pronto: 600, 1080 (quando houver) e a cheia, no formato pedido.
- * Ver o porquê das larguras em scripts/versoes.mjs.
+ * `srcset` pronto, da menor largura para a cheia, no formato pedido. Ver o
+ * porquê das larguras em scripts/versoes.mjs.
  */
 export function srcsetDe(imagem: Imagem, formato: 'webp' | 'avif' = 'webp') {
   const base = imagem.src.replace(/\.webp$/, '')
-  const versoes = [`${base}-600.${formato} 600w`]
-  if (imagem.largura > LARGURA_MEDIA) versoes.push(`${base}-${LARGURA_MEDIA}.${formato} ${LARGURA_MEDIA}w`)
-  versoes.push(`${base}.${formato} ${imagem.largura}w`)
-  return versoes.join(', ')
+  return [
+    ...LARGURAS.filter((largura) => imagem.largura > largura).map(
+      (largura) => `${base}-${largura}.${formato} ${largura}w`,
+    ),
+    `${base}.${formato} ${imagem.largura}w`,
+  ].join(', ')
 }
 
 /**

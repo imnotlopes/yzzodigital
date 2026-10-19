@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Antes de tudo: marca que há JavaScript. O que anima ao entrar na tela só
+      se esconde com esta classe (ver o `.js` em src/index.css); sem
+      JavaScript, a página vem inteira e visível, do jeito que o build montou.
+    -->
+    <script>document.documentElement.classList.add('js')</script>
     <meta name="theme-color" content="#F3F3F3" />
 
     <link rel="icon" type="image/png" href="/favicon.png" />

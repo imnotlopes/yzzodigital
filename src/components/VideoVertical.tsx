@@ -95,8 +95,10 @@ export default function VideoVertical({
   const [naTela, setNaTela] = useState(false)
   const [tocando, setTocando] = useState(true)
   /* Decidido uma vez, na montagem: trocar de ideia no meio faria o vídeo
-     aparecer e sumir se a pessoa mudasse a preferência do sistema. */
-  const [semMovimento] = useState(movimentoReduzido)
+     aparecer e sumir se a pessoa mudasse a preferência do sistema. No efeito,
+     e não no estado inicial, porque o HTML pronto do build não sabe dela. */
+  const [semMovimento, setSemMovimento] = useState(false)
+  useEffect(() => setSemMovimento(movimentoReduzido()), [])
 
   /*
     O PÔSTER TAMBÉM ESPERA.
