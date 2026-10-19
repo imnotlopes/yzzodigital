@@ -46,11 +46,11 @@ const PUBLICO = path.resolve(import.meta.dirname, '..', 'public')
 /** As larguras intermediárias. Precisam bater com `LARGURAS` em src/data/portfolio.ts. */
 const LARGURAS = [320, 800, 1080]
 
-/** As pastas e a qualidade de cada uma. `fotos` é só a da capa: as outras não aparecem no site. */
+/** As pastas e a qualidade de cada uma. Em `fotos`, só as que aparecem no site: a da capa e as de jogo. */
 const PASTAS = [
   { pasta: 'artes', qualidade: 55 },
   { pasta: 'matchday', qualidade: 55 },
-  { pasta: 'fotos', qualidade: 50, so: ['camisa-20'] },
+  { pasta: 'fotos', qualidade: 50, so: ['camisa-20', 'lance-conducao', 'lance-camisa-18', 'lance-arbitro'] },
 ]
 
 const existe = (arquivo) =>
@@ -105,10 +105,10 @@ for (const { pasta, qualidade, so } of PASTAS) {
   serviço que não vêm de uma arte). Ganham a AVIF e a versão de 320, a do
   cartão no celular; ver src/data/servicos.ts.
 */
-const AVULSAS = ['fotos/chute-600', 'videos/brasil-x-paraguai']
+const AVULSAS = ['videos/brasil-x-paraguai']
 for (const avulsa of AVULSAS) {
   const origem = path.join(PUBLICO, `${avulsa}.webp`)
-  const pequena = path.join(PUBLICO, `${avulsa.replace(/-600$/, '')}-320`)
+  const pequena = path.join(PUBLICO, `${avulsa}-320`)
   await gerar(origem, path.join(PUBLICO, `${avulsa}.avif`), 'avif', 55)
   await gerar(origem, `${pequena}.webp`, 'webp', 55, 320)
   await gerar(origem, `${pequena}.avif`, 'avif', 55, 320)

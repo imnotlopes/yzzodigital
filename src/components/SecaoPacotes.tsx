@@ -8,9 +8,10 @@ import {
   pacotesAtleta,
   type PacoteAtleta,
 } from '../data/pacotes'
-import { artes, matchDays } from '../data/portfolio'
+import { artes, fotosDeJogo, matchDays } from '../data/portfolio'
 import { cn } from '../lib/utils'
 import BotaoWhatsapp from './BotaoWhatsapp'
+import Foto from './Foto'
 import Revelar from './Revelar'
 import TituloSecao from './TituloSecao'
 
@@ -256,17 +257,23 @@ function PecasDoMes({ pacote, escuro }: { pacote: PacoteAtleta; escuro: boolean 
   )
 }
 
-/** O DVD, à parte: não tem valor de tabela. */
+/**
+ * O DVD, à parte: não tem valor de tabela.
+ *
+ * As três fotos de jogo editadas pela Yzzo mostram o que é o "material
+ * atualizado do atleta": é o que o DVD reúne, e o que a frase sozinha não
+ * deixava ver.
+ */
 function FaixaDvd({ origem, sozinha }: { origem: SecaoPacotesProps['origem']; sozinha: boolean }) {
   return (
     <div
       className={cn(
         'fundo-escuro flex flex-col justify-between gap-6 overflow-hidden rounded-sm p-7 md:p-8',
-        /* Na largura toda, o botão vai para a direita, na mesma linha. */
-        sozinha && 'md:flex-row md:items-center',
+        /* Na largura toda (em /parceiros), texto, fotos e botão numa linha só. */
+        sozinha && 'lg:flex-row lg:items-center lg:gap-10',
       )}
     >
-      <div className="flex items-start gap-4">
+      <div className={cn('flex items-start gap-4', sozinha && 'lg:flex-1')}>
         <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-amarelo text-preto">
           <Clapperboard size={20} strokeWidth={2} aria-hidden />
         </span>
@@ -277,6 +284,13 @@ function FaixaDvd({ origem, sozinha }: { origem: SecaoPacotesProps['origem']; so
           </p>
         </div>
       </div>
+      <ul className="grid w-full max-w-[21rem] shrink-0 grid-cols-3 gap-2">
+        {fotosDeJogo.map((foto) => (
+          <li key={foto.src} className="aspect-[4/5] overflow-hidden rounded-sm bg-grafite">
+            <Foto imagem={foto} sizes="7rem" loading="lazy" decoding="async" className="size-full object-cover" />
+          </li>
+        ))}
+      </ul>
       <BotaoWhatsapp
         texto="Quero o DVD"
         mensagem={`Olá, Yzzo! Vim ${origem} e quero saber sobre o DVD esportivo.`}

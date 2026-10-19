@@ -312,6 +312,13 @@ O que foi feito:
 - **Google:** os três pacotes, com preço por mês, entraram nos dados da
   agência que o Google lê, e o sitemap diz a data da última atualização.
 
+**Ajuste de 19/10/2026, a pedido da Yzzo:** um atleta pediu para não aparecer
+no site. Saíram o post "Novo Cliente!" dele (da faixa do #TimeYzzoDigital) e as
+duas fotos em que ele aparecia, também dos arquivos publicados e da lista de
+importação do Instagram, para não voltarem. No lugar, as três fotos de jogo
+novas: uma no serviço "DVD esportivo" e as três no cartão do DVD, na seção de
+pacotes.
+
 ---
 
 ## Pendências

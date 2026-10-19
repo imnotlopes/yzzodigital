@@ -56,7 +56,7 @@ const MAPA = {
   20: 'clientes/novo-cliente-02',
   21: 'clientes/novo-cliente-03',
   22: 'clientes/novo-cliente-04',
-  29: 'clientes/novo-cliente-05',
+  // 29 saiu: o atleta pediu para não aparecer no site (outubro de 2026).
   35: 'clientes/novo-cliente-06',
   36: 'clientes/novo-cliente-07',
 
@@ -67,8 +67,7 @@ const MAPA = {
   14: 'fotos/conducao',
   15: 'fotos/barreira',
   16: 'fotos/flamula',
-  17: 'fotos/chute',
-  18: 'fotos/disputa',
+  // 17 e 18 saíram: o mesmo atleta do 29, que pediu para não aparecer.
   30: 'fotos/escanteio',
   31: 'fotos/trofeu-colegio',
   32: 'fotos/entre-predios',

@@ -13,6 +13,10 @@
  *      Instagram usa de foto de perfil.
  *   3. AS ARTES DE MATCH DAY, em duas larguras, como as do Instagram (ver
  *      scripts/importar-instagram.mjs).
+ *   4. AS FOTOS DE JOGO, editadas pela Yzzo (banco-de-midia/fotos-de-jogo/),
+ *      também em duas larguras. Vêm do celular, em JPEG de 2 a 3 MB e às
+ *      vezes deitadas no arquivo: o `rotate()` endireita pela orientação
+ *      gravada pela câmera.
  *
  * A pasta banco-de-midia/ NÃO faz parte do repositório: são 200 MB de PNG e
  * vídeo como saíram da edição. O que o site publica é o resultado deste
@@ -164,10 +168,44 @@ async function matchDays() {
   }
 }
 
+/**
+ * As fotos de jogo: arquivo em banco-de-midia/fotos-de-jogo/ → caminho em
+ * public/. Mandadas em outubro de 2026; aparecem no "DVD esportivo".
+ */
+const FOTOS_DE_JOGO = {
+  'IMG_3396.JPG.jpeg': 'fotos/lance-conducao',
+  'IMG_3100.JPG.jpeg': 'fotos/lance-camisa-18',
+  'IMG_3399.JPG.jpeg': 'fotos/lance-arbitro',
+}
+
+async function fotosDeJogo() {
+  for (const [arquivo, destino] of Object.entries(FOTOS_DE_JOGO)) {
+    const origem = path.join(ORIGEM, 'fotos-de-jogo', arquivo)
+    const cheia = path.join(DESTINO, `${destino}.webp`)
+
+    await sharp(origem)
+      .rotate()
+      .resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: 80 })
+      .toFile(cheia)
+    await sharp(origem)
+      .rotate()
+      .resize({ width: 600, withoutEnlargement: true })
+      .webp({ quality: 76 })
+      .toFile(path.join(DESTINO, `${destino}-600.webp`))
+
+    const { width, height } = await sharp(cheia).metadata()
+    console.log(`✓ ${destino}  ${width}x${height}`)
+  }
+}
+
 async function main() {
+  /* `node scripts/importar-midia.mjs fotos` refaz só as fotos de jogo. */
+  if (process.argv[2] === 'fotos') return fotosDeJogo()
   await recortarLogo()
   await icones()
   await matchDays()
+  await fotosDeJogo()
 }
 
 main().catch((erro) => {

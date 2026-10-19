@@ -122,9 +122,17 @@ export const novosClientes: Imagem[] = [
   imagem('clientes/novo-cliente-02', 'Post "Novo Cliente!" de um atleta com a camisa amarela da Seleção.'),
   imagem('clientes/novo-cliente-03', 'Post "Novo Cliente!" de um atleta com a camisa branca do clube.'),
   imagem('clientes/novo-cliente-04', 'Post "Novo Cliente!" de um atleta com a camisa branca e vermelha.'),
-  imagem('clientes/novo-cliente-05', 'Post "Novo Cliente!" de um atleta de agasalho preto.'),
   imagem('clientes/novo-cliente-06', 'Post "Novo Cliente!" de um atleta com a camisa azul-clara.'),
   imagem('clientes/novo-cliente-07', 'Post "Novo Cliente!" de um atleta com a camisa tricolor do Grêmio.'),
 ]
 
-
+/**
+ * Fotos de jogo editadas pela Yzzo: o "material atualizado do atleta" que o
+ * DVD esportivo reúne. Mandadas em outubro de 2026 (banco-de-midia/, via
+ * scripts/importar-midia.mjs). A primeira também ilustra o DVD em Serviços.
+ */
+export const fotosDeJogo: Imagem[] = [
+  imagem('fotos/lance-conducao', 'Atleta de camisa branca e vermelha conduzindo a bola num jogo de campo.', 1200, 1600),
+  imagem('fotos/lance-camisa-18', 'Atleta de camisa azul número 18 dominando a bola, com um adversário de amarelo ao lado.', 1200, 1600),
+  imagem('fotos/lance-arbitro', 'Atleta de camisa azul-marinho correndo em campo, com o árbitro ao fundo.', 1200, 1600),
+]

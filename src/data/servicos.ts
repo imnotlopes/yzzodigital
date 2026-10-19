@@ -68,7 +68,7 @@ export const servicos: Servico[] = [
   {
     titulo: 'DVD esportivo',
     texto: 'O material atualizado do atleta, para mostrar a clubes e empresários.',
-    imagem: '/fotos/chute-600.webp',
-    alt: 'Atleta de branco batendo na bola num estádio.',
+    imagem: '/fotos/lance-conducao-600.webp',
+    alt: 'Foto de jogo editada pela Yzzo: atleta de camisa branca e vermelha conduzindo a bola.',
   },
 ]
