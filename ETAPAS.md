@@ -48,7 +48,7 @@ Só sobe para o GitHub com aprovação.
 | 2 | O que a Yzzo faz | o "sobre" da proposta numa frase e os **6 serviços**: Match Days, Motion Design, Convocação, Novo clube, Comemorativas e DVD esportivo |
 | 3 | Portfólio | artes deslizando e Motion (o mural de fotos de jogo saiu) |
 | + | #TimeYzzoDigital | a faixa dos "Novo Cliente!", que também são artes da Yzzo |
-| 4 | Pacotes para atletas | **Essencial R$ 90 · Profissional R$ 115 · Motion R$ 140** por mês, DVD esportivo "valor sob negociação" e o caminho para o pacote de empresas |
+| 4 | Pacotes para atletas | **Essencial R$ 100 · Profissional R$ 110 · Motion R$ 140** por mês, DVD esportivo "valor sob negociação" e o caminho para o pacote de empresas |
 | 5 | Contato | "Grandes conquistas começam com grandes decisões." |
 
 **`/parceiros`**, de 11 blocos para 4:
@@ -71,7 +71,7 @@ Rodapé: "Profissionalismo, qualidade e valorização da imagem do atleta.", o
 fecho da proposta.
 
 Cada botão de pacote abre o WhatsApp com o pacote e o valor escritos ("Vim
-pelo site e quero o pacote Profissional (R$ 115/mês)").
+pelo site e quero o pacote Profissional (R$ 110/mês)").
 
 Onde mexer: `src/data/servicos.ts` (serviços) e `src/data/pacotes.ts`
 (pacotes, modalidades, parceria e Estrela do Mês).
@@ -150,7 +150,7 @@ A seção de preços foi refeita do zero, a pedido de vocês ("tá bem ruim").
 | **Para quem é** | uma linha embaixo do nome. ⚠️ Texto meu, tirado da proposta: confirmar |
 | **Peças no mês, desenhadas** | uma miniatura de arte de verdade para cada peça do pacote: 4 no Essencial, 5 no Profissional, 4 Motion (com play) no Motion. A diferença entre os pacotes se vê, sem comparar listas |
 | **Preço** | grande, com o "R$" pequeno ao lado e "/mês" |
-| **Custo por arte** | o preço dividido pelas peças: R$ 22,50 · R$ 23,00 · R$ 35,00 |
+| **Custo por arte** | o preço dividido pelas peças: R$ 25,00 · R$ 22,00 · R$ 35,00 |
 | **Destaque** | o cartão preto com borda amarela e a etiqueta "Melhor custo por arte" é o de menor custo por peça. É calculado: se o preço mudar, o destaque acompanha |
 
 Embaixo, o DVD esportivo ("valor sob negociação") e, na landing, um cartão
@@ -158,8 +158,11 @@ amarelo que leva ao pacote de empresas em /parceiros.
 
 **Ajuste de 17/10/2026, a pedido do Yan:** o Profissional ficou com 5 artes e
 o Motion com 4 artes em vídeo; a arte de anúncio de novo clube saiu dos dois.
-Com isso, o menor custo por arte passou a ser o do Essencial (R$ 22,50, contra
-R$ 23,00 do Profissional), e o destaque "Melhor custo por arte" foi para ele.
+
+**Ajuste de 19/10/2026:** o Essencial passou de R$ 90 para R$ 100 e o
+Profissional de R$ 115 para R$ 110. O Profissional sai a R$ 22,00 por arte, o
+menor custo dos três (Essencial R$ 25,00, Motion R$ 35,00), e o destaque
+"Melhor custo por arte" ficou com ele.
 
 ### Etapa 6b: carregamento e celular ✅ (aprovada)
 

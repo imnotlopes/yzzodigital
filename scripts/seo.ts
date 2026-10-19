@@ -50,7 +50,7 @@ function montarRobots(): string {
  * uma fonte de verdade só, e o preço aqui nunca fica diferente do da página.
  *
  * Os pacotes do atleta entram como ofertas, com preço e "por mês": é o que
- * permite ao Google mostrar "a partir de R$ 90" sem a pessoa abrir o site.
+ * permite ao Google mostrar "a partir de R$ 100" sem a pessoa abrir o site.
  */
 function montarOrganizacao() {
   return {

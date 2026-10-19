@@ -48,8 +48,8 @@ interface SecaoPacotesProps {
  *
  * O DESTAQUE É CALCULADO
  * ----------------------
- * O cartão escuro é o de menor custo por peça (desde o ajuste de outubro de
- * 2026, o Essencial: R$ 22,50 por arte, contra R$ 23,00 do Profissional). Não
+ * O cartão escuro é o de menor custo por peça (hoje o Profissional: R$ 22,00
+ * por arte, contra R$ 25,00 do Essencial). Não
  * é escolha minha de "mais vendido", que eu não sei: é a conta, e continua
  * certa se a Yzzo mudar preço ou quantidade.
  */
