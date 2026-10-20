@@ -50,14 +50,14 @@ export interface PacoteAtleta {
 export const pacotesAtleta: PacoteAtleta[] = [
   {
     nome: 'Essencial',
-    preco: 100,
+    preco: 105,
     publico: 'Para manter o perfil ativo, com arte nova toda semana.',
     itens: ['Até 4 artes por mês'],
     pecas: { artes: 4, motion: 0, novoClube: 0 },
   },
   {
     nome: 'Profissional',
-    preco: 110,
+    preco: 115,
     publico: 'Para quem quer mais presença, com uma arte a mais por mês.',
     itens: ['Até 5 artes por mês'],
     pecas: { artes: 5, motion: 0, novoClube: 0 },
